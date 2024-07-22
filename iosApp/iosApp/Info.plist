@@ -22,6 +22,8 @@
 	<true/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>MBXAccessToken</key>
+	<string>pk.eyJ1Ijoib2xpdmVyZGVsYW5nZSIsImEiOiJjamlhZzNydnQwMHdvM3ZwY3o1NXRsbXF0In0.hxkqmnzrAyrooJix_YK04w</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
