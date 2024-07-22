@@ -4,6 +4,8 @@ import Shared
 
 struct ContentView: View {
     @State private var showContent = false
+    @State var viewport: Viewport = .followPuck(zoom: 16)
+
     var body: some View {
         VStack {
             Button("Click me!") {
@@ -21,8 +23,11 @@ struct ContentView: View {
                 }
                 .transition(.move(edge: .top).combined(with: .opacity))
             }
+            
             let center = CLLocationCoordinate2D(latitude: 39.5, longitude: -98.0)
-            Map(initialViewport: .camera(center: center, zoom: 2, bearing: 0, pitch: 0))
+            Map(viewport: $viewport){
+                Puck2D(bearing: .heading).showsAccuracyRing(true)
+            }
                 .ignoresSafeArea()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
