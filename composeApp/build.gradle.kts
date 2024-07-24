@@ -49,6 +49,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.mapbox)
             implementation(libs.mapboxCompose)
+            implementation(libs.mapboxTurf)
         }
         commonMain.dependencies {
             implementation(projects.shared)

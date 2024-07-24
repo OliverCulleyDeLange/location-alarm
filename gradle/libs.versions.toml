@@ -1,7 +1,7 @@
 [versions]
 agp = "8.2.0"
 android-compileSdk = "34"
-android-minSdk = "24"
+android-minSdk = "26"
 android-targetSdk = "34"
 androidx-activityCompose = "1.9.0"
 androidx-lifecycle-viewmodel-compose = "2.8.3"
@@ -12,10 +12,11 @@ androidx-espresso-core = "3.6.0"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.0"
 compose-plugin = "1.6.11"
+lifecycleRuntimeComposeAndroid = "2.8.3"
 junit = "4.13.2"
 kotlin = "2.0.0"
 mapbox = "11.5.0"
-lifecycleRuntimeComposeAndroid = "2.8.3"
+mapboxTurf = "7.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -29,9 +30,10 @@ androidx-material = { group = "com.google.android.material", name = "material", 
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle-viewmodel-compose" }
+androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
 mapboxCompose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapbox" }
-androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+mapboxTurf = { module = "com.mapbox.mapboxsdk:mapbox-sdk-turf", version.ref = "mapboxTurf" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
