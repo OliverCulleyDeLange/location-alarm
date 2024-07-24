@@ -50,6 +50,8 @@ kotlin {
             implementation(libs.mapbox)
             implementation(libs.mapboxCompose)
             implementation(libs.mapboxTurf)
+            implementation(libs.koin.android)
+            implementation(libs.koin.android.compose)
         }
         commonMain.dependencies {
             implementation(projects.shared)
