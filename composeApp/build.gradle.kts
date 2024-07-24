@@ -40,6 +40,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -90,5 +91,8 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
 }
 
