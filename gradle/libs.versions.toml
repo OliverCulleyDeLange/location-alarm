@@ -4,7 +4,7 @@ android-compileSdk = "34"
 android-minSdk = "26"
 android-targetSdk = "34"
 androidx-activityCompose = "1.9.0"
-androidx-lifecycle-viewmodel-compose = "2.8.3"
+androidx-lifecycle-viewmodel-compose = "2.8.4"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 androidx-core-ktx = "1.13.1"
@@ -13,11 +13,12 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.0"
 compose-plugin = "1.6.11"
 koin = "3.6.0-wasm-alpha2"
-lifecycleRuntimeComposeAndroid = "2.8.3"
+lifecycleRuntimeComposeAndroid = "2.8.4"
 junit = "4.13.2"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 mapbox = "11.5.0"
 mapboxTurf = "7.0.0"
+kmpObservableviewmodelCore = "1.0.0-BETA-5"
 
 [libraries]
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
@@ -38,6 +39,7 @@ androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", nam
 mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
 mapboxCompose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapbox" }
 mapboxTurf = { module = "com.mapbox.mapboxsdk:mapbox-sdk-turf", version.ref = "mapboxTurf" }
+kmp-observableviewmodel-core = { module = "com.rickclephas.kmp:kmp-observableviewmodel-core", version.ref = "kmpObservableviewmodelCore" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

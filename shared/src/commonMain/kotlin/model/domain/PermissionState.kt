@@ -1,4 +1,4 @@
-package uk.co.oliverdelange.location_alarm
+package model.domain
 
 enum class PermissionState {
     Unknown, Granted, Denied

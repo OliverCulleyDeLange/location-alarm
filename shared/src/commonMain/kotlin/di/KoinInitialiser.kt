@@ -1,15 +1,17 @@
 package di
 
-import EventHandler
+import model.ui.AppViewModel
 import org.koin.core.context.startKoin
-import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
+expect val platformModule: Module
+
 val sharedModule = module {
-    singleOf(::EventHandler)
+    single { AppViewModel() }
 }
 
-fun appModule() = listOf(sharedModule)
+fun appModule(): List<Module> = sharedModule + platformModule
 
 fun initKoin() {
     startKoin {
