@@ -1,7 +1,6 @@
 package uk.co.oliverdelange.location_alarm.screens
 
 import Greeting
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -45,6 +44,7 @@ import model.domain.AppState
 import model.domain.granted
 import model.ui.AppViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.location.MapboxLocationConsumer
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
@@ -97,7 +97,7 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                             }
                         }
                     ) { style ->
-                        Log.d("OCD", "Updating style after initialisation")
+                        Timber.d("Updating style after initialisation")
                         updateGeofence(style, state)
                     }
                 }
@@ -115,10 +115,10 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                                 registerLocationConsumer(MapboxLocationConsumer {
                                     viewmodel.onLocationChange(it)
                                 })
-                                Log.d("OCD", "Registered location consumer")
-                            } ?: Log.w("OCD", "Couldn't get location provider")
+                                Timber.d("Registered location consumer")
+                            } ?: Timber.w("Couldn't get location provider")
                         } else {
-                            Log.d("OCD", "Location permission not granted, so location disabled")
+                            Timber.d("Location permission not granted, so location disabled")
                             location.enabled = false
                         }
                     }
@@ -126,8 +126,8 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                 MapEffect(state.geoFenceLocation) { mapView ->
                     mapView.mapboxMap.style?.let {
                         updateGeofence(it, state)
-                        Log.d("OCD", "Updated geofence location ${state.geoFenceLocation}")
-                    } ?: Log.w("OCD", "Couldn't get mapbox style")
+                        Timber.d("Updated geofence location ${state.geoFenceLocation}")
+                    } ?: Timber.w("Couldn't get mapbox style")
                 }
             }
         }
@@ -140,7 +140,7 @@ private fun updateGeofence(style: Style, state: AppState) {
         style.getSourceAs<GeoJsonSource>("source-geofence")?.let {
             it.removeGeoJSONSourceFeatures(listOf("geofence-feature"))
             it.addGeoJSONSourceFeatures(listOf(geofenceFeature))
-            Log.d("OCD", "Updated geofence feature $geofenceFeature")
-        } ?: Log.w("Mapbox", "geofence source doesn't exist!")
-    } ?: Log.d("OCD", "Not updating geofence as no user location available")
+            Timber.d("Updated geofence feature $geofenceFeature")
+        } ?: Timber.w("geofence source doesn't exist!")
+    } ?: Timber.d("Not updating geofence as no user location available")
 }

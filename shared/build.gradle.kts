@@ -45,6 +45,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(libs.koin.core)
+            implementation(libs.kermit)
             api(libs.kmp.observableviewmodel.core)
         }
 
