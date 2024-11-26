@@ -32,10 +32,11 @@ import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.style.expressions.dsl.generated.color
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
+import com.mapbox.maps.extension.style.sources.addGeoJSONSourceFeatures
 import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
-import com.mapbox.maps.extension.style.sources.updateGeoJSONSourceFeatures
+import com.mapbox.maps.extension.style.sources.removeGeoJSONSourceFeatures
 import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
@@ -84,8 +85,7 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                 MapEffect(Unit) { mapView ->
                     mapView.mapboxMap.loadStyle(
                         style(style = Style.LIGHT) {
-                            +geoJsonSource(id = "source-geofence") {
-                            }
+                            +geoJsonSource(id = "source-geofence")
                             +fillLayer(layerId = "layer-geofence-fill", sourceId = "source-geofence") {
                                 fillColor(color.toArgb())
                                 fillOpacity(0.3)
@@ -112,9 +112,11 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                                 transition = viewport.makeImmediateViewportTransition()
                             )
                             location.getLocationProvider()?.apply {
-                                registerLocationConsumer(MapboxLocationConsumer())
+                                registerLocationConsumer(MapboxLocationConsumer {
+                                    viewmodel.onLocationChange(it)
+                                })
                                 Log.d("OCD", "Registered location consumer")
-                            } ?: Log.w("Location.kt", "Couldn't get location provider")
+                            } ?: Log.w("OCD", "Couldn't get location provider")
                         } else {
                             Log.d("OCD", "Location permission not granted, so location disabled")
                             location.enabled = false
@@ -124,6 +126,7 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                 MapEffect(state.geoFenceLocation) { mapView ->
                     mapView.mapboxMap.style?.let {
                         updateGeofence(it, state)
+                        Log.d("OCD", "Updated geofence location ${state.geoFenceLocation}")
                     } ?: Log.w("OCD", "Couldn't get mapbox style")
                 }
             }
@@ -135,7 +138,8 @@ private fun updateGeofence(style: Style, state: AppState) {
     state.geoFenceLocation?.toPoint()?.let {
         val geofenceFeature = buildGeofenceFeature(it, state.perimeterRadiusMeters)
         style.getSourceAs<GeoJsonSource>("source-geofence")?.let {
-            it.updateGeoJSONSourceFeatures(listOf(geofenceFeature))
+            it.removeGeoJSONSourceFeatures(listOf("geofence-feature"))
+            it.addGeoJSONSourceFeatures(listOf(geofenceFeature))
             Log.d("OCD", "Updated geofence feature $geofenceFeature")
         } ?: Log.w("Mapbox", "geofence source doesn't exist!")
     } ?: Log.d("OCD", "Not updating geofence as no user location available")

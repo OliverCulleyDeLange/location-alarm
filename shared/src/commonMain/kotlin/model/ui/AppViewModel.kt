@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import model.domain.AppState
+import model.domain.Location
 import model.domain.PermissionState
 
 class AppViewModel : ViewModel() {
@@ -19,5 +20,18 @@ class AppViewModel : ViewModel() {
                 locationPermissionState = if (granted) PermissionState.Granted else PermissionState.Denied
             )
         }
+    }
+
+    /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
+    fun onLocationChange(locations: List<Location>) {
+        println("Location updated $locations")
+        locations.firstOrNull()?.let { firstLocation ->
+            _state.update { it.copy(usersLocation = firstLocation) }
+            if (!_state.value.mapInteracted) {
+                _state.update {
+                    it.copy(geoFenceLocation = firstLocation)
+                }
+            }
+        } ?: println("Location update contains no location")
     }
 }

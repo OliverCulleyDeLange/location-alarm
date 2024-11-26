@@ -1,27 +1,19 @@
 package uk.co.oliverdelange.location_alarm.location
 
 import android.animation.ValueAnimator
-import android.util.Log
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
+import model.domain.Location
+import toLocation
 
-class MapboxLocationConsumer : LocationConsumer {
-    // Location.kt Consumer overrides
-    /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
+/** Listens to locaiton updates from mapbox's inbuilt location service,
+ * calls a callback with domain locations
+ * */
+class MapboxLocationConsumer(val onLocationChange: (List<Location>) -> Unit) : LocationConsumer {
     override fun onLocationUpdated(vararg location: Point, options: (ValueAnimator.() -> Unit)?) {
-        Log.d("OCD", "Location.kt updated $location")
-//        eventHandler.handle(LocationEvents.LocationChanged(location.map{ it.toLocation()}))
-//        if (!_state.value.mapInteracted)
-//            location.firstOrNull()?.let { point ->
-//                _state.update {
-//                    it.copy(
-//                        geofenceFeature = buildGeofenceFeature(point, it.perimeterRadiusMeters)
-//                    )
-//                }
-//            } ?: Log.w("Location.kt", "Location.kt update contains no location")
+        onLocationChange(location.map { it.toLocation() })
     }
-
 
     override fun onBearingUpdated(vararg bearing: Double, options: (ValueAnimator.() -> Unit)?) {
     }
