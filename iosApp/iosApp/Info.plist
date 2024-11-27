@@ -25,7 +25,9 @@
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1Ijoib2xpdmVyZGVsYW5nZSIsImEiOiJjamlhZzNydnQwMHdvM3ZwY3o1NXRsbXF0In0.hxkqmnzrAyrooJix_YK04w</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Choose a wake up location near you</string>
+	<string>Your location is required to wake you up when you get near your destination</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is required to wake you up when you get near your destination</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

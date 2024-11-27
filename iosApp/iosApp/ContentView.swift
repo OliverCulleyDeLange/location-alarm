@@ -5,7 +5,9 @@ import Shared
 struct ContentView: View {
     @State private var showContent = false
     @State var viewport: Viewport = .followPuck(zoom: 16)
-
+    @State var locationProvider: AppleLocationProvider = AppleLocationProvider()
+    @State var locationObserver: AnyCancelable? = nil
+    
     var body: some View {
         VStack {
             Button("Click me!") {
@@ -24,11 +26,19 @@ struct ContentView: View {
                 .transition(.move(edge: .top).combined(with: .opacity))
             }
             
-            let center = CLLocationCoordinate2D(latitude: 39.5, longitude: -98.0)
-            Map(viewport: $viewport){
-                Puck2D(bearing: .heading).showsAccuracyRing(true)
-            }
+            MapReader { map in
+                Map(viewport: $viewport){
+                    Puck2D(bearing: .heading).showsAccuracyRing(true)
+                }.onAppear {
+                    // Start listening for location updates when map is ready
+                    locationObserver = locationProvider.onLocationUpdate.observe { location in
+                        print("Location  \(location[0].coordinate)")
+                    }
+                }.onDisappear{
+                    locationObserver?.cancel()
+                }
                 .ignoresSafeArea()
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
