@@ -1,6 +1,15 @@
 {
-  "originHash" : "c48d77ebe93e854e8e2b4bbddf1d5fe4977e5a87efa4e14ea29c90b3e5919e31",
+  "originHash" : "f1a6f07617c7690b5382a8afe25b7e191973faad27722f35ce71d4557a3a1c2c",
   "pins" : [
+    {
+      "identity" : "kmp-observableviewmodel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rickclephas/KMP-ObservableViewModel.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "a7596d7d856ba1d0b92ca310ed8fa31e22b418fd"
+      }
+    },
     {
       "identity" : "mapbox-common-ios",
       "kind" : "remoteSourceControl",
