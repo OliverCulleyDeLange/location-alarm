@@ -7,8 +7,7 @@ struct ContentView: View {
     @StateViewModel var viewModel = AppViewModel()
     @State private var showContent = false
     @State var viewport: Viewport = .followPuck(zoom: 16)
-    @State var locationProvider: AppleLocationProvider = AppleLocationProvider()
-    @State var locationObserver: AnyCancelable? = nil
+    @State var locationService: LocationService = LocationService()
     
     var body: some View {
         VStack {
@@ -17,7 +16,7 @@ struct ContentView: View {
                     showContent = !showContent
                 }
             }
-
+            
             if showContent {
                 VStack(spacing: 16) {
                     Image(systemName: "swift")
@@ -33,15 +32,11 @@ struct ContentView: View {
                     Puck2D(bearing: .heading).showsAccuracyRing(true)
                 }.onAppear {
                     // Start listening for location updates when map is ready
-                    locationObserver = locationProvider.onLocationUpdate.observe { locations in
-                        // TODO Move mapping out of view 
-                        let mapped = locations.map { (location) -> Shared.Location in
-                            Shared.Location(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-                        }
-                        viewModel.onLocationChange(locations: mapped)
+                    locationService.listenForUpdates { locations in
+                        viewModel.onLocationChange(locations: locations)
                     }
                 }.onDisappear{
-                    locationObserver?.cancel()
+                    locationService.stopListeningForUpdates()
                 }
                 .ignoresSafeArea()
             }
@@ -50,6 +45,7 @@ struct ContentView: View {
         .padding()
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
