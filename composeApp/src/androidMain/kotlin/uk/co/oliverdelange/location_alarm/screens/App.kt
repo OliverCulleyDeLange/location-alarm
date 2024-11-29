@@ -40,6 +40,10 @@ import com.mapbox.maps.extension.style.style
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.viewport
+import mapbox.MapboxIDs.FEATURE_GEOFENCE
+import mapbox.MapboxIDs.LAYER_GEOFENCE_FILL
+import mapbox.MapboxIDs.LAYER_GEOFENCE_LINE
+import mapbox.MapboxIDs.SOURCE_GEOFENCE
 import model.domain.AppState
 import model.domain.granted
 import model.ui.AppViewModel
@@ -85,13 +89,13 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                 MapEffect(Unit) { mapView ->
                     mapView.mapboxMap.loadStyle(
                         style(style = Style.LIGHT) {
-                            +geoJsonSource(id = "source-geofence")
-                            +fillLayer(layerId = "layer-geofence-fill", sourceId = "source-geofence") {
+                            +geoJsonSource(id = SOURCE_GEOFENCE)
+                            +fillLayer(layerId = LAYER_GEOFENCE_FILL, sourceId = SOURCE_GEOFENCE) {
                                 fillColor(color.toArgb())
                                 fillOpacity(0.3)
                                 fillOutlineColor(color(R.color.geofenceBorder.toColor().toArgb()))
                             }
-                            +lineLayer(layerId = "layer-geofence-line", sourceId = "source-geofence") {
+                            +lineLayer(layerId = LAYER_GEOFENCE_LINE, sourceId = SOURCE_GEOFENCE) {
                                 lineWidth(5.0)
                                 lineColor(color.toArgb())
                             }
@@ -137,8 +141,8 @@ fun App(viewmodel: AppViewModel = viewModel()) {
 private fun updateGeofence(style: Style, state: AppState) {
     state.geoFenceLocation?.toPoint()?.let {
         val geofenceFeature = buildGeofenceFeature(it, state.perimeterRadiusMeters)
-        style.getSourceAs<GeoJsonSource>("source-geofence")?.let {
-            it.removeGeoJSONSourceFeatures(listOf("geofence-feature"))
+        style.getSourceAs<GeoJsonSource>(SOURCE_GEOFENCE)?.let {
+            it.removeGeoJSONSourceFeatures(listOf(FEATURE_GEOFENCE))
             it.addGeoJSONSourceFeatures(listOf(geofenceFeature))
             Timber.d("Updated geofence feature $geofenceFeature")
         } ?: Timber.w("geofence source doesn't exist!")
