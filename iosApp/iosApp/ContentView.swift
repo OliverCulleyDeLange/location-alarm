@@ -8,9 +8,11 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
     @State private var showContent = false
     @State var viewport: Viewport = .followPuck(zoom: 16)
     @State var locationService: LocationService = LocationService()
-    
+    @State var featureCollection: FeatureCollection?
+
     var body: some View {
         VStack {
+            Text("\(viewModel.state.usersLocation)")
             Button("Click me!") {
                 withAnimation {
                     showContent = !showContent
@@ -28,7 +30,8 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
             }
             
             MapReader { map in
-                Map(viewport: $viewport){
+                Map(viewport: $viewport)
+                {
                     Puck2D(bearing: .heading).showsAccuracyRing(true)
                 }.onAppear {
                     logger.debug("Map did appear")

@@ -156,6 +156,7 @@
 			packageReferences = (
 				42D85C6C2C4E253D0001DF76 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
 				423E49F92CF7729B0024F2EB /* XCRemoteSwiftPackageReference "KMP-ObservableViewModel" */,
+				423E4A062CFA16F90024F2EB /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -425,6 +426,14 @@
 			requirement = {
 				branch = master;
 				kind = branch;
+			};
+		};
+		423E4A062CFA16F90024F2EB /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rickclephas/KMP-NativeCoroutines.git";
+			requirement = {
+				kind = exactVersion;
+				version = "1.0.0-ALPHA-37";
 			};
 		};
 		42D85C6C2C4E253D0001DF76 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {

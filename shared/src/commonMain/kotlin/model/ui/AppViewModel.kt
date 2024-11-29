@@ -1,8 +1,9 @@
 package model.ui
 
 import co.touchlab.kermit.Logger
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
+import com.rickclephas.kmp.observableviewmodel.MutableStateFlow
 import com.rickclephas.kmp.observableviewmodel.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -11,7 +12,9 @@ import model.domain.Location
 import model.domain.PermissionState
 
 class AppViewModel : ViewModel() {
-    private val _state = MutableStateFlow(AppState())
+    private val _state = MutableStateFlow(viewModelScope, AppState())
+
+    @NativeCoroutinesState
     val state: StateFlow<AppState> = _state.asStateFlow()
 
     fun onLocationPermissionResult(granted: Boolean) {
