@@ -41,5 +41,11 @@ class AppViewModel : ViewModel() {
 
     fun onMapTap(location: Location) {
         Logger.d("Map tapped $location")
+        _state.update {
+            it.copy(
+                mapInteracted = true,
+                geoFenceLocation = location
+            )
+        }
     }
 }
