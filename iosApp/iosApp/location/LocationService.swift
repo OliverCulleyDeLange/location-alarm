@@ -12,6 +12,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        logger.debug("LocationService init")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 0

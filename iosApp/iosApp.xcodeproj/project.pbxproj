@@ -15,9 +15,9 @@
 		423E49FF2CF772CC0024F2EB /* KMPObservableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */; };
 		423E4A012CF891E00024F2EB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A002CF891E00024F2EB /* LocationService.swift */; };
 		423E4A032CF93B540024F2EB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A022CF93B540024F2EB /* Logger.swift */; };
-		423E4A082CFB20CC0024F2EB /* Mapbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A072CFB20CC0024F2EB /* Mapbox.swift */; };
 		423E4A0E2CFB28370024F2EB /* Location_to_CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A0D2CFB28370024F2EB /* Location_to_CLLocationCoordinate2D.swift */; };
 		423E4A122CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A112CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift */; };
+		423E4A142CFB405F0024F2EB /* MapboxMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A132CFB405F0024F2EB /* MapboxMap.swift */; };
 		42D85C6E2C4E253D0001DF76 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 42D85C6D2C4E253D0001DF76 /* MapboxMaps */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -29,9 +29,9 @@
 		423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMPObservableViewModel.swift; sourceTree = "<group>"; };
 		423E4A002CF891E00024F2EB /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		423E4A022CF93B540024F2EB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		423E4A072CFB20CC0024F2EB /* Mapbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapbox.swift; sourceTree = "<group>"; };
 		423E4A0D2CFB28370024F2EB /* Location_to_CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location_to_CLLocationCoordinate2D.swift; sourceTree = "<group>"; };
 		423E4A112CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2D_to_Location.swift; sourceTree = "<group>"; };
+		423E4A132CFB405F0024F2EB /* MapboxMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxMap.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Location Alarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Location Alarm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 			children = (
 				7555FF82242A565900829871 /* ContentView.swift */,
 				423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */,
-				423E4A072CFB20CC0024F2EB /* Mapbox.swift */,
+				423E4A132CFB405F0024F2EB /* MapboxMap.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -267,9 +267,9 @@
 				423E4A122CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				423E4A012CF891E00024F2EB /* LocationService.swift in Sources */,
-				423E4A082CFB20CC0024F2EB /* Mapbox.swift in Sources */,
 				423E49FF2CF772CC0024F2EB /* KMPObservableViewModel.swift in Sources */,
 				423E4A0E2CFB28370024F2EB /* Location_to_CLLocationCoordinate2D.swift in Sources */,
+				423E4A142CFB405F0024F2EB /* MapboxMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
