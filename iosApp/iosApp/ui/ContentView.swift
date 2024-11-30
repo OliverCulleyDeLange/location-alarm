@@ -8,7 +8,6 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
     @State private var showContent = false
     @State var viewport: Viewport = .followPuck(zoom: 16)
     @State var locationService: LocationService = LocationService()
-    @State var featureCollection: FeatureCollection?
 
     var body: some View {
         VStack {
@@ -33,6 +32,19 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                 Map(viewport: $viewport)
                 {
                     Puck2D(bearing: .heading).showsAccuracyRing(true)
+                   if let geofence = viewModel.state.geoFenceLocation {
+                       let circle = createCirclePolygon(center: geofence.toCLLocationCoordinate2D(), radius: Double(viewModel.state.perimeterRadiusMeters))
+                       var featureCollection: FeatureCollection = FeatureCollection(features: [Feature(geometry: .polygon(circle))])
+
+                       GeoJSONSource(id: MapboxIDs.shared.SOURCE_GEOFENCE)
+                           .data(.featureCollection(featureCollection))
+                       FillLayer(id: MapboxIDs.shared.LAYER_GEOFENCE_FILL, source: MapboxIDs.shared.SOURCE_GEOFENCE)
+                           .fillColor(UIColor(named: "GeofenceLine")!)
+                           .fillOpacity(0.3)
+                       LineLayer(id: MapboxIDs.shared.LAYER_GEOFENCE_LINE, source: MapboxIDs.shared.SOURCE_GEOFENCE)
+                           .lineWidth(5.0)
+                           .lineColor(UIColor(named: "GeofenceLine")!)
+                   }
                 }.onAppear {
                     logger.debug("Map did appear")
                     locationService.checkLocationPermissionsAndStartListening()
@@ -65,3 +77,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

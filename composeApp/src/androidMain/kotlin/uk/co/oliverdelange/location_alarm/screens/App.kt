@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.core.graphics.toColor
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mapbox.geojson.Point
@@ -28,7 +27,6 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
-import com.mapbox.maps.extension.style.expressions.dsl.generated.color
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.sources.addGeoJSONSourceFeatures
@@ -93,7 +91,6 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                             +fillLayer(layerId = LAYER_GEOFENCE_FILL, sourceId = SOURCE_GEOFENCE) {
                                 fillColor(color.toArgb())
                                 fillOpacity(0.3)
-                                fillOutlineColor(color(R.color.geofenceBorder.toColor().toArgb()))
                             }
                             +lineLayer(layerId = LAYER_GEOFENCE_LINE, sourceId = SOURCE_GEOFENCE) {
                                 lineWidth(5.0)

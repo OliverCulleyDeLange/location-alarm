@@ -15,6 +15,8 @@
 		423E49FF2CF772CC0024F2EB /* KMPObservableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */; };
 		423E4A012CF891E00024F2EB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A002CF891E00024F2EB /* LocationService.swift */; };
 		423E4A032CF93B540024F2EB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A022CF93B540024F2EB /* Logger.swift */; };
+		423E4A082CFB20CC0024F2EB /* Mapbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A072CFB20CC0024F2EB /* Mapbox.swift */; };
+		423E4A0E2CFB28370024F2EB /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A0D2CFB28370024F2EB /* Location.swift */; };
 		42D85C6E2C4E253D0001DF76 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 42D85C6D2C4E253D0001DF76 /* MapboxMaps */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -26,6 +28,8 @@
 		423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMPObservableViewModel.swift; sourceTree = "<group>"; };
 		423E4A002CF891E00024F2EB /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		423E4A022CF93B540024F2EB /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		423E4A072CFB20CC0024F2EB /* Mapbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapbox.swift; sourceTree = "<group>"; };
+		423E4A0D2CFB28370024F2EB /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Location Alarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Location Alarm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,6 +56,48 @@
 				058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		423E4A092CFB27D60024F2EB /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				7555FF82242A565900829871 /* ContentView.swift */,
+				423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */,
+				423E4A072CFB20CC0024F2EB /* Mapbox.swift */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		423E4A0A2CFB27E90024F2EB /* location */ = {
+			isa = PBXGroup;
+			children = (
+				423E4A002CF891E00024F2EB /* LocationService.swift */,
+			);
+			path = location;
+			sourceTree = "<group>";
+		};
+		423E4A0B2CFB28220024F2EB /* mapper */ = {
+			isa = PBXGroup;
+			children = (
+				423E4A0C2CFB282A0024F2EB /* domain_to_ui */,
+			);
+			path = mapper;
+			sourceTree = "<group>";
+		};
+		423E4A0C2CFB282A0024F2EB /* domain_to_ui */ = {
+			isa = PBXGroup;
+			children = (
+				423E4A0D2CFB28370024F2EB /* Location.swift */,
+			);
+			path = domain_to_ui;
+			sourceTree = "<group>";
+		};
+		423E4A0F2CFB288F0024F2EB /* logging */ = {
+			isa = PBXGroup;
+			children = (
+				423E4A022CF93B540024F2EB /* Logger.swift */,
+			);
+			path = logging;
 			sourceTree = "<group>";
 		};
 		42799AB246E5F90AF97AA0EF /* Frameworks */ = {
@@ -82,14 +128,14 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				423E4A0F2CFB288F0024F2EB /* logging */,
+				423E4A0B2CFB28220024F2EB /* mapper */,
+				423E4A0A2CFB27E90024F2EB /* location */,
+				423E4A092CFB27D60024F2EB /* ui */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
-				423E4A002CF891E00024F2EB /* LocationService.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */,
-				423E4A022CF93B540024F2EB /* Logger.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -209,7 +255,9 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				423E4A012CF891E00024F2EB /* LocationService.swift in Sources */,
+				423E4A082CFB20CC0024F2EB /* Mapbox.swift in Sources */,
 				423E49FF2CF772CC0024F2EB /* KMPObservableViewModel.swift in Sources */,
+				423E4A0E2CFB28370024F2EB /* Location.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
