@@ -28,9 +28,17 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                             .lineWidth(5.0)
                             .lineColor(UIColor(named: "GeofenceLine")!)
                     }
-                }.onAppear {
+                }
+                .ornamentOptions(OrnamentOptions.init(
+                    attributionButton: AttributionButtonOptions.init(position: OrnamentPosition.topRight, margins: CGPoint())
+                ))
+                .onMapTapGesture(perform: { MapContentGestureContext in
+                    viewModel.onMapTap(location: MapContentGestureContext.coordinate.toLocation())
+                })
+                .onAppear {
                     logger.debug("Map did appear")
                     locationService.checkLocationPermissionsAndStartListening()
+                    
                 }.onDisappear{
                     logger.debug("Map did dissapear")
                     locationService.stopListeningForUpdates()

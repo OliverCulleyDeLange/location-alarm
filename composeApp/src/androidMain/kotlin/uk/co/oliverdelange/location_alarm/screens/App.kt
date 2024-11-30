@@ -41,6 +41,7 @@ import model.domain.granted
 import model.ui.AppViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import timber.log.Timber
+import toLocation
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.location.MapboxLocationConsumer
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
@@ -66,7 +67,7 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                         bearing(0.0)
                     }
                 },
-
+                onMapClickListener = { point: Point -> viewmodel.onMapTap(point.toLocation()); true }
                 ) {
                 val color = colorResource(R.color.geofenceBorder)
                 MapEffect(Unit) { mapView ->

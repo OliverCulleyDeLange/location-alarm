@@ -38,4 +38,8 @@ class AppViewModel : ViewModel() {
             }
         } ?: Logger.w { "Location update contains no location" }
     }
+
+    fun onMapTap(location: Location) {
+        Logger.d("Map tapped $location")
+    }
 }
