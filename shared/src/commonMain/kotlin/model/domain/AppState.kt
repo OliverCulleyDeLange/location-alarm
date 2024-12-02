@@ -13,7 +13,7 @@ data class AppState(
     // Geofence radius in meters
     val perimeterRadiusMeters: Int = 500,
     // Whether the user has enabled the alarm
-    val alarmEnabled: Boolean = true, // FIXME testing only
+    val alarmEnabled: Boolean = false,
     // Whether the alarm has been triggered (the users location is within the geofence bounds)
     val alarmTriggered: Boolean = false,
 ) {

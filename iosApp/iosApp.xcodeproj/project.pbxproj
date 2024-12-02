@@ -19,6 +19,8 @@
 		423E4A122CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A112CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift */; };
 		423E4A142CFB405F0024F2EB /* MapboxMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A132CFB405F0024F2EB /* MapboxMap.swift */; };
 		423E4A162CFB48540024F2EB /* RadiusScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A152CFB48540024F2EB /* RadiusScrubber.swift */; };
+		423E4A182CFE3DBC0024F2EB /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E4A172CFE3DBC0024F2EB /* AppViewModel.swift */; };
+		423E4A1A2CFE40580024F2EB /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 423E4A192CFE40580024F2EB /* KMPNativeCoroutinesCombine */; };
 		42D85C6E2C4E253D0001DF76 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 42D85C6D2C4E253D0001DF76 /* MapboxMaps */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,7 @@
 		423E4A112CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2D_to_Location.swift; sourceTree = "<group>"; };
 		423E4A132CFB405F0024F2EB /* MapboxMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxMap.swift; sourceTree = "<group>"; };
 		423E4A152CFB48540024F2EB /* RadiusScrubber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiusScrubber.swift; sourceTree = "<group>"; };
+		423E4A172CFE3DBC0024F2EB /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Location Alarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Location Alarm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -46,6 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				423E49FD2CF7729B0024F2EB /* KMPObservableViewModelSwiftUI in Frameworks */,
+				423E4A1A2CFE40580024F2EB /* KMPNativeCoroutinesCombine in Frameworks */,
 				423E49FB2CF7729B0024F2EB /* KMPObservableViewModelCore in Frameworks */,
 				42D85C6E2C4E253D0001DF76 /* MapboxMaps in Frameworks */,
 			);
@@ -69,6 +73,7 @@
 				423E49FE2CF772CC0024F2EB /* KMPObservableViewModel.swift */,
 				423E4A132CFB405F0024F2EB /* MapboxMap.swift */,
 				423E4A152CFB48540024F2EB /* RadiusScrubber.swift */,
+				423E4A172CFE3DBC0024F2EB /* AppViewModel.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 				42D85C6D2C4E253D0001DF76 /* MapboxMaps */,
 				423E49FA2CF7729B0024F2EB /* KMPObservableViewModelCore */,
 				423E49FC2CF7729B0024F2EB /* KMPObservableViewModelSwiftUI */,
+				423E4A192CFE40580024F2EB /* KMPNativeCoroutinesCombine */,
 			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* Location Alarm.app */;
@@ -265,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				423E4A182CFE3DBC0024F2EB /* AppViewModel.swift in Sources */,
 				423E4A032CF93B540024F2EB /* Logger.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				423E4A122CFB31C60024F2EB /* CLLocationCoordinate2D_to_Location.swift in Sources */,
@@ -520,6 +527,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 423E49F92CF7729B0024F2EB /* XCRemoteSwiftPackageReference "KMP-ObservableViewModel" */;
 			productName = KMPObservableViewModelSwiftUI;
+		};
+		423E4A192CFE40580024F2EB /* KMPNativeCoroutinesCombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 423E4A062CFA16F90024F2EB /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */;
+			productName = KMPNativeCoroutinesCombine;
 		};
 		42D85C6D2C4E253D0001DF76 /* MapboxMaps */ = {
 			isa = XCSwiftPackageProductDependency;

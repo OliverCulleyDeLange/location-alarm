@@ -11,7 +11,7 @@ import model.domain.AppState
 import model.domain.Location
 import model.domain.PermissionState
 
-class AppViewModel : ViewModel() {
+open class AppViewModel : ViewModel() {
     private val _state = MutableStateFlow(viewModelScope, AppState())
 
     @NativeCoroutinesState
@@ -50,6 +50,15 @@ class AppViewModel : ViewModel() {
             it.copy(
                 mapInteracted = true,
                 geoFenceLocation = location
+            )
+        }
+    }
+
+    fun onToggleAlarm() {
+        _state.update {
+            it.copy(
+                alarmEnabled = !it.alarmEnabled,
+                mapInteracted = true, // So the geofence stops moving with the location updates
             )
         }
     }

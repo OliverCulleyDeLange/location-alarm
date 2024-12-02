@@ -11,21 +11,25 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
         VStack {
             Text("SwiftUI: \(Greeting().greet())")
             Text("Alarm: \(viewModel.state.alarmTriggered)")
-            ZStack {
+            ZStack(alignment: .trailing) {
                 MapboxMap(
                     geofenceLocation: viewModel.state.geoFenceLocation,
                     perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
                     onMapTap: {viewModel.onMapTap(location: $0)}
                 )
-                HStack {
+                    
+                RadiusScrubber(
+                    radiusMeters: viewModel.state.perimeterRadiusMeters,
+                    onRadiusChanged: { radius in
+                        viewModel.onRadiusChanged(radius: radius)
+                    }
+                )
+                VStack{
                     Spacer()
-                    RadiusScrubber(
-                        radiusMeters: viewModel.state.perimeterRadiusMeters,
-                        onRadiusChanged: { radius in
-                            viewModel.onRadiusChanged(radius: radius)
-                        }
-                    )
-                        .containerRelativeFrame(.horizontal, count: 5, span: 1, spacing: 0)
+                    Button(action: { viewModel.onToggleAlarm()}){
+                        Text(viewModel.alarmButtonText)
+                    }.buttonStyle(.borderedProminent)
+                        .padding(16)
                 }
             }
             .onAppear {
