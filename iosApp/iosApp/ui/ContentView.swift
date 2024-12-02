@@ -18,7 +18,7 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                 )
                 HStack {
                     Spacer()
-                    RadiusScroller(
+                    RadiusScrubber(
                         radiusMeters: viewModel.state.perimeterRadiusMeters,
                         onRadiusChanged: { radius in
                             viewModel.onRadiusChanged(radius: radius)
