@@ -2,11 +2,12 @@ package uk.co.oliverdelange.location_alarm
 
 import android.app.Application
 import di.sharedModule
-import logging.setupLogging
+import logging.setupSharedLogging
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
+import uk.co.oliverdelange.location_alarm.di.androidModule
 
 class MainApplication : Application() {
 
@@ -16,9 +17,10 @@ class MainApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(sharedModule)
+            modules(sharedModule + androidModule)
         }
-        setupLogging()
+        setupSharedLogging()
+        Timber.plant(Timber.DebugTree())
         Timber.d("Koin started")
     }
 }

@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
-import model.ui.AppViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.oliverdelange.location_alarm.screens.App
+import uk.co.oliverdelange.location_alarm.screens.AppViewModel
 
 class MainActivity : ComponentActivity(), PermissionsListener {
 

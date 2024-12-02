@@ -2,6 +2,6 @@ package logging
 
 import co.touchlab.kermit.Logger
 
-fun setupLogging() {
+fun setupSharedLogging() {
     Logger.setTag("OCD")
 }
