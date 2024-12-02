@@ -36,6 +36,7 @@ class AppViewModel : ViewModel() {
                     it.copy(geoFenceLocation = firstLocation)
                 }
             }
+            _state.update { it.copy(alarmTriggered = _state.value.shouldTriggerAlarm()) }
         } ?: Logger.w { "Location update contains no location" }
     }
 

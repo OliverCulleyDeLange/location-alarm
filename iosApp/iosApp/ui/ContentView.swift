@@ -10,6 +10,7 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
     var body: some View {
         VStack {
             Text("SwiftUI: \(Greeting().greet())")
+            Text("Alarm: \(viewModel.state.alarmTriggered)")
             ZStack {
                 MapboxMap(
                     geofenceLocation: viewModel.state.geoFenceLocation,
