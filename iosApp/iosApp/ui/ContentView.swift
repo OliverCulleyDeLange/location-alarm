@@ -11,13 +11,22 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
         VStack {
             Text("SwiftUI: \(Greeting().greet())")
             ZStack {
-                Text("\(viewModel.state.perimeterRadiusMeters)")
+                MapboxMap(
+                    geofenceLocation: viewModel.state.geoFenceLocation,
+                    perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
+                    onMapTap: {viewModel.onMapTap(location: $0)}
+                )
+                HStack {
+                    Spacer()
+                    RadiusScroller(
+                        radiusMeters: viewModel.state.perimeterRadiusMeters,
+                        onRadiusChanged: { radius in
+                            viewModel.onRadiusChanged(radius: radius)
+                        }
+                    )
+                        .containerRelativeFrame(.horizontal, count: 5, span: 1, spacing: 0)
+                }
             }
-            MapboxMap(
-                geofenceLocation: viewModel.state.geoFenceLocation,
-                perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
-                onMapTap: {viewModel.onMapTap(location: $0)}
-            )
             .onAppear {
                 logger.debug("Map did appear")
                 locationService.delegate = self

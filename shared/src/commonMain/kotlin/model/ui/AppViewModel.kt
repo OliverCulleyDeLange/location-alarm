@@ -39,6 +39,10 @@ class AppViewModel : ViewModel() {
         } ?: Logger.w { "Location update contains no location" }
     }
 
+    fun onRadiusChanged(radius: Int) {
+        _state.update { it.copy(perimeterRadiusMeters = radius) }
+    }
+
     fun onMapTap(location: Location) {
         Logger.d("Map tapped $location")
         _state.update {
