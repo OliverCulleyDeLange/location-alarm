@@ -17,13 +17,16 @@ data class AppState(
     // Whether the alarm has been triggered (the users location is within the geofence bounds)
     val alarmTriggered: Boolean = false,
 ) {
-    fun shouldTriggerAlarm(): Boolean {
-        if (!alarmEnabled) return false
+    fun shouldTriggerAlarm() = shouldTriggerAlarm(alarmEnabled, geoFenceLocation, usersLocation, perimeterRadiusMeters)
+}
 
-        return if (geoFenceLocation != null && usersLocation != null) {
-            val distance = geoFenceLocation.distanceTo(usersLocation)
-            Logger.d("Distance $distance, radius $perimeterRadiusMeters")
-            distance < perimeterRadiusMeters
-        } else false
-    }
+/** Determines whether the alarm should trigger based on the passed in values */
+fun shouldTriggerAlarm(alarmEnabled: Boolean, geoFenceLocation: Location?, usersLocation: Location?, perimeterRadiusMeters: Int): Boolean {
+    if (!alarmEnabled) return false
+
+    return if (geoFenceLocation != null && usersLocation != null) {
+        val distance = geoFenceLocation.distanceTo(usersLocation)
+        Logger.d("Distance $distance, radius $perimeterRadiusMeters")
+        distance < perimeterRadiusMeters
+    } else false
 }

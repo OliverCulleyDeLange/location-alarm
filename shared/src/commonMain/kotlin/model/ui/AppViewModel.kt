@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import model.domain.AppState
 import model.domain.Location
 import model.domain.PermissionState
+import model.domain.shouldTriggerAlarm
 
 open class AppViewModel : ViewModel() {
     private val _state = MutableStateFlow(viewModelScope, AppState())
@@ -41,7 +42,17 @@ open class AppViewModel : ViewModel() {
     }
 
     fun onRadiusChanged(radius: Int) {
-        _state.update { it.copy(perimeterRadiusMeters = radius) }
+        _state.update {
+            it.copy(
+                perimeterRadiusMeters = radius,
+                alarmTriggered = shouldTriggerAlarm(
+                    it.alarmEnabled,
+                    it.geoFenceLocation,
+                    it.usersLocation,
+                    radius
+                )
+            )
+        }
     }
 
     fun onMapTap(location: Location) {
@@ -49,15 +60,28 @@ open class AppViewModel : ViewModel() {
         _state.update {
             it.copy(
                 mapInteracted = true,
-                geoFenceLocation = location
+                geoFenceLocation = location,
+                alarmTriggered = shouldTriggerAlarm(
+                    it.alarmEnabled,
+                    location,
+                    it.usersLocation,
+                    it.perimeterRadiusMeters
+                )
             )
         }
     }
 
     fun onToggleAlarm() {
         _state.update {
+            val alarmEnabled = !it.alarmEnabled
             it.copy(
-                alarmEnabled = !it.alarmEnabled,
+                alarmEnabled = alarmEnabled,
+                alarmTriggered = shouldTriggerAlarm(
+                    alarmEnabled,
+                    it.geoFenceLocation,
+                    it.usersLocation,
+                    it.perimeterRadiusMeters
+                ),
                 mapInteracted = true, // So the geofence stops moving with the location updates
             )
         }
