@@ -1,4 +1,4 @@
-package uk.co.oliverdelange.location_alarm.screens
+package uk.co.oliverdelange.location_alarm.screens.map
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

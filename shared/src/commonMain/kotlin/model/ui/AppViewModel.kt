@@ -42,14 +42,15 @@ open class AppViewModel : ViewModel() {
     }
 
     fun onRadiusChanged(radius: Int) {
+        val newRadius = radius.coerceAtLeast(10)
         _state.update {
             it.copy(
-                perimeterRadiusMeters = radius,
+                perimeterRadiusMeters = newRadius,
                 alarmTriggered = shouldTriggerAlarm(
                     it.alarmEnabled,
                     it.geoFenceLocation,
                     it.usersLocation,
-                    radius
+                    newRadius
                 )
             )
         }
