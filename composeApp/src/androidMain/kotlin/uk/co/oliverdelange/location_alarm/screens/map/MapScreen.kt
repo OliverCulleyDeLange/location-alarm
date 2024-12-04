@@ -1,14 +1,19 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,17 +47,32 @@ fun MapScreen(
             radius = state.perimeterRadiusMeters,
             onRadiusChange = onRadiusChange
         )
-        Button(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(24.dp),
-            onClick = onToggleAlarm,
-            elevation = ButtonDefaults.elevatedButtonElevation()
+        Column(
+            Modifier.align(Alignment.BottomEnd),
+            horizontalAlignment = Alignment.End
         ) {
-            Text(
-                text = alarmButtonText.uppercase(),
-                fontSize = 24.sp,
-            )
+            Column(
+                Modifier
+                    .padding(horizontal = 24.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .padding(8.dp)
+            ) {
+                Text("${state.distanceToGeofence}m -> Destination", color = MaterialTheme.colorScheme.secondary)
+                Text("${state.distanceToGeofencePerimeter}m -> Alarm", color = MaterialTheme.colorScheme.secondary)
+            }
+            Button(
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 24.dp, top = 8.dp),
+                onClick = onToggleAlarm,
+                elevation = ButtonDefaults.elevatedButtonElevation()
+            ) {
+                Text(
+                    text = alarmButtonText.uppercase(),
+                    fontSize = 24.sp,
+                )
+            }
         }
     }
 }

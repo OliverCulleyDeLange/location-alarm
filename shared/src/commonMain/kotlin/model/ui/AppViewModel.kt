@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import model.domain.AppState
 import model.domain.Location
 import model.domain.PermissionState
-import model.domain.shouldTriggerAlarm
+import kotlin.math.roundToInt
 
 open class AppViewModel : ViewModel() {
     protected val _state = MutableStateFlow(viewModelScope, AppState())
@@ -46,52 +46,56 @@ open class AppViewModel : ViewModel() {
                     it.copy(geoFenceLocation = firstLocation)
                 }
             }
-            _state.update { it.copy(alarmTriggered = _state.value.shouldTriggerAlarm()) }
+            _state.update { state ->
+                state.copy(
+                    distanceToGeofence = getDistanceToGeofence(state.usersLocation, state.geoFenceLocation),
+                    distanceToGeofencePerimeter = getDistanceToGeofencePerimeter(
+                        state.usersLocation,
+                        state.geoFenceLocation,
+                        state.perimeterRadiusMeters
+                    )
+                )
+            }
         } ?: Logger.w { "Location update contains no location" }
     }
 
     fun onRadiusChanged(radius: Int) {
         val newRadius = radius.coerceAtLeast(10)
-        _state.update {
-            it.copy(
+        _state.update { state ->
+            state.copy(
                 perimeterRadiusMeters = newRadius,
-                alarmTriggered = shouldTriggerAlarm(
-                    it.alarmEnabled,
-                    it.geoFenceLocation,
-                    it.usersLocation,
-                    newRadius
-                )
+                distanceToGeofencePerimeter = getDistanceToGeofencePerimeter(state.usersLocation, state.geoFenceLocation, newRadius)
             )
         }
     }
 
-    fun onMapTap(location: Location) {
-        Logger.d("Map tapped $location")
-        _state.update {
-            it.copy(
+    fun onMapTap(newGeofenceLocation: Location) {
+        Logger.d("Map tapped $newGeofenceLocation")
+        _state.update { state ->
+            state.copy(
                 mapInteracted = true,
-                geoFenceLocation = location,
-                alarmTriggered = shouldTriggerAlarm(
-                    it.alarmEnabled,
-                    location,
-                    it.usersLocation,
-                    it.perimeterRadiusMeters
-                )
+                geoFenceLocation = newGeofenceLocation,
+                distanceToGeofence = getDistanceToGeofence(state.usersLocation, newGeofenceLocation),
+                distanceToGeofencePerimeter = getDistanceToGeofencePerimeter(state.usersLocation, newGeofenceLocation, state.perimeterRadiusMeters)
             )
         }
+    }
+
+    private fun getDistanceToGeofence(usersLocation: Location?, geofenceLocation: Location?): Int? {
+        return if (usersLocation != null && geofenceLocation != null) {
+            geofenceLocation.distanceTo(usersLocation).roundToInt()
+        } else null
+    }
+
+    private fun getDistanceToGeofencePerimeter(usersLocation: Location?, geofenceLocation: Location?, perimeterRadiusMeters: Int): Int? {
+        return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
     }
 
     open fun onToggleAlarm() {
-        _state.update {
-            val alarmEnabled = !it.alarmEnabled
-            it.copy(
+        _state.update { state ->
+            val alarmEnabled = !state.alarmEnabled
+            state.copy(
                 alarmEnabled = alarmEnabled,
-                alarmTriggered = shouldTriggerAlarm(
-                    alarmEnabled,
-                    it.geoFenceLocation,
-                    it.usersLocation,
-                    it.perimeterRadiusMeters
-                ),
                 mapInteracted = true, // So the geofence stops moving with the location updates
             )
         }

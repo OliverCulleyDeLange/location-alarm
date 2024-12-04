@@ -5,6 +5,8 @@ Also an excude to learn multiplatform app development with KMM
 
 Cool things i wanna do eventually, maybe:
 
+- Vibration
+- Alarm config (sound, vibration pattern)
 - Sexy animations
 - Recent geofences
 - Favourite geofences
