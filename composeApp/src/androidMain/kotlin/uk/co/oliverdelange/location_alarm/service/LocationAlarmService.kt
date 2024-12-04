@@ -12,14 +12,25 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.notifications.NOTIFICATION_CHANNEL_ID_MAIN
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
+import uk.co.oliverdelange.location_alarm.screens.AppViewModel
 
 class LocationAlarmService : Service() {
     private val notificationId = 60494
-    private lateinit var alarmPlayer: MediaPlayer
+    private var alarmPlayer: MediaPlayer? = null
+    private val viewModel: AppViewModel = get()
+
+    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onBind(intent: Intent?): IBinder? {
         return null // We're not allowing binding
@@ -27,7 +38,6 @@ class LocationAlarmService : Service() {
 
     override fun onCreate() {
         Timber.d("LocationAlarmService onCreate")
-        super.onCreate()
         val alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             ?: Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
@@ -43,8 +53,12 @@ class LocationAlarmService : Service() {
             setAudioAttributes(alarmAudioAttributes)
             isLooping = true
             prepare()
+            setOnErrorListener { mp, what, extra ->
+                Timber.e("Media player occurred: what=$what, extra=$extra")
+                true
+            }
         }
-        alarmPlayer.start()
+        super.onCreate()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -63,13 +77,36 @@ class LocationAlarmService : Service() {
             notification,
             FOREGROUND_SERVICE_TYPE_LOCATION
         )
+
+        serviceScope.launch {
+            viewModel.state.map { it.alarmTriggered }.distinctUntilChanged().collect { alarmTriggered ->
+                if (alarmTriggered) {
+                    Timber.d("Triggering alarm sound")
+                    alarmPlayer?.let {
+                        if (!it.isPlaying) it.start()
+                    } ?: Timber.e("Alarm player is null")
+                } else {
+                    Timber.d("Stopping alarm sound")
+                    alarmPlayer?.let {
+                        if (it.isPlaying) {
+                            it.stop()
+                            it.prepare()
+                        }
+                    } ?: Timber.e("Alarm player is null")
+                }
+            }
+        }
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
-        if (alarmPlayer.isPlaying) {
-            alarmPlayer.stop()
+        alarmPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+                it.release()
+            }
         }
+        alarmPlayer = null
         Timber.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }
