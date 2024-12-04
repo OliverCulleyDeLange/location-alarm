@@ -10,6 +10,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapEffect
+import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.rememberMapState
 import com.mapbox.maps.extension.style.layers.generated.fillLayer
@@ -52,7 +53,7 @@ fun MapboxMap(
             bearing(0.0)
         }
     }
-    com.mapbox.maps.extension.compose.MapboxMap(
+    MapboxMap(
         Modifier.fillMaxSize(),
         mapViewportState = mapViewportState,
         mapState = mapState,
@@ -61,7 +62,6 @@ fun MapboxMap(
             true
         },
     ) {
-        Timber.w("OCD Map Init")
         val color = colorResource(R.color.geofenceBorder)
         MapEffect(Unit) { mapView ->
             mapView.mapboxMap.loadStyle(
@@ -77,7 +77,6 @@ fun MapboxMap(
                     }
                 }
             ) { style ->
-                Timber.d("Updating style after initialisation")
                 updateGeofence(style, geoFenceLocation, perimeterRadiusMeters)
             }
         }
@@ -102,7 +101,7 @@ fun MapboxMap(
                 }
             }
         }
-        MapEffect(geoFenceLocation) { mapView ->
+        MapEffect(geoFenceLocation, perimeterRadiusMeters) { mapView ->
             mapView.mapboxMap.style?.let {
                 updateGeofence(it, geoFenceLocation, perimeterRadiusMeters)
             } ?: Timber.w("Couldn't get mapbox style")
