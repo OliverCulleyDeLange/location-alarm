@@ -26,7 +26,7 @@ fun shouldTriggerAlarm(alarmEnabled: Boolean, geoFenceLocation: Location?, users
 
     return if (geoFenceLocation != null && usersLocation != null) {
         val distance = geoFenceLocation.distanceTo(usersLocation)
-        Logger.d("Distance $distance, radius $perimeterRadiusMeters")
+        Logger.v("Distance $distance, radius $perimeterRadiusMeters")
         distance < perimeterRadiusMeters
     } else false
 }

@@ -45,14 +45,7 @@ fun MapboxMap(
     onLocationUpdate: (List<Location>) -> Unit,
 ) {
     val mapState = rememberMapState()
-    val mapViewportState = rememberMapViewportState {
-        setCameraOptions {
-            zoom(2.0)
-            center(Point.fromLngLat(-98.0, 39.5))
-            pitch(0.0)
-            bearing(0.0)
-        }
-    }
+    val mapViewportState = rememberMapViewportState {}
     MapboxMap(
         Modifier.fillMaxSize(),
         mapViewportState = mapViewportState,
