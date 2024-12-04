@@ -62,9 +62,7 @@ fun RadiusScrubber(radius: Int, modifier: Modifier = Modifier, onRadiusChange: (
         Column(
             modifier = Modifier
                 .draggable(dragState, Orientation.Vertical)
-                .clickable {
-                    radiusHelpAnimationKey++
-                }
+                .clickable { radiusHelpAnimationKey++ }
                 .clip(RoundedCornerShape(8.dp))
                 .background(MaterialTheme.colorScheme.primaryContainer)
                 .padding(4.dp),
