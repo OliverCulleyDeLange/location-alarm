@@ -1,5 +1,6 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -23,10 +24,12 @@ fun MapScreen(
     onRadiusChange: (Int) -> Unit,
 ) {
     Box {
+        val darkMode = isSystemInDarkTheme()
         MapboxMap(
             state.perimeterRadiusMeters,
             state.geoFenceLocation,
             state.locationPermissionState.granted(),
+            darkMode,
             onLocationUpdate = onLocationUpdate,
             onMapTap = onMapTap,
         )

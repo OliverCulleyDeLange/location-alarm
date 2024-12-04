@@ -1,10 +1,10 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.res.colorResource
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
@@ -30,7 +30,6 @@ import mapbox.MapboxIDs.SOURCE_GEOFENCE
 import model.domain.Location
 import timber.log.Timber
 import toLocation
-import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.location.MapboxLocationConsumer
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
@@ -41,6 +40,7 @@ fun MapboxMap(
     perimeterRadiusMeters: Int,
     geoFenceLocation: Location?,
     locationPermissionStateGranted: Boolean,
+    darkMap: Boolean,
     onMapTap: (Location) -> Unit,
     onLocationUpdate: (List<Location>) -> Unit,
 ) {
@@ -62,10 +62,10 @@ fun MapboxMap(
             true
         },
     ) {
-        val color = colorResource(R.color.geofenceBorder)
-        MapEffect(Unit) { mapView ->
+        val color = MaterialTheme.colorScheme.primary
+        MapEffect(darkMap) { mapView ->
             mapView.mapboxMap.loadStyle(
-                style(style = Style.LIGHT) {
+                style(style = if (darkMap) Style.DARK else Style.LIGHT) {
                     +geoJsonSource(id = SOURCE_GEOFENCE)
                     +fillLayer(layerId = MapboxIDs.LAYER_GEOFENCE_FILL, sourceId = SOURCE_GEOFENCE) {
                         fillColor(color.toArgb())
