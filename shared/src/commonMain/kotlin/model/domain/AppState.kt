@@ -12,7 +12,7 @@ data class AppState(
     // Flag to say whether user has manually interacted with the mao.
     val mapInteracted: Boolean = false,
     // Geofence radius in meters
-    val perimeterRadiusMeters: Int = 500,
+    val perimeterRadiusMeters: Int = 200,
     // Whether the user has enabled the alarm
     val alarmEnabled: Boolean = false,
     // Whether the alarm has been triggered (the users location is within the geofence bounds)

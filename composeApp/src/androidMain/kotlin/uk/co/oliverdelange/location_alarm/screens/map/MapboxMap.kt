@@ -44,7 +44,7 @@ fun MapboxMap(
     onMapTap: (Location) -> Unit,
     onLocationUpdate: (List<Location>) -> Unit,
 ) {
-    val mapState = rememberMapState()
+    val mapState = rememberMapState {}
     val mapViewportState = rememberMapViewportState {}
     MapboxMap(
         Modifier.fillMaxSize(),
@@ -54,6 +54,7 @@ fun MapboxMap(
             onMapTap(point.toLocation())
             true
         },
+        scaleBar = {}
     ) {
         val color = MaterialTheme.colorScheme.primary
         MapEffect(darkMap) { mapView ->
@@ -106,10 +107,10 @@ private fun updateGeofence(style: Style, location: Location?, perimeterRadiusMet
     location?.toPoint()?.let {
         val geofenceFeature = buildGeofenceFeature(it, perimeterRadiusMeters)
         style.getSourceAs<GeoJsonSource>(SOURCE_GEOFENCE)?.let {
-            Timber.d("Updating geofence feature")
+            Timber.v("Updating geofence feature")
             it.removeGeoJSONSourceFeatures(listOf(FEATURE_GEOFENCE))
             it.addGeoJSONSourceFeatures(listOf(geofenceFeature))
-            Timber.d("Updated geofence feature")
+            Timber.v("Updated geofence feature")
         } ?: Timber.w("geofence source doesn't exist!")
     } ?: Timber.d("Not updating geofence as no user location available")
 }
