@@ -6,6 +6,8 @@ Also an excude to learn multiplatform app development with KMM
 Cool things i wanna do eventually, maybe:
 
 - Vibration
+- Code quality
+- CI / CD
 - Alarm config (sound, vibration pattern)
 - Sexy animations
 - Recent geofences

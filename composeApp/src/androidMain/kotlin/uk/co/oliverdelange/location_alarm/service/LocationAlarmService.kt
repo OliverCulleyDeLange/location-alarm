@@ -13,6 +13,8 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.IBinder
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +30,7 @@ import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.notifications.NOTIFICATION_CHANNEL_ID_MAIN
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
 import uk.co.oliverdelange.location_alarm.screens.AppViewModel
+import uk.co.oliverdelange.location_alarm.ui.theme.errorLight
 
 class LocationAlarmService : Service() {
     private val notificationId = 60494
@@ -67,11 +70,13 @@ class LocationAlarmService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.d("LocationAlarmService onStartCommand")
         createAlarmNotificationChannel(this)
-        val distanceToGeofencePerimeter = viewModel.state.value.distanceToGeofencePerimeter
         ServiceCompat.startForeground(
             this,
             notificationId,
-            buildAlarmNotification(distanceToGeofencePerimeter),
+            buildAlarmNotification(
+                viewModel.state.value.distanceToGeofencePerimeter,
+                viewModel.state.value.alarmTriggered
+            ),
             FOREGROUND_SERVICE_TYPE_LOCATION
         )
 
@@ -95,14 +100,17 @@ class LocationAlarmService : Service() {
         }
 
         serviceScope.launch {
-            viewModel.state.map { it.distanceToGeofencePerimeter }.distinctUntilChanged().collect { distanceToGeofencePerimeter ->
-                distanceToGeofencePerimeter?.let {
-                    if (checkPermission()) {
-                        val notificationManager = NotificationManagerCompat.from(this@LocationAlarmService)
-                        notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter))
+            viewModel.state
+                .map { it.distanceToGeofencePerimeter to it.alarmTriggered }
+                .distinctUntilChanged()
+                .collect { (distanceToGeofencePerimeter, alarmTriggered) ->
+                    distanceToGeofencePerimeter?.let {
+                        if (checkPermission()) {
+                            val notificationManager = NotificationManagerCompat.from(this@LocationAlarmService)
+                            notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
+                        }
                     }
                 }
-            }
         }
         return super.onStartCommand(intent, flags, startId)
     }
@@ -122,15 +130,28 @@ class LocationAlarmService : Service() {
         super.onDestroy()
     }
 
-    private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?) =
-        buildNotification("Location Alarm Active", "Alarm will sound in ${distanceToGeofencePerimeter}m")
+    private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?, alarmTriggered: Boolean): Notification {
+        val subtitle = when {
+            alarmTriggered -> "You have reached your destination"
+            else -> "Alarm will sound in ${distanceToGeofencePerimeter}m"
+        }
+        return buildNotification("Location Alarm Active", subtitle, alarmTriggered)
+    }
 
-    private fun buildNotification(title: String, subtitle: String) = Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
+    private fun buildNotification(title: String, subtitle: String, alarmTriggered: Boolean) = Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
         .setSmallIcon(R.drawable.ic_notification_icon)
         .setContentTitle(title)
         .setContentText(subtitle)
         .setOngoing(true) // User can't dismiss notification
         .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
         .setOnlyAlertOnce(true)
+        .setCategory(NotificationCompat.CATEGORY_ALARM)
+        .setPriority(Notification.PRIORITY_HIGH)
+        .run {
+            if (alarmTriggered) {
+                setColor(errorLight.toArgb())
+                    .setColorized(true)
+            } else this
+        }
         .build()
 }
