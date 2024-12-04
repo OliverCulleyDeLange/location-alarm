@@ -3,6 +3,7 @@ package model.domain
 import co.touchlab.kermit.Logger
 
 data class AppState(
+    val notificationPermissionState: PermissionState = PermissionState.Unknown,
     val locationPermissionState: PermissionState = PermissionState.Unknown,
     // Most up to date user location - may be used fort the geofence if they haven't manually moved it
     val usersLocation: Location? = null,

@@ -29,8 +29,8 @@ class LocationAlarmService : Service() {
         createAlarmNotificationChannel(this)
         val notification = Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
             .setSmallIcon(R.drawable.ic_notification_icon) // Replace with your icon
-            .setContentTitle("Foreground Service")
-            .setContentText("The service is running")
+            .setContentTitle("Location Alarm Active")
+            .setContentText("Alarm will sound near your destination")
             .setOngoing(true) // User can't dismiss notification
             .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
             .build()

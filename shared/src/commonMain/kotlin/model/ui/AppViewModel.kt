@@ -19,10 +19,19 @@ open class AppViewModel : ViewModel() {
     val state: StateFlow<AppState> = _state.asStateFlow()
 
     fun onLocationPermissionResult(granted: Boolean) {
-        Logger.d { "location permission granted: $granted" }
+        Logger.d { "Location permission granted: $granted" }
         _state.update { current ->
             current.copy(
                 locationPermissionState = if (granted) PermissionState.Granted else PermissionState.Denied
+            )
+        }
+    }
+
+    fun onNotificationPermissionResult(granted: Boolean) {
+        Logger.d { "Notification permission granted: $granted" }
+        _state.update { current ->
+            current.copy(
+                notificationPermissionState = if (granted) PermissionState.Granted else PermissionState.Denied
             )
         }
     }
