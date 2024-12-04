@@ -1,20 +1,24 @@
 package uk.co.oliverdelange.location_alarm.service
 
+import android.Manifest
 import android.app.Notification
 import android.app.Notification.FOREGROUND_SERVICE_IMMEDIATE
 import android.app.Service
 import android.content.ContentResolver
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.IBinder
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -29,7 +33,6 @@ class LocationAlarmService : Service() {
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
     private val viewModel: AppViewModel = get()
-
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -64,17 +67,11 @@ class LocationAlarmService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.d("LocationAlarmService onStartCommand")
         createAlarmNotificationChannel(this)
-        val notification = Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
-            .setSmallIcon(R.drawable.ic_notification_icon)
-            .setContentTitle("Location Alarm Active")
-            .setContentText("Alarm will sound near your destination")
-            .setOngoing(true) // User can't dismiss notification
-            .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
-            .build()
+        val distanceToGeofencePerimeter = viewModel.state.value.distanceToGeofencePerimeter
         ServiceCompat.startForeground(
             this,
             notificationId,
-            notification,
+            buildAlarmNotification(distanceToGeofencePerimeter),
             FOREGROUND_SERVICE_TYPE_LOCATION
         )
 
@@ -96,8 +93,21 @@ class LocationAlarmService : Service() {
                 }
             }
         }
+
+        serviceScope.launch {
+            viewModel.state.map { it.distanceToGeofencePerimeter }.distinctUntilChanged().collect { distanceToGeofencePerimeter ->
+                distanceToGeofencePerimeter?.let {
+                    if (checkPermission()) {
+                        val notificationManager = NotificationManagerCompat.from(this@LocationAlarmService)
+                        notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter))
+                    }
+                }
+            }
+        }
         return super.onStartCommand(intent, flags, startId)
     }
+
+    private fun checkPermission() = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
 
     override fun onDestroy() {
         alarmPlayer?.let {
@@ -107,7 +117,20 @@ class LocationAlarmService : Service() {
             }
         }
         alarmPlayer = null
+        serviceScope.cancel()
         Timber.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }
+
+    private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?) =
+        buildNotification("Location Alarm Active", "Alarm will sound in ${distanceToGeofencePerimeter}m")
+
+    private fun buildNotification(title: String, subtitle: String) = Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
+        .setSmallIcon(R.drawable.ic_notification_icon)
+        .setContentTitle(title)
+        .setContentText(subtitle)
+        .setOngoing(true) // User can't dismiss notification
+        .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
+        .setOnlyAlertOnce(true)
+        .build()
 }
