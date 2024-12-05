@@ -27,7 +27,7 @@ import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.haptics.Vibrator
 import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
-import uk.co.oliverdelange.location_alarm.screens.AppViewModel
+import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 
 class LocationAlarmService : Service() {
     companion object {
@@ -36,7 +36,7 @@ class LocationAlarmService : Service() {
 
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
-    private val viewModel: AppViewModel = get()
+    private val viewModel: MapUiViewModel = get()
     private val vibrator: Vibrator = get()
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 

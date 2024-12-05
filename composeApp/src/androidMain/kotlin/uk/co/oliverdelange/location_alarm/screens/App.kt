@@ -26,6 +26,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
+import model.ui.MapUiState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import uk.co.oliverdelange.location_alarm.screens.map.MapScreen
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
@@ -33,9 +34,9 @@ import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 @Preview
-fun App(viewmodel: AppViewModel = viewModel()) {
+fun App(viewmodel: MapUiViewModel = viewModel()) {
     val state by viewmodel.state.collectAsStateWithLifecycle()
-    val alarmButtonText by viewmodel.toggleAlarmButtonText.collectAsStateWithLifecycle("")
+    val uiState by viewmodel.uiState.collectAsStateWithLifecycle(MapUiState())
 
     val notificationPermissionState = rememberPermissionState(POST_NOTIFICATIONS)
     val locationPermissionState = rememberMultiplePermissionsState(listOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION))
@@ -57,7 +58,7 @@ fun App(viewmodel: AppViewModel = viewModel()) {
             if (locationPermissionState.allPermissionsGranted) {
                 MapScreen(
                     state,
-                    alarmButtonText,
+                    uiState.toggleAlarmButtonText,
                     onLocationUpdate = { locations -> viewmodel.onLocationChange(locations) },
                     onMapTap = { location -> viewmodel.onMapTap(location) },
                     onToggleAlarm = {

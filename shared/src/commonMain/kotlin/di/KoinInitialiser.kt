@@ -1,6 +1,6 @@
 package di
 
-import model.ui.AppViewModel
+import model.domain.AppViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module

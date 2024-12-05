@@ -1,4 +1,4 @@
-package model.ui
+package model.domain
 
 import co.touchlab.kermit.Logger
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
@@ -7,16 +7,13 @@ import com.rickclephas.kmp.observableviewmodel.ViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import model.domain.AppState
-import model.domain.Location
-import model.domain.PermissionState
 import kotlin.math.roundToInt
 
 open class AppViewModel : ViewModel() {
-    protected val _state = MutableStateFlow(viewModelScope, AppState())
+    private val _state = MutableStateFlow(viewModelScope, MapFeatureState())
 
     @NativeCoroutinesState
-    val state: StateFlow<AppState> = _state.asStateFlow()
+    val state: StateFlow<MapFeatureState> = _state.asStateFlow()
 
     fun onLocationPermissionResult(granted: Boolean) {
         Logger.d { "Location permission granted: $granted" }
@@ -91,16 +88,6 @@ open class AppViewModel : ViewModel() {
         }
     }
 
-    private fun getDistanceToGeofence(usersLocation: Location?, geofenceLocation: Location?): Int? {
-        return if (usersLocation != null && geofenceLocation != null) {
-            geofenceLocation.distanceTo(usersLocation).roundToInt()
-        } else null
-    }
-
-    private fun getDistanceToGeofencePerimeter(usersLocation: Location?, geofenceLocation: Location?, perimeterRadiusMeters: Int): Int? {
-        return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
-    }
-
     /** Check notification permissions and enable if granted
      * Otherwise, request notification permissions */
     fun onToggleAlarm() {
@@ -124,5 +111,15 @@ open class AppViewModel : ViewModel() {
                 userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable
             )
         }
+    }
+
+    private fun getDistanceToGeofence(usersLocation: Location?, geofenceLocation: Location?): Int? {
+        return if (usersLocation != null && geofenceLocation != null) {
+            geofenceLocation.distanceTo(usersLocation).roundToInt()
+        } else null
+    }
+
+    private fun getDistanceToGeofencePerimeter(usersLocation: Location?, geofenceLocation: Location?, perimeterRadiusMeters: Int): Int? {
+        return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
     }
 }

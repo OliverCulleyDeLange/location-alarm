@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.oliverdelange.location_alarm.screens.App
-import uk.co.oliverdelange.location_alarm.screens.AppViewModel
+import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val appViewModel: AppViewModel by viewModel()
+    private val appViewModel: MapUiViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()

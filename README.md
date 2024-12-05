@@ -3,11 +3,30 @@
 An app that sounds an alarm when you enter a geofence.
 Also an excuse to learn multiplatform app development with KMM
 
+MVP:
+
+- Android Only
+  - Unit Tests & refactoring
+  - UI Tests?
+- IOS
+  - Theming (light dark mode)
+  - Location when backgrounded
+  - Alarm sound and vibration handling
+  - Sticky notification on lock screen with distance to alarm
+    - Red when alarm going off
+    - Stop alarm action
+    - Open app on tap
+  - Full screen UI
+  - Alarm alert UI
+  - Radius scrubber animation
+  - Vibration
+  - Fly to location button
+  - Set initial location follow zoom
+  - Permissions requests only when nessecary
+
 Cool things i wanna do eventually, maybe:
 
-- Sexy animations (ios)
-- Vibration (ios)
-
+- IOS Lock screen widget
 - Code quality
 - CI / CD
 - Bug & crash reporting

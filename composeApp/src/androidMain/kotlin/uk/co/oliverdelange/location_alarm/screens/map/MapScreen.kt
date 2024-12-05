@@ -28,8 +28,8 @@ import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
 import mapbox.MapboxIDs
-import model.domain.AppState
 import model.domain.Location
+import model.domain.MapFeatureState
 import model.domain.granted
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
@@ -37,7 +37,7 @@ import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 @OptIn(MapboxExperimental::class)
 @Composable
 fun MapScreen(
-    state: AppState,
+    state: MapFeatureState,
     alarmButtonText: String,
     onMapTap: (Location) -> Unit,
     onLocationUpdate: (List<Location>) -> Unit,
@@ -121,4 +121,4 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(AppState(), "Enable Alarm", {}, {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {})
