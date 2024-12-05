@@ -40,9 +40,7 @@ fun MapboxMap(
     onLocationUpdate: (List<Location>) -> Unit,
     geofenceSourceState: GeoJsonSourceState,
 ) {
-    val mapState = rememberMapState {
-
-    }
+    val mapState = rememberMapState {}
     val mapViewportState = rememberMapViewportState {}
     MapboxMap(
         Modifier.fillMaxSize(),

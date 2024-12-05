@@ -2,8 +2,6 @@ package uk.co.oliverdelange.location_alarm.service
 
 import android.Manifest
 import android.app.Notification
-import android.app.Notification.FOREGROUND_SERVICE_IMMEDIATE
-import android.app.PendingIntent
 import android.app.Service
 import android.content.ContentResolver
 import android.content.Intent
@@ -14,8 +12,6 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.IBinder
-import androidx.compose.ui.graphics.toArgb
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import kotlinx.coroutines.CoroutineScope
@@ -28,22 +24,19 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
-import uk.co.oliverdelange.location_alarm.notifications.NOTIFICATION_CHANNEL_ID_MAIN
+import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
 import uk.co.oliverdelange.location_alarm.screens.AppViewModel
-import uk.co.oliverdelange.location_alarm.ui.theme.errorLight
 
 class LocationAlarmService : Service() {
-    val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
+    companion object {
+        val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
+    }
 
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
     private val viewModel: AppViewModel = get()
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    override fun onBind(intent: Intent?): IBinder? {
-        return null // We're not allowing binding
-    }
 
     override fun onCreate() {
         Timber.d("LocationAlarmService onCreate")
@@ -76,8 +69,20 @@ class LocationAlarmService : Service() {
             ACTION_STOP_AND_CANCEL_ALARM -> {
                 viewModel.onSetAlarm(false)
             }
+
+            else -> setupAlarm()
         }
 
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    /** Handles alarm notification and sound
+     * - Ensures notification channel exists
+     * - Makes this service a foreground service
+     * - Listens for state updates to trigger alarm sound
+     * - Updates notification based on new distance values and alarm triggered state
+     * */
+    private fun setupAlarm() {
         createAlarmNotificationChannel(this)
         ServiceCompat.startForeground(
             this,
@@ -121,10 +126,7 @@ class LocationAlarmService : Service() {
                     }
                 }
         }
-        return super.onStartCommand(intent, flags, startId)
     }
-
-    private fun checkPermission() = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
 
     override fun onDestroy() {
         alarmPlayer?.let {
@@ -140,39 +142,17 @@ class LocationAlarmService : Service() {
         super.onDestroy()
     }
 
+    override fun onBind(intent: Intent?): IBinder? {
+        return null // We're not allowing binding
+    }
+
+    private fun checkPermission() = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+
     private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?, alarmTriggered: Boolean): Notification {
         val subtitle = when {
             alarmTriggered -> "You have reached your destination"
             else -> "Alarm will sound in ${distanceToGeofencePerimeter}m"
         }
-        return buildNotification("Location Alarm Active", subtitle, alarmTriggered)
-    }
-
-    private fun buildNotification(title: String, subtitle: String, alarmTriggered: Boolean): Notification {
-        return Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
-            .setSmallIcon(R.drawable.ic_notification_icon)
-            .setContentTitle(title)
-            .setContentText(subtitle)
-            .setOngoing(true) // User can't dismiss notification
-            .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
-            .setOnlyAlertOnce(true)
-            .setCategory(NotificationCompat.CATEGORY_ALARM)
-            .setPriority(Notification.PRIORITY_HIGH)
-            .run {
-                if (alarmTriggered) {
-                    val stopAlarmIntent = PendingIntent.getForegroundService(
-                        applicationContext,
-                        0,
-                        Intent(applicationContext, LocationAlarmService::class.java).apply {
-                            action = ACTION_STOP_AND_CANCEL_ALARM
-                        },
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
-                    addAction(Notification.Action.Builder(android.R.drawable.ic_media_pause, "Stop", stopAlarmIntent).build())
-                        .setColor(errorLight.toArgb())
-                        .setColorized(true)
-                } else this
-            }
-            .build()
+        return buildAlarmNotification(applicationContext, "Location Alarm Active", subtitle, alarmTriggered)
     }
 }
