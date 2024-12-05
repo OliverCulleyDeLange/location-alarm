@@ -91,12 +91,16 @@ open class AppViewModel : ViewModel() {
         return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
     }
 
-    open fun onToggleAlarm() {
+    fun onToggleAlarm() {
+        val alarmEnabled = !state.value.alarmEnabled
+        onSetAlarm(alarmEnabled)
+    }
+
+    open fun onSetAlarm(enabled: Boolean) {
         _state.update { state ->
-            val alarmEnabled = !state.alarmEnabled
             state.copy(
-                alarmEnabled = alarmEnabled,
-                mapInteracted = true, // So the geofence stops moving with the location updates
+                alarmEnabled = enabled,
+                mapInteracted = true,
             )
         }
     }

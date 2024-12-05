@@ -3,6 +3,7 @@ package uk.co.oliverdelange.location_alarm.service
 import android.Manifest
 import android.app.Notification
 import android.app.Notification.FOREGROUND_SERVICE_IMMEDIATE
+import android.app.PendingIntent
 import android.app.Service
 import android.content.ContentResolver
 import android.content.Intent
@@ -33,6 +34,8 @@ import uk.co.oliverdelange.location_alarm.screens.AppViewModel
 import uk.co.oliverdelange.location_alarm.ui.theme.errorLight
 
 class LocationAlarmService : Service() {
+    val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
+
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
     private val viewModel: AppViewModel = get()
@@ -69,6 +72,12 @@ class LocationAlarmService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.d("LocationAlarmService onStartCommand")
+        when (intent?.action) {
+            ACTION_STOP_AND_CANCEL_ALARM -> {
+                viewModel.onSetAlarm(false)
+            }
+        }
+
         createAlarmNotificationChannel(this)
         ServiceCompat.startForeground(
             this,
@@ -126,6 +135,7 @@ class LocationAlarmService : Service() {
         }
         alarmPlayer = null
         serviceScope.cancel()
+        NotificationManagerCompat.from(this).cancel(notificationId)
         Timber.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }
@@ -138,20 +148,31 @@ class LocationAlarmService : Service() {
         return buildNotification("Location Alarm Active", subtitle, alarmTriggered)
     }
 
-    private fun buildNotification(title: String, subtitle: String, alarmTriggered: Boolean) = Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
-        .setSmallIcon(R.drawable.ic_notification_icon)
-        .setContentTitle(title)
-        .setContentText(subtitle)
-        .setOngoing(true) // User can't dismiss notification
-        .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
-        .setOnlyAlertOnce(true)
-        .setCategory(NotificationCompat.CATEGORY_ALARM)
-        .setPriority(Notification.PRIORITY_HIGH)
-        .run {
-            if (alarmTriggered) {
-                setColor(errorLight.toArgb())
-                    .setColorized(true)
-            } else this
-        }
-        .build()
+    private fun buildNotification(title: String, subtitle: String, alarmTriggered: Boolean): Notification {
+        return Notification.Builder(this, NOTIFICATION_CHANNEL_ID_MAIN)
+            .setSmallIcon(R.drawable.ic_notification_icon)
+            .setContentTitle(title)
+            .setContentText(subtitle)
+            .setOngoing(true) // User can't dismiss notification
+            .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
+            .setOnlyAlertOnce(true)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setPriority(Notification.PRIORITY_HIGH)
+            .run {
+                if (alarmTriggered) {
+                    val stopAlarmIntent = PendingIntent.getForegroundService(
+                        applicationContext,
+                        0,
+                        Intent(applicationContext, LocationAlarmService::class.java).apply {
+                            action = ACTION_STOP_AND_CANCEL_ALARM
+                        },
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    addAction(Notification.Action.Builder(android.R.drawable.ic_media_pause, "Stop", stopAlarmIntent).build())
+                        .setColor(errorLight.toArgb())
+                        .setColorized(true)
+                } else this
+            }
+            .build()
+    }
 }

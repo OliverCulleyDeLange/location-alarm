@@ -5,6 +5,7 @@ import android.content.Intent
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import model.ui.AppViewModel
+import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.resources.StringProvider
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
@@ -18,13 +19,14 @@ class AppViewModel(val context: Context, stringProvider: StringProvider) : AppVi
             stringProvider.getString(resId)
         }
 
-    override fun onToggleAlarm() {
-        super.onToggleAlarm()
-        val alarmEnabled = _state.value.alarmEnabled
+    override fun onSetAlarm(enabled: Boolean) {
+        super.onSetAlarm(enabled)
         val intent = Intent(context, LocationAlarmService::class.java)
-        if (alarmEnabled) {
+        if (enabled) {
+            Timber.i("Starting LocationAlarmService")
             context.startForegroundService(intent)
         } else {
+            Timber.i("Stopping LocationAlarmService")
             context.stopService(intent)
         }
     }
