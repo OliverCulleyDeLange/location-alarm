@@ -8,6 +8,8 @@ struct MapboxMap: View {
     var perimeterRadiusMeters: Double
     var onMapTap: (Shared.Location) -> Void
     
+    @Environment(\.colorScheme) var colorScheme
+
     @State var viewport: Viewport = .followPuck(zoom: 16)
     
     var body: some View {
@@ -35,6 +37,7 @@ struct MapboxMap: View {
             .onMapTapGesture(perform: { MapContentGestureContext in
                 onMapTap(MapContentGestureContext.coordinate.toLocation())
             })
+            .mapStyle(colorScheme == .dark ? MapStyle.dark : MapStyle.light)
             .ignoresSafeArea()
         }
     }
