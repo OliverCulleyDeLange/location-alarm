@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
+import uk.co.oliverdelange.location_alarm.haptics.Vibrator
 import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
 import uk.co.oliverdelange.location_alarm.screens.AppViewModel
@@ -36,6 +37,7 @@ class LocationAlarmService : Service() {
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
     private val viewModel: AppViewModel = get()
+    private val vibrator: Vibrator = get()
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onCreate() {
@@ -97,18 +99,20 @@ class LocationAlarmService : Service() {
         serviceScope.launch {
             viewModel.state.map { it.alarmTriggered }.distinctUntilChanged().collect { alarmTriggered ->
                 if (alarmTriggered) {
-                    Timber.d("Triggering alarm sound")
+                    Timber.d("Triggering alarm sound & vibration")
                     alarmPlayer?.let {
                         if (!it.isPlaying) it.start()
                     } ?: Timber.e("Alarm player is null")
+                    vibrator.vibrateAlarm()
                 } else {
-                    Timber.d("Stopping alarm sound")
+                    Timber.d("Stopping alarm sound & vibration")
                     alarmPlayer?.let {
                         if (it.isPlaying) {
                             it.stop()
                             it.prepare()
                         }
                     } ?: Timber.e("Alarm player is null")
+                    vibrator.cancelVibration()
                 }
             }
         }
@@ -136,6 +140,7 @@ class LocationAlarmService : Service() {
             }
         }
         alarmPlayer = null
+        vibrator.cancelVibration()
         serviceScope.cancel()
         NotificationManagerCompat.from(this).cancel(notificationId)
         Timber.d("LocationAlarmService onDestroy")

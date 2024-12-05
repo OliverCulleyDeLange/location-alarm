@@ -1,16 +1,17 @@
 # Location Alarm
 
 An app that sounds an alarm when you enter a geofence.
-Also an excude to learn multiplatform app development with KMM
+Also an excuse to learn multiplatform app development with KMM
 
 Cool things i wanna do eventually, maybe:
 
-- Vibration
+- Sexy animations (ios)
+- Vibration (ios)
+
 - Code quality
 - CI / CD
 - Bug & crash reporting
 - Alarm config (sound, vibration pattern)
-- Sexy animations
 - Recent geofences
 - Favourite geofences
 - Multiple labelled geofences, seperately toggleable
