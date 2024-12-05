@@ -22,6 +22,7 @@ import com.mapbox.maps.extension.compose.style.layers.generated.LineLayer
 import com.mapbox.maps.extension.compose.style.sources.generated.GeoJsonSourceState
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import mapbox.MapboxIDs
 import model.domain.Location
@@ -72,7 +73,7 @@ fun MapboxMap(
                     location.locationPuck = createDefault2DPuck(withBearing = false)
                     location.enabled = true
                     viewport.transitionTo(
-                        targetState = viewport.makeFollowPuckViewportState(),
+                        targetState = viewport.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().pitch(0.0).zoom(14.0).build()),
                         transition = viewport.makeImmediateViewportTransition()
                     )
                     location.getLocationProvider()?.apply {
@@ -89,7 +90,11 @@ fun MapboxMap(
         }
         LaunchedEffect(usersLocationToFlyTo) {
             usersLocationToFlyTo?.let {
-                mapViewportState.flyTo(CameraOptions.Builder().center(it.toPoint()).build())
+                val cameraOptions = CameraOptions.Builder()
+                    .center(it.toPoint())
+                    .zoom(16.0)
+                    .build()
+                mapViewportState.flyTo(cameraOptions)
             }
         }
     }
