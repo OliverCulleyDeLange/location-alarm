@@ -15,7 +15,7 @@ import uk.co.oliverdelange.location_alarm.resources.StringProvider
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
 
 /** App side extension of the shared view model
- * Handles app side view model mapping
+ * Handles app side ui model mapping
  * */
 class MapUiViewModel(val context: Context, val stringProvider: StringProvider) : AppViewModel(), UiViewModel<MapFeatureState, MapUiState> {
     override val uiState = state
