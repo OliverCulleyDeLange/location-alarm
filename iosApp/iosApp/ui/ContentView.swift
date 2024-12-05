@@ -15,7 +15,7 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                 MapboxMap(
                     geofenceLocation: viewModel.state.geoFenceLocation,
                     perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
-                    onMapTap: {viewModel.onMapTap(location: $0)}
+                    onMapTap: {viewModel.onMapTap(newGeofenceLocation: $0)}
                 )
                     
                 RadiusScrubber(
