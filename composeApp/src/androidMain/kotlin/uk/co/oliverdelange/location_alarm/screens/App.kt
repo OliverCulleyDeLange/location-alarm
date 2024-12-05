@@ -23,7 +23,8 @@ fun App(viewmodel: AppViewModel = viewModel()) {
                 onLocationUpdate = { locations -> viewmodel.onLocationChange(locations) },
                 onMapTap = { location -> viewmodel.onMapTap(location) },
                 onToggleAlarm = { viewmodel.onToggleAlarm() },
-                onRadiusChange = { radius -> viewmodel.onRadiusChanged(radius) }
+                onRadiusChange = { radius -> viewmodel.onRadiusChanged(radius) },
+                onTapLocationIcon = { viewmodel.onTapLocationIcon() },
             )
             AlarmAlert(state.alarmTriggered) {
                 viewmodel.onSetAlarm(false)

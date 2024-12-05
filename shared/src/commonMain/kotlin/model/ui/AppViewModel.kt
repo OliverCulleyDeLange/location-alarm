@@ -81,6 +81,12 @@ open class AppViewModel : ViewModel() {
         }
     }
 
+    fun onTapLocationIcon() {
+        _state.update { state ->
+            state.copy(usersLocationToFlyTo = state.usersLocation)
+        }
+    }
+
     private fun getDistanceToGeofence(usersLocation: Location?, geofenceLocation: Location?): Int? {
         return if (usersLocation != null && geofenceLocation != null) {
             geofenceLocation.distanceTo(usersLocation).roundToInt()

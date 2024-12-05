@@ -17,6 +17,9 @@ data class AppState(
     val distanceToGeofencePerimeter: Int? = null,
     // The distance in meters from the users location to the geofence location
     val distanceToGeofence: Int? = null,
+    // Tapping on the location icon zooms to the users current location.
+    // If this is set we should fly to it. The UI should listen for changes to this state and fly to new values.
+    val usersLocationToFlyTo: Location? = null,
 ) {
     // Whether the alarm has been triggered (the users location is within the geofence bounds)
     val alarmTriggered = alarmEnabled && distanceToGeofencePerimeter?.let { it <= 0 } ?: false

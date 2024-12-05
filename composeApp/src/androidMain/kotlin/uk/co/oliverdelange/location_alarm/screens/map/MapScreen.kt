@@ -1,13 +1,19 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,17 +35,33 @@ fun MapScreen(
     onLocationUpdate: (List<Location>) -> Unit,
     onToggleAlarm: () -> Unit,
     onRadiusChange: (Int) -> Unit,
+    onTapLocationIcon: () -> Unit,
 ) {
     Box {
         val darkMode = isSystemInDarkTheme()
         MapboxMap(
             state.perimeterRadiusMeters,
             state.geoFenceLocation,
+            state.usersLocationToFlyTo,
             state.locationPermissionState.granted(),
             darkMode,
             onLocationUpdate = onLocationUpdate,
             onMapTap = onMapTap,
         )
+        IconButton(
+            onClick = { onTapLocationIcon() },
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 24.dp)
+                .align(Alignment.BottomStart)
+                .border(3.dp, MaterialTheme.colorScheme.primary)
+                .size(40.dp)
+        ) {
+            Icon(
+                Icons.Default.LocationOn, null,
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+
         RadiusScrubber(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
@@ -79,4 +101,4 @@ fun MapScreen(
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(AppState(), "Enable Alarm", {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(AppState(), "Enable Alarm", {}, {}, {}, {}, {})

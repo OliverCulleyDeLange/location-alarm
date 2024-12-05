@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
@@ -21,6 +22,7 @@ import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
 import com.mapbox.maps.extension.style.sources.getSourceAs
 import com.mapbox.maps.extension.style.sources.removeGeoJSONSourceFeatures
 import com.mapbox.maps.extension.style.style
+import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.viewport
@@ -39,6 +41,7 @@ import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 fun MapboxMap(
     perimeterRadiusMeters: Int,
     geoFenceLocation: Location?,
+    usersLocationToFlyTo: Location?,
     locationPermissionStateGranted: Boolean,
     darkMap: Boolean,
     onMapTap: (Location) -> Unit,
@@ -99,6 +102,11 @@ fun MapboxMap(
             mapView.mapboxMap.style?.let {
                 updateGeofence(it, geoFenceLocation, perimeterRadiusMeters)
             } ?: Timber.w("Couldn't get mapbox style")
+        }
+        MapEffect(usersLocationToFlyTo) { mapView ->
+            usersLocationToFlyTo?.let {
+                mapView.mapboxMap.flyTo(CameraOptions.Builder().center(it.toPoint()).build())
+            }
         }
     }
 }
