@@ -47,6 +47,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.accompanist.permissions)
             implementation(libs.androidx.material3)
             implementation(libs.mapbox)
             implementation(libs.mapboxCompose)

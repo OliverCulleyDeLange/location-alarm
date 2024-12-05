@@ -34,6 +34,10 @@ open class AppViewModel : ViewModel() {
                 notificationPermissionState = if (granted) PermissionState.Granted else PermissionState.Denied
             )
         }
+        // If notification permissions are granted and the user is requesting the enable the alarm, we should honor this
+        if (granted && _state.value.userRequestedAlarmEnable) {
+            onSetAlarm(true)
+        }
     }
 
     /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
@@ -97,16 +101,27 @@ open class AppViewModel : ViewModel() {
         return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
     }
 
+    /** Check notification permissions and enable if granted
+     * Otherwise, request notification permissions */
     fun onToggleAlarm() {
-        val alarmEnabled = !state.value.alarmEnabled
-        onSetAlarm(alarmEnabled)
+        when (_state.value.notificationPermissionState) {
+            PermissionState.Granted -> {
+                val alarmEnabled = !state.value.alarmEnabled
+                onSetAlarm(alarmEnabled)
+            }
+
+            else -> {
+                _state.update { state -> state.copy(userRequestedAlarmEnable = true) }
+            }
+        }
     }
 
-    open fun onSetAlarm(enabled: Boolean) {
+    fun onSetAlarm(enabled: Boolean) {
         _state.update { state ->
             state.copy(
                 alarmEnabled = enabled,
                 mapInteracted = true,
+                userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable
             )
         }
     }

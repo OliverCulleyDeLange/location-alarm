@@ -11,6 +11,8 @@ data class AppState(
     val mapInteracted: Boolean = false,
     // Geofence radius in meters
     val perimeterRadiusMeters: Int = 200,
+    // Indicates the user has requested to enable the alarm. This may or may not complete due to notification permissions state.
+    val userRequestedAlarmEnable: Boolean = false,
     // Whether the user has enabled the alarm
     val alarmEnabled: Boolean = false,
     // The distance in meters from the users location to the geofence perimeter (distance until alarm sounds)

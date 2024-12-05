@@ -2,6 +2,7 @@ package uk.co.oliverdelange.location_alarm.screens
 
 import android.content.Context
 import android.content.Intent
+import com.rickclephas.kmp.observableviewmodel.launch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import model.ui.AppViewModel
@@ -19,15 +20,19 @@ class AppViewModel(val context: Context, stringProvider: StringProvider) : AppVi
             stringProvider.getString(resId)
         }
 
-    override fun onSetAlarm(enabled: Boolean) {
-        super.onSetAlarm(enabled)
-        val intent = Intent(context, LocationAlarmService::class.java)
-        if (enabled) {
-            Timber.i("Starting LocationAlarmService")
-            context.startForegroundService(intent)
-        } else {
-            Timber.i("Stopping LocationAlarmService")
-            context.stopService(intent)
+    init {
+        viewModelScope.launch {
+            // Start and stop the foreground service based on alarm enabled state
+            state.map { it.alarmEnabled }.distinctUntilChanged().collect { enabled ->
+                val intent = Intent(context, LocationAlarmService::class.java)
+                if (enabled) {
+                    Timber.i("Starting LocationAlarmService")
+                    context.startForegroundService(intent)
+                } else {
+                    Timber.i("Stopping LocationAlarmService")
+                    context.stopService(intent)
+                }
+            }
         }
     }
 }
