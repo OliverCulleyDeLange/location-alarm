@@ -17,16 +17,24 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mapbox.maps.MapboxExperimental
+import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
+import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
+import mapbox.MapboxIDs
 import model.domain.AppState
 import model.domain.Location
 import model.domain.granted
+import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
+import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 
+@OptIn(MapboxExperimental::class)
 @Composable
 fun MapScreen(
     state: AppState,
@@ -38,15 +46,20 @@ fun MapScreen(
     onTapLocationIcon: () -> Unit,
 ) {
     Box {
-        val darkMode = isSystemInDarkTheme()
+        val geofenceSourceState = rememberGeoJsonSourceState(sourceId = MapboxIDs.SOURCE_GEOFENCE)
+        // Update geofence geojson source only when geofence location or radius changes
+        LaunchedEffect(state.geoFenceLocation, state.perimeterRadiusMeters) {
+            state.geoFenceLocation?.toPoint()?.let {
+                geofenceSourceState.data = GeoJSONData(buildGeofenceFeature(it, state.perimeterRadiusMeters))
+            }
+        }
         MapboxMap(
-            state.perimeterRadiusMeters,
-            state.geoFenceLocation,
+            isSystemInDarkTheme(),
             state.usersLocationToFlyTo,
             state.locationPermissionState.granted(),
-            darkMode,
             onLocationUpdate = onLocationUpdate,
             onMapTap = onMapTap,
+            geofenceSourceState = geofenceSourceState,
         )
         IconButton(
             onClick = { onTapLocationIcon() },
