@@ -61,19 +61,10 @@ fun MapScreen(
             onMapTap = onMapTap,
             geofenceSourceState = geofenceSourceState,
         )
-        IconButton(
-            onClick = { onTapLocationIcon() },
-            modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 24.dp)
-                .align(Alignment.BottomStart)
-                .border(3.dp, MaterialTheme.colorScheme.primary)
-                .size(40.dp)
-        ) {
-            Icon(
-                Icons.Default.LocationOn, null,
-                tint = MaterialTheme.colorScheme.primary,
-            )
-        }
+        FlyToCurrentLocationButton(
+            onTapLocationIcon,
+            Modifier.align(Alignment.BottomStart)
+        )
 
         RadiusScrubber(
             modifier = Modifier
@@ -109,6 +100,22 @@ fun MapScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: Modifier) {
+    IconButton(
+        onClick = { onTapLocationIcon() },
+        modifier = modifier
+            .padding(horizontal = 24.dp, vertical = 32.dp)
+            .size(40.dp)
+            .border(3.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(24.dp))
+    ) {
+        Icon(
+            Icons.Default.LocationOn, null,
+            tint = MaterialTheme.colorScheme.primary,
+        )
     }
 }
 

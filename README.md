@@ -8,6 +8,7 @@ Cool things i wanna do eventually, maybe:
 - Vibration
 - Code quality
 - CI / CD
+- Bug & crash reporting
 - Alarm config (sound, vibration pattern)
 - Sexy animations
 - Recent geofences
