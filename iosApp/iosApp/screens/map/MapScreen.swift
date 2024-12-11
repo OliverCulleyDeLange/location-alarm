@@ -28,6 +28,8 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                     Spacer()
                     Button(action: { viewModel.onToggleAlarm()}){
                         Text(viewModel.alarmButtonText)
+                            .foregroundStyle(Color(.primaryContainer))
+                            .fontWeight(.semibold)
                     }.buttonStyle(.borderedProminent)
                         .padding(16)
                 }
