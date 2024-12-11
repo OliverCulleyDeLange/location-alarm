@@ -34,7 +34,8 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                         .resizable()
                         .frame(width: 40, height: 40)
                         .foregroundStyle(Color(.primary))
-                        .padding(16)
+                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 40, trailing: 0))
+                        
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
