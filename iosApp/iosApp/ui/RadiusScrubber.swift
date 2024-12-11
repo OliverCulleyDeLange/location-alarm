@@ -9,33 +9,50 @@ struct RadiusScrubber: View {
     var body: some View {
         ScrollViewReader { scrollView in
             VStack {
-                Text("Radius:")
-                    .foregroundStyle(.secondary)
-                    .fontWeight(.bold)
-                Text("\(radiusMeters)")
-                    .font(.title)
-                    .fontWeight(.black)
-            }.padding(4)
-                .foregroundStyle(Color(.primary))
-                .background(Color(.primaryContainer))
-                .cornerRadius(8)
-                .padding(8)
-                .gesture(DragGesture()
-                .onChanged { change in
-                    print("Change \(change.translation.height)")
-                    if radiusAtDragStart == nil {
-                        radiusAtDragStart = Optional(CGFloat(radiusMeters))
-                    }
-                    // *5 just to increase the rate of change a bit
-                    radiusMeters = Int32(radiusAtDragStart! - (change.translation.height * 5))
-                    onRadiusChanged(Int32(radiusMeters))
-                    
-                }
-                .onEnded {_ in
-                    radiusAtDragStart = nil
-                }
-            )
+                Icon(iconName: "arrow.up")
+                VStack {
+                    Text("Radius:")
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.bold)
+                    Text("\(radiusMeters)")
+                        .font(.title)
+                        .fontWeight(.black)
+                }.padding(4)
+                    .foregroundStyle(Color(.primary))
+                    .background(Color(.primaryContainer))
+                    .cornerRadius(8)
+                    .padding(8)
+                    .gesture(DragGesture()
+                        .onChanged { change in
+                            print("Change \(change.translation.height)")
+                            if radiusAtDragStart == nil {
+                                radiusAtDragStart = Optional(CGFloat(radiusMeters))
+                            }
+                            // *5 just to increase the rate of change a bit
+                            radiusMeters = Int32(radiusAtDragStart! - (change.translation.height * 5))
+                            onRadiusChanged(Int32(radiusMeters))
+                            
+                        }
+                        .onEnded {_ in
+                            radiusAtDragStart = nil
+                        }
+                             
+                    )
+            }
+            Icon(iconName: "arrow.down")
         }
+    }
+
+}
+
+struct Icon: View {
+    let iconName: String
+    var body: some View {
+        Image(systemName: iconName)
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(Color(.primaryContainer))
+            .frame(width: 24)
     }
 }
 
