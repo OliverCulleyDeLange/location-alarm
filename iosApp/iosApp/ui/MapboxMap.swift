@@ -23,11 +23,11 @@ struct MapboxMap: View {
                     GeoJSONSource(id: MapboxIDs.shared.SOURCE_GEOFENCE)
                         .data(.feature(Feature(geometry: .polygon(circle))))
                     FillLayer(id: MapboxIDs.shared.LAYER_GEOFENCE_FILL, source: MapboxIDs.shared.SOURCE_GEOFENCE)
-                        .fillColor(UIColor(named: "GeofenceLine")!)
+                        .fillColor(UIColor(Color(.primary)))
                         .fillOpacity(0.3)
                     LineLayer(id: MapboxIDs.shared.LAYER_GEOFENCE_LINE, source: MapboxIDs.shared.SOURCE_GEOFENCE)
                         .lineWidth(5.0)
-                        .lineColor(UIColor(named: "GeofenceLine")!)
+                        .lineColor(UIColor(Color(.primary)))
                 }
                 
             }

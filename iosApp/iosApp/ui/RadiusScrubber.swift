@@ -10,10 +10,16 @@ struct RadiusScrubber: View {
         ScrollViewReader { scrollView in
             VStack {
                 Text("Radius:")
+                    .foregroundStyle(.secondary)
+                    .fontWeight(.bold)
                 Text("\(radiusMeters)")
                     .font(.title)
+                    .fontWeight(.black)
             }.padding(4)
-//                .clipShape()
+                .foregroundStyle(Color(.primary))
+                .background(Color(.primaryContainer))
+                .cornerRadius(8)
+                .padding(8)
                 .gesture(DragGesture()
                 .onChanged { change in
                     print("Change \(change.translation.height)")
