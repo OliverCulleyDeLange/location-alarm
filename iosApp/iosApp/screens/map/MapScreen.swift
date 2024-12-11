@@ -11,20 +11,34 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
         VStack {
             Text("SwiftUI: \(Greeting().greet())")
             Text("Alarm: \(viewModel.state.alarmTriggered)")
-            ZStack(alignment: .trailing) {
+            ZStack {
                 MapboxMap(
                     geofenceLocation: viewModel.state.geoFenceLocation,
                     perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
                     onMapTap: {viewModel.onMapTap(newGeofenceLocation: $0)}
-            )
-                    
-                RadiusScrubber(
-                    radiusMeters: viewModel.state.perimeterRadiusMeters,
-                    onRadiusChanged: { radius in
-                        viewModel.onRadiusChanged(radius: radius)
-                    }
                 )
-                VStack(alignment: .trailing){
+                
+                HStack {
+                    Spacer()
+                    RadiusScrubber(
+                        radiusMeters: viewModel.state.perimeterRadiusMeters,
+                        onRadiusChanged: { radius in
+                            viewModel.onRadiusChanged(radius: radius)
+                        }
+                    )
+                }
+                
+                VStack {
+                    Spacer()
+                    Image(systemName: "location.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundStyle(Color(.primary))
+                        .padding(16)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                VStack {
                     Spacer()
                     
                     VStack(alignment: .leading) {
@@ -46,6 +60,8 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                     }.buttonStyle(.borderedProminent)
                         .padding(EdgeInsets(top: 8, leading: 16, bottom: 16, trailing: 16))
                 }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+
             }
             .onAppear {
                 logger.debug("Map did appear")
@@ -62,7 +78,6 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
-        
     }
     
     func onLocationUpdate(locations: Array<Shared.Location>) {
