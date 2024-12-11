@@ -6,10 +6,15 @@ struct RadiusScrubber: View {
     
     @State private var radiusAtDragStart: CGFloat?
     
+    @State private var offsetUp: CGFloat = 0
+    @State private var offsetDown: CGFloat = 0
+    
     var body: some View {
         ScrollViewReader { scrollView in
             VStack {
                 Icon(iconName: "arrow.up")
+                    .offset(y: offsetUp)
+                    .animation(.easeInOut, value: offsetUp)
                 VStack {
                     Text("Radius:")
                         .foregroundStyle(.secondary)
@@ -38,11 +43,34 @@ struct RadiusScrubber: View {
                         }
                              
                     )
+                    .onTapGesture {
+                        Task {
+                            await animateHelper()
+                        }
+                    }
             }
             Icon(iconName: "arrow.down")
+                .offset(y: offsetDown)
         }
     }
 
+    func animateHelper() async {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            offsetUp = -100
+        }
+        try? await sleepFor(milliseconds: 300)
+        withAnimation(.easeInOut(duration: 0.2)) {
+            offsetUp = 0
+        }
+        
+        withAnimation(.easeInOut(duration: 0.3)) {
+            offsetDown = 100
+        }
+        try? await sleepFor(milliseconds: 300)
+        withAnimation(.easeInOut(duration: 0.2)) {
+            offsetDown = 0
+        }
+    }
 }
 
 struct Icon: View {
