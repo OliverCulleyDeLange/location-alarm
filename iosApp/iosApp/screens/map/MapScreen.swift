@@ -24,14 +24,27 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                         viewModel.onRadiusChanged(radius: radius)
                     }
                 )
-                VStack{
+                VStack(alignment: .trailing){
                     Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        // FIXME Move strings to viewmodel & handle optionalness
+                        Text("\(viewModel.state.distanceToGeofence?.stringValue ?? "?")m -> Destination")
+                            .font(.caption)
+                        Text("\(viewModel.state.distanceToGeofencePerimeter?.stringValue ?? "?")m -> Alarm")
+                            .font(.caption)
+                    }
+                    .padding(8)
+                    .background(Color(.primaryContainer))
+                    .cornerRadius(8)
+                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
+                    
                     Button(action: { viewModel.onToggleAlarm()}){
                         Text(viewModel.alarmButtonText)
                             .foregroundStyle(Color(.primaryContainer))
                             .fontWeight(.semibold)
                     }.buttonStyle(.borderedProminent)
-                        .padding(16)
+                        .padding(EdgeInsets(top: 8, leading: 16, bottom: 16, trailing: 16))
                 }
             }
             .onAppear {
