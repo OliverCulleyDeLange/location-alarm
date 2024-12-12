@@ -15,8 +15,9 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
             ZStack {
                 MapboxMap(
                     geofenceLocation: viewModel.state.geoFenceLocation,
+                    usersLocationToFlyTo: viewModel.state.usersLocationToFlyTo,
                     perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
-                    onMapTap: {viewModel.onMapTap(newGeofenceLocation: $0)}
+                    onMapTap: {viewModel.onMapTap(newGeofenceLocation: $0)},
                 )
                 
                 HStack {
@@ -36,6 +37,9 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                         .frame(width: 40, height: 40)
                         .foregroundStyle(Color(.primary))
                         .padding(EdgeInsets(top: 0, leading: 8, bottom: 40, trailing: 0))
+                        .onTapGesture {
+                            viewModel.onTapLocationIcon()
+                        }
                         
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -77,6 +81,9 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                 logger.debug("Did receive UIApplication.didBecomeActiveNotification")
                 locationService.checkLocationPermissionsAndStartListening()
             }
+            // TODO I'm not sure about these stacked tasks - they feel a bit clunky code cleanliness wise.
+            // Maybe Just extracting the functions out will help?
+            // There's probably a smarter way to use the observable state here
             .task(id: viewModel.state.userRequestedAlarmEnable) {
                 if(
                     viewModel.state.userRequestedAlarmEnable &&

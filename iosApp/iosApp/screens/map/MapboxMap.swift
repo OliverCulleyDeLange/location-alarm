@@ -5,8 +5,10 @@ import Turf
 
 struct MapboxMap: View {
     var geofenceLocation: Shared.Location?
+    var usersLocationToFlyTo: Shared.Location?
     var perimeterRadiusMeters: Double
     var onMapTap: (Shared.Location) -> Void
+    var onZoomedToUserLocation: () -> Void
     
     @Environment(\.colorScheme) var colorScheme
 
@@ -40,6 +42,13 @@ struct MapboxMap: View {
             })
             .mapStyle(colorScheme == .dark ? MapStyle.dark : MapStyle.light)
             .ignoresSafeArea()
+            .task(id: usersLocationToFlyTo){
+                if (usersLocationToFlyTo != nil) {
+                    var options = CameraOptions(center: usersLocationToFlyTo?.toCLLocationCoordinate2D())
+                    map.camera?.fly(to: options)
+                    onZoomedToUserLocation()
+                }
+            }
         }
     }
 }

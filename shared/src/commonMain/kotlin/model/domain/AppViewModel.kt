@@ -82,6 +82,8 @@ open class AppViewModel : ViewModel() {
         }
     }
 
+    // Fixme - if user presses location buttion twice, and their location doesn't change,
+    //  this results in the nothing happening the seconds time
     fun onTapLocationIcon() {
         _state.update { state ->
             state.copy(usersLocationToFlyTo = state.usersLocation)
