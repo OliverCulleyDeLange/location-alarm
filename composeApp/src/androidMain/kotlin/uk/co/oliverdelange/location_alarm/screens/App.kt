@@ -62,6 +62,7 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
                     onLocationUpdate = { locations -> viewmodel.onLocationChange(locations) },
                     onMapTap = { location -> viewmodel.onMapTap(location) },
                     onToggleAlarm = {
+                        // FIXME Move out of click handler. Request permissions based on bool from state
                         if (!notificationPermissionState.status.isGranted) {
                             notificationPermissionState.launchPermissionRequest()
                         }

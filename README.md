@@ -9,7 +9,6 @@ MVP:
   - Unit Tests & refactoring
   - UI Tests?
 - IOS
-  - Theming (light dark mode)
   - Location when backgrounded
   - Alarm sound and vibration handling
   - Sticky notification on lock screen with distance to alarm
@@ -18,7 +17,6 @@ MVP:
     - Open app on tap
   - Full screen UI
   - Alarm alert UI
-  - Radius scrubber animation
   - Vibration
   - Fly to location button
   - Set initial location follow zoom

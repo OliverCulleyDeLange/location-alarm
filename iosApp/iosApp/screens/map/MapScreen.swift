@@ -76,6 +76,21 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                 logger.debug("Did receive UIApplication.didBecomeActiveNotification")
                 locationService.checkLocationPermissionsAndStartListening()
             }
+            .task(id: viewModel.state.userRequestedAlarmEnable) {
+                if(
+                    viewModel.state.userRequestedAlarmEnable &&
+                    viewModel.state.notificationPermissionState != Shared.PermissionState.granted
+                ){
+                    let center = UNUserNotificationCenter.current()
+                    do {
+                        let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
+                        logger.debug("Notification permissions granted: \(granted)")
+                        viewModel.onNotificationPermissionResult(granted: granted)
+                    } catch {
+                        logger.debug("Error requesting notification permissions: \(error)")
+                    }
+                }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()

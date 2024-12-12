@@ -40,7 +40,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     func requestPermissions() {
         logger.debug("requestPermissions")
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.allowsBackgroundLocationUpdates = true
     }
     
     func listenForUpdates() {
