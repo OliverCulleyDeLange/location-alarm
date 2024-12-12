@@ -34,8 +34,9 @@ struct MapboxMap: View {
                 
             }
             .ornamentOptions(OrnamentOptions.init(
-                scaleBar: ScaleBarViewOptions.init(visibility: .hidden),
-                attributionButton: AttributionButtonOptions.init(position: OrnamentPosition.topRight, margins: CGPoint())
+                scaleBar: .init(visibility: .hidden),
+                logo: LogoViewOptions(position: .topRight, margins: CGPoint()),
+                attributionButton: .init(position: .topRight, margins: CGPoint())
             ))
             .onMapTapGesture(perform: { MapContentGestureContext in
                 onMapTap(MapContentGestureContext.coordinate.toLocation())
