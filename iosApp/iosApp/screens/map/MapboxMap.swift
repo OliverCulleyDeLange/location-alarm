@@ -44,7 +44,7 @@ struct MapboxMap: View {
             .ignoresSafeArea()
             .task(id: usersLocationToFlyTo){
                 if (usersLocationToFlyTo != nil) {
-                    var options = CameraOptions(center: usersLocationToFlyTo?.toCLLocationCoordinate2D())
+                    let options = CameraOptions(center: usersLocationToFlyTo?.toCLLocationCoordinate2D())
                     map.camera?.fly(to: options)
                     onZoomedToUserLocation()
                 }

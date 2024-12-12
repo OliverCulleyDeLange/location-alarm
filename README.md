@@ -16,7 +16,6 @@ MVP:
     - Open app on tap
   - Full screen UI
   - Alarm alert UI
-  - Fly to location button
 
 Cool things i wanna do eventually, maybe:
 

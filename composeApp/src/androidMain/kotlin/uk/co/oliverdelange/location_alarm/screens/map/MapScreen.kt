@@ -44,6 +44,7 @@ fun MapScreen(
     onToggleAlarm: () -> Unit,
     onRadiusChange: (Int) -> Unit,
     onTapLocationIcon: () -> Unit,
+    onFinishFlyingToUsersLocation: () -> Unit,
 ) {
     Box {
         val geofenceSourceState = rememberGeoJsonSourceState(sourceId = MapboxIDs.SOURCE_GEOFENCE)
@@ -59,6 +60,7 @@ fun MapScreen(
             state.locationPermissionState.granted(),
             onLocationUpdate = onLocationUpdate,
             onMapTap = onMapTap,
+            onFinishFlyingToUsersLocation = onFinishFlyingToUsersLocation,
             geofenceSourceState = geofenceSourceState,
         )
         FlyToCurrentLocationButton(
@@ -121,4 +123,4 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {})

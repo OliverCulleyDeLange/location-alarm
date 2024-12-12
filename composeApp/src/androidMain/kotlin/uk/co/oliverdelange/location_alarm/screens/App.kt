@@ -70,6 +70,7 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
                     },
                     onRadiusChange = { radius -> viewmodel.onRadiusChanged(radius) },
                     onTapLocationIcon = { viewmodel.onTapLocationIcon() },
+                    onFinishFlyingToUsersLocation = { viewmodel.onFinishFlyingToUsersLocation() }
                 )
             } else {
                 Column(

@@ -18,6 +18,7 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                     usersLocationToFlyTo: viewModel.state.usersLocationToFlyTo,
                     perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
                     onMapTap: {viewModel.onMapTap(newGeofenceLocation: $0)},
+                    onZoomedToUserLocation: { viewModel.onFinishFlyingToUsersLocation() }
                 )
                 
                 HStack {

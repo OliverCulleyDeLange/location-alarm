@@ -39,6 +39,7 @@ fun MapboxMap(
     locationPermissionStateGranted: Boolean,
     onMapTap: (Location) -> Unit,
     onLocationUpdate: (List<Location>) -> Unit,
+    onFinishFlyingToUsersLocation: () -> Unit,
     geofenceSourceState: GeoJsonSourceState,
 ) {
     val mapState = rememberMapState {}
@@ -100,6 +101,7 @@ fun MapboxMap(
                     .zoom(16.0)
                     .build()
                 mapViewportState.flyTo(cameraOptions)
+                onFinishFlyingToUsersLocation()
             }
         }
     }
