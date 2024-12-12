@@ -10,7 +10,7 @@ struct MapboxMap: View {
     
     @Environment(\.colorScheme) var colorScheme
 
-    @State var viewport: Viewport = .followPuck(zoom: 16)
+    @State var viewport: Viewport = .followPuck(zoom: 14)
     
     var body: some View {
         MapReader { map in

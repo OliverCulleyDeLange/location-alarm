@@ -73,7 +73,12 @@ fun MapboxMap(
                     location.locationPuck = createDefault2DPuck(withBearing = false)
                     location.enabled = true
                     viewport.transitionTo(
-                        targetState = viewport.makeFollowPuckViewportState(FollowPuckViewportStateOptions.Builder().pitch(0.0).zoom(14.0).build()),
+                        targetState = viewport.makeFollowPuckViewportState(
+                            FollowPuckViewportStateOptions.Builder()
+                                .pitch(0.0)
+                                .zoom(14.0)
+                                .build()
+                        ),
                         transition = viewport.makeImmediateViewportTransition()
                     )
                     location.getLocationProvider()?.apply {

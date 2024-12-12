@@ -10,17 +10,13 @@ MVP:
   - UI Tests?
 - IOS
   - Location when backgrounded
-  - Alarm sound and vibration handling
   - Sticky notification on lock screen with distance to alarm
     - Red when alarm going off
     - Stop alarm action
     - Open app on tap
   - Full screen UI
   - Alarm alert UI
-  - Vibration
   - Fly to location button
-  - Set initial location follow zoom
-  - Permissions requests only when nessecary
 
 Cool things i wanna do eventually, maybe:
 
