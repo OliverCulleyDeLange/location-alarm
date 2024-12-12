@@ -7,6 +7,7 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
     @StateViewModel var viewModel = AppViewModel()
     @State var locationService: LocationService = LocationService()
     @State var alarmManager: AlarmManager = AlarmManager()
+
     
     var body: some View {
         ZStack {
@@ -65,6 +66,15 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             
+        }
+        .alert(isPresented: .constant(viewModel.state.alarmTriggered)) {
+            Alert(
+                title: Text("Wakey Wakey"),
+                message: Text("You have reached your destination."),
+                dismissButton: .default(Text("Stop Alarm")){
+                    viewModel.onSetAlarm(enabled: false)
+                }
+            )
         }
         .onAppear {
             logger.debug("Map did appear")

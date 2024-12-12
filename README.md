@@ -14,7 +14,6 @@ MVP:
     - Red when alarm going off
     - Stop alarm action
     - Open app on tap
-  - Alarm alert UI
 
 Cool things i wanna do eventually, maybe:
 
