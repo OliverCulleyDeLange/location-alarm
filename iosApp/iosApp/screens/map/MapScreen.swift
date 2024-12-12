@@ -6,6 +6,7 @@ import KMPObservableViewModelSwiftUI
 struct ContentView: View, LocationService.LocationServiceDelegate {
     @StateViewModel var viewModel = AppViewModel()
     @State var locationService: LocationService = LocationService()
+    @State var alarmManager: AlarmManager = AlarmManager()
     
     var body: some View {
         VStack {
@@ -89,6 +90,13 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                     } catch {
                         logger.debug("Error requesting notification permissions: \(error)")
                     }
+                }
+            }
+            .task(id: viewModel.state.alarmTriggered) {
+                if (viewModel.state.alarmTriggered){
+                    alarmManager.startAlarm()
+                } else {
+                    alarmManager.stopAlarm()
                 }
             }
         }
