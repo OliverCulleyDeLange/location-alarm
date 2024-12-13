@@ -10,22 +10,12 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct LocationAlarmWidgetAttributes: ActivityAttributes {
-    public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
-        var emoji: String
-    }
-
-    // Fixed non-changing properties about your activity go here!
-    var name: String
-}
-
 struct LocationAlarmWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LocationAlarmWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
-                Text("Hello \(context.state.emoji)")
+                Text("Distance to alarm: \(context.state.distanceToAlarm)")
             }
             .activityBackgroundTint(Color.cyan)
             .activitySystemActionForegroundColor(Color.black)
@@ -41,15 +31,15 @@ struct LocationAlarmWidgetLiveActivity: Widget {
                     Text("Trailing")
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.emoji)")
+                    Text("Bottom \(context.state.distanceToAlarm)")
                     // more content
                 }
             } compactLeading: {
                 Text("L")
             } compactTrailing: {
-                Text("T \(context.state.emoji)")
+                Text("T \(context.state.distanceToAlarm)")
             } minimal: {
-                Text(context.state.emoji)
+                Text(context.state.distanceToAlarm)
             }
             .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color.red)
@@ -59,17 +49,17 @@ struct LocationAlarmWidgetLiveActivity: Widget {
 
 extension LocationAlarmWidgetAttributes {
     fileprivate static var preview: LocationAlarmWidgetAttributes {
-        LocationAlarmWidgetAttributes(name: "World")
+        LocationAlarmWidgetAttributes()
     }
 }
 
 extension LocationAlarmWidgetAttributes.ContentState {
     fileprivate static var smiley: LocationAlarmWidgetAttributes.ContentState {
-        LocationAlarmWidgetAttributes.ContentState(emoji: "😀")
+        LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "😀")
      }
      
      fileprivate static var starEyes: LocationAlarmWidgetAttributes.ContentState {
-         LocationAlarmWidgetAttributes.ContentState(emoji: "🤩")
+         LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "🤩")
      }
 }
 

@@ -4,10 +4,10 @@ import KMPObservableViewModelSwiftUI
 @_spi(Experimental) import MapboxMaps
 
 struct ContentView: View, LocationService.LocationServiceDelegate {
-    @StateViewModel var viewModel = AppViewModel()
-    @State var locationService: LocationService = LocationService()
-    @State var alarmManager: AlarmManager = AlarmManager()
-
+    @StateViewModel private var viewModel = AppViewModel()
+    @State private var locationService: LocationService = LocationService()
+    @State private var alarmManager: AlarmManager = AlarmManager()
+    @StateObject private var activityManager = ActivityManager.shared
     
     var body: some View {
         ZStack {
@@ -111,6 +111,13 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
                 alarmManager.startAlarm()
             } else {
                 alarmManager.stopAlarm()
+            }
+        }
+        .task(id: viewModel.state.alarmEnabled) {
+            if (viewModel.state.alarmEnabled){
+                await activityManager.start()
+            } else {
+                await activityManager.stop()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

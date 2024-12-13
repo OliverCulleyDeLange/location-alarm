@@ -74,6 +74,7 @@
 		42B0AF542D0B82DB00521A6C /* location */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = location; sourceTree = "<group>"; };
 		42B0AF5C2D0B82DD00521A6C /* screens */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = screens; sourceTree = "<group>"; };
 		42B0AF732D0CAEFC00521A6C /* LocationAlarmWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (42B0AF842D0CAEFD00521A6C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = LocationAlarmWidget; sourceTree = "<group>"; };
+		42C91ADD2D0CFAA8004C0713 /* live_activity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = live_activity; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +141,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				42C91ADD2D0CFAA8004C0713 /* live_activity */,
 				42B0AF442D0B6CD700521A6C /* haptics */,
 				42B0AF402D0B6C2900521A6C /* alarm_manager */,
 				4244D0882D0A378000B2D9FC /* helpers */,
@@ -211,6 +213,7 @@
 				42B0AF502D0B82D900521A6C /* mapper */,
 				42B0AF542D0B82DB00521A6C /* location */,
 				42B0AF5C2D0B82DD00521A6C /* screens */,
+				42C91ADD2D0CFAA8004C0713 /* live_activity */,
 			);
 			name = iosApp;
 			packageProductDependencies = (

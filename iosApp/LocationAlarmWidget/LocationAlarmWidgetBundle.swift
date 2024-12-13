@@ -12,8 +12,8 @@ import SwiftUI
 @main
 struct LocationAlarmWidgetBundle: WidgetBundle {
     var body: some Widget {
-        LocationAlarmWidget()
-        LocationAlarmWidgetControl()
+//        LocationAlarmWidget()
+//        LocationAlarmWidgetControl()
         LocationAlarmWidgetLiveActivity()
     }
 }
