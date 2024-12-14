@@ -63,6 +63,13 @@
 			);
 			target = 42B0AF6D2D0CAEFC00521A6C /* LocationAlarmWidgetExtension */;
 		};
+		42C91AE92D0DA7D6004C0713 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				LocationAlarmWidgetAttributes.swift,
+			);
+			target = 42B0AF6D2D0CAEFC00521A6C /* LocationAlarmWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -74,7 +81,7 @@
 		42B0AF542D0B82DB00521A6C /* location */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = location; sourceTree = "<group>"; };
 		42B0AF5C2D0B82DD00521A6C /* screens */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = screens; sourceTree = "<group>"; };
 		42B0AF732D0CAEFC00521A6C /* LocationAlarmWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (42B0AF842D0CAEFD00521A6C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = LocationAlarmWidget; sourceTree = "<group>"; };
-		42C91ADD2D0CFAA8004C0713 /* live_activity */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = live_activity; sourceTree = "<group>"; };
+		42C91ADD2D0CFAA8004C0713 /* live_activity */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (42C91AE92D0DA7D6004C0713 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = live_activity; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
