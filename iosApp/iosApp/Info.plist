@@ -53,8 +53,8 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>com.apple.developer.activity-types</key>
-    <array>
-        <string>live-activity</string>
-    </array>
+	<array>
+		<string>live-activity</string>
+	</array>
 </dict>
 </plist>

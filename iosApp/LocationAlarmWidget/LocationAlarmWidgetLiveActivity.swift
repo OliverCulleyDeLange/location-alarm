@@ -39,7 +39,7 @@ struct LocationAlarmWidgetLiveActivity: Widget {
             } compactTrailing: {
                 Text("T \(context.state.distanceToAlarm)")
             } minimal: {
-                Text(context.state.distanceToAlarm)
+                Text(context.state.distanceToAlarm ?? "")
             }
             .widgetURL(URL(string: "http://www.apple.com"))
             .keylineTint(Color.red)
