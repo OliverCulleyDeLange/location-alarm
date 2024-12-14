@@ -13,36 +13,66 @@ import SwiftUI
 struct LocationAlarmWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LocationAlarmWidgetAttributes.self) { context in
-            // Lock screen/banner UI goes here
+            let text = context.state.distanceToAlarm != nil ?
+                "Distance to alarm: \(context.state.distanceToAlarm ?? "")" :
+                "Location alarm active!"
             VStack {
-                Text("Distance to alarm: \(context.state.distanceToAlarm)")
+                Text("\(text)")
             }
             .activityBackgroundTint(Color.cyan)
             .activitySystemActionForegroundColor(Color.black)
-
+            
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
+                let text = context.state.distanceToAlarm != nil ?
+                    "Distance to alarm: \(context.state.distanceToAlarm ?? "")" :
+                    "Location alarm active!"
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    Image(systemName: "location")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(.primary)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
+                    HStack {
+                        Image(systemName: "alarm")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(.primary)
+                        Image(systemName: "checkmark.circle.fill")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(.green)
+                            .padding(2)
+                    }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.distanceToAlarm)")
-                    // more content
+                    Text("\(text)")
                 }
             } compactLeading: {
-                Text("L")
+                Image(systemName: "location")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundStyle(.primary)
             } compactTrailing: {
-                Text("T \(context.state.distanceToAlarm)")
+                HStack {
+                    Image(systemName: "alarm")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(.primary)
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(.green)
+                }
             } minimal: {
-                Text(context.state.distanceToAlarm ?? "")
+                Image(systemName: "location")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundStyle(.primary)
             }
-            .widgetURL(URL(string: "http://www.apple.com"))
-            .keylineTint(Color.red)
+//            .widgetURL(URL(string: "http://www.apple.com"))
+//            .keylineTint(Color.red)
         }
     }
 }
@@ -54,18 +84,18 @@ extension LocationAlarmWidgetAttributes {
 }
 
 extension LocationAlarmWidgetAttributes.ContentState {
-    fileprivate static var smiley: LocationAlarmWidgetAttributes.ContentState {
-        LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "😀")
-     }
-     
-     fileprivate static var starEyes: LocationAlarmWidgetAttributes.ContentState {
-         LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "🤩")
-     }
+    fileprivate static var empty: LocationAlarmWidgetAttributes.ContentState {
+        LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil)
+    }
+    
+    fileprivate static var withValue: LocationAlarmWidgetAttributes.ContentState {
+        LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "100m")
+    }
 }
 
 #Preview("Notification", as: .content, using: LocationAlarmWidgetAttributes.preview) {
-   LocationAlarmWidgetLiveActivity()
+    LocationAlarmWidgetLiveActivity()
 } contentStates: {
-    LocationAlarmWidgetAttributes.ContentState.smiley
-    LocationAlarmWidgetAttributes.ContentState.starEyes
+    LocationAlarmWidgetAttributes.ContentState.empty
+    LocationAlarmWidgetAttributes.ContentState.withValue
 }
