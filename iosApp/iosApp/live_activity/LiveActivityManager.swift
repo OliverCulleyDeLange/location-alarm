@@ -2,12 +2,8 @@ import ActivityKit
 import Combine
 import Foundation
 
-
-
-
 final class ActivityManager: ObservableObject {
     @MainActor @Published private(set) var activityID: String?
-    @MainActor @Published private(set) var activityToken: String?
     
     static let shared = ActivityManager()
     
@@ -19,7 +15,7 @@ final class ActivityManager: ObservableObject {
     private func startNewLiveActivity() async {
         let attributes = LocationAlarmWidgetAttributes()
         let initialContentState = ActivityContent(
-            state: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "100m"),
+            state: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil),
             staleDate: nil
         )
         
@@ -29,15 +25,9 @@ final class ActivityManager: ObservableObject {
                 content: initialContentState,
                 pushType: nil
             )
-            logger.warning("Started live activity")
+            logger.debug("Started live activity")
             
             await MainActor.run { activityID = activity.id }
-            
-            for await data in activity.pushTokenUpdates {
-                let token = data.map {String(format: "%02x", $0)}.joined()
-                logger.debug("LiveActivity token: \(token)")
-                await MainActor.run { activityToken = token }
-            }
         } catch {
             logger.warning("Couldn't start live activity \(error)")
         }
@@ -46,10 +36,10 @@ final class ActivityManager: ObservableObject {
     func updateActivityRandomly() async {
         guard let activityID = await activityID,
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
+            logger.warning("Activity to update isn't running")
             return
         }
-        let newRandomContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "todo")
-        await runningActivity.update(using: newRandomContentState)
+        await runningActivity.update(using: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil))
     }
     
     func stop() async {
@@ -66,13 +56,12 @@ final class ActivityManager: ObservableObject {
         
         await MainActor.run {
             self.activityID = nil
-            self.activityToken = nil
         }
     }
     
     func cancelAllRunningActivities() async {
         for activity in Activity<LocationAlarmWidgetAttributes>.activities {
-            let initialContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "TODO")
+            let initialContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil)
             
             await activity.end(
                 ActivityContent(state: initialContentState, staleDate: Date()),
@@ -82,7 +71,6 @@ final class ActivityManager: ObservableObject {
         
         await MainActor.run {
             activityID = nil
-            activityToken = nil
         }
     }
     
