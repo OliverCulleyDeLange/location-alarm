@@ -24,47 +24,30 @@ struct LocationAlarmWidgetLiveActivity: Widget {
             
         } dynamicIsland: { context in
             DynamicIsland {
-                let text = context.state.distanceToAlarm != nil ?
-                    "Distance to alarm: \(context.state.distanceToAlarm ?? "")" :
-                    "Location alarm active!"
                 DynamicIslandExpandedRegion(.leading) {
-                    Image(systemName: "location")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(.primary)
+                    LocationAlarmIcons()
                 }
-                DynamicIslandExpandedRegion(.trailing) {
-                    HStack {
-                        Image(systemName: "alarm")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(.primary)
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(.green)
-                            .padding(2)
-                    }
-                }
+                // Feels like overload of info given its repeated in the expanded section
+//                DynamicIslandExpandedRegion(.trailing) {
+//                    let text = context.state.distanceToAlarm != nil ?
+//                        "\(context.state.distanceToAlarm ?? "")m" :
+//                        "Active!"
+//                    Text("\(text)")
+//                }
                 DynamicIslandExpandedRegion(.bottom) {
+                    let text = context.state.distanceToAlarm != nil ?
+                        "Distance to alarm: \(context.state.distanceToAlarm ?? "")m" :
+                        "Location alarm active"
                     Text("\(text)")
                 }
             } compactLeading: {
-                Image(systemName: "location")
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundStyle(.primary)
+                LocationAlarmIcons()
+
             } compactTrailing: {
-                HStack {
-                    Image(systemName: "alarm")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(.primary)
-                    Image(systemName: "checkmark.circle.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundStyle(.green)
-                }
+                let text = context.state.distanceToAlarm != nil ?
+                    "\(context.state.distanceToAlarm ?? "")m" :
+                    "Active!"
+                Text("\(text)")
             } minimal: {
                 Image(systemName: "location")
                     .resizable()
@@ -89,13 +72,33 @@ extension LocationAlarmWidgetAttributes.ContentState {
     }
     
     fileprivate static var withValue: LocationAlarmWidgetAttributes.ContentState {
-        LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "100m")
+        LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "100")
     }
 }
 
 #Preview("Notification", as: .content, using: LocationAlarmWidgetAttributes.preview) {
     LocationAlarmWidgetLiveActivity()
 } contentStates: {
-    LocationAlarmWidgetAttributes.ContentState.empty
     LocationAlarmWidgetAttributes.ContentState.withValue
+    LocationAlarmWidgetAttributes.ContentState.empty
+}
+
+struct LocationAlarmIcons: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "location")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(.primary)
+            Image(systemName: "alarm")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(.primary)
+            Image(systemName: "checkmark.circle.fill")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(.green)
+                .padding(2)
+        }
+    }
 }

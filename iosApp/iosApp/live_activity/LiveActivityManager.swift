@@ -33,13 +33,13 @@ final class ActivityManager: ObservableObject {
         }
     }
     
-    func updateActivityRandomly() async {
+    func updateActivity(newDistanceToAlarm: Int) async {
         guard let activityID = await activityID,
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
             logger.warning("Activity to update isn't running")
             return
         }
-        await runningActivity.update(using: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil))
+        await runningActivity.update(using: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: String(newDistanceToAlarm)))
     }
     
     func stop() async {
