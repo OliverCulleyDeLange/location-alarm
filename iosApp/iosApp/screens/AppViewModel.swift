@@ -26,7 +26,7 @@ class AppViewModel: Shared.AppViewModel, Cancellable {
             .removeDuplicates()
             .sink { alarmEnabled in
                 Task {
-                    await alarmEnabled ? ActivityManager.shared.start() : ActivityManager.shared.stop()
+                    await alarmEnabled ? ActivityManager.shared.start(newDistanceToAlarm: self.state.distanceToGeofencePerimeter?.intValue, alarmTriggered: self.state.alarmTriggered) : ActivityManager.shared.stop()
                 }
             }
             .store(in: &cancellables)
@@ -41,7 +41,10 @@ class AppViewModel: Shared.AppViewModel, Cancellable {
             ) }
             .removeDuplicates()
             .sink { holder in
-                guard let distanceToAlarm = holder.distanceToGeofencePerimeter else { return }
+                guard let distanceToAlarm = holder.distanceToGeofencePerimeter else {
+                    logger.warning("Trying to update live location, but no available distance to alarm")
+                    return
+                }
                 Task {
                     await ActivityManager.shared.updateActivity(
                         newDistanceToAlarm: distanceToAlarm,

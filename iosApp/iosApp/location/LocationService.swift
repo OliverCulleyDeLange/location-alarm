@@ -59,7 +59,6 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         let mapped = locations.map { (location) -> Shared.Location in
             Shared.Location(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
         }
-        logger.debug("New location \(mapped)")
         delegate?.onLocationUpdate(locations: mapped)
     }
     

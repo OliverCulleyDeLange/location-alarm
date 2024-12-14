@@ -10,8 +10,6 @@ MVP:
   - UI Tests?
 - IOS
   - Location when backgrounded
-  - Sticky notification on lock screen with distance to alarm
-    - Stop alarm action
 
 Cool things i wanna do eventually, maybe:
 

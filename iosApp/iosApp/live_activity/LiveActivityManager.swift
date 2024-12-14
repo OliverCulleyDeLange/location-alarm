@@ -1,21 +1,22 @@
 import ActivityKit
 import Combine
 import Foundation
+import UserNotifications
 
 final class ActivityManager: ObservableObject {
     @MainActor @Published private(set) var activityID: String?
     
     static let shared = ActivityManager()
     
-    func start() async {
+    func start(newDistanceToAlarm: Int?, alarmTriggered: Bool) async {
         await stop()
-        await startNewLiveActivity()
+        await startNewLiveActivity(newDistanceToAlarm, alarmTriggered)
     }
     
-    private func startNewLiveActivity() async {
+    private func startNewLiveActivity(_ newDistanceToAlarm: Int?, _ alarmTriggered: Bool) async {
         let attributes = LocationAlarmWidgetAttributes()
         let initialContentState = ActivityContent(
-            state: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil, alarmTriggered: false),
+            state: getContentStateFrom(newDistanceToAlarm, alarmTriggered),
             staleDate: nil
         )
         
@@ -39,25 +40,24 @@ final class ActivityManager: ObservableObject {
             logger.warning("Activity to update isn't running")
             return
         }
+        logger.debug("Updating live activity newDistanceToAlarm: \(newDistanceToAlarm), alarmTriggered: \(alarmTriggered)")
         await runningActivity.update(
-            using: LocationAlarmWidgetAttributes.ContentState(
-                distanceToAlarm: "\(String(newDistanceToAlarm))m",
-                alarmTriggered: alarmTriggered
-            )
+            using: getContentStateFrom(newDistanceToAlarm, alarmTriggered)
         )
     }
     
     func stop() async {
         guard let activityID = await activityID,
-              let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
-            return
-        }
+              let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(
+                where: { $0.id == activityID }
+              ) else { return }
         let initialContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil, alarmTriggered: false)
 
         await runningActivity.end(
             ActivityContent(state: initialContentState, staleDate: Date.distantFuture),
             dismissalPolicy: .immediate
         )
+        logger.debug("Stopped live activity")
         
         await MainActor.run {
             self.activityID = nil
@@ -82,4 +82,10 @@ final class ActivityManager: ObservableObject {
         }
     }
     
+    fileprivate func getContentStateFrom(_ newDistanceToAlarm: Int?, _ alarmTriggered: Bool) -> LocationAlarmWidgetAttributes.ContentState {
+        return LocationAlarmWidgetAttributes.ContentState(
+            distanceToAlarm: newDistanceToAlarm.map {_ in "\(String(newDistanceToAlarm!))m" },
+            alarmTriggered: alarmTriggered
+        )
+    }
 }

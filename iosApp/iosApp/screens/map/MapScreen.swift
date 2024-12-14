@@ -3,10 +3,10 @@ import Shared
 import KMPObservableViewModelSwiftUI
 @_spi(Experimental) import MapboxMaps
 
-struct ContentView: View, LocationService.LocationServiceDelegate {
-    @StateViewModel private var viewModel = AppViewModel()
+struct MapScreen: View, LocationService.LocationServiceDelegate {
+    @StateViewModel var viewModel: AppViewModel
     @State private var locationService: LocationService = LocationService()
-    @State private var alarmManager: AlarmManager = AlarmManager()
+    @State private var alarmManager: AlarmManager = AlarmManager.shared
     
     var body: some View {
         ZStack {
@@ -122,8 +122,8 @@ struct ContentView: View, LocationService.LocationServiceDelegate {
 }
 
 
-struct ContentView_Previews: PreviewProvider {
+struct MapScreen_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MapScreen(viewModel: AppViewModel())
     }
 }

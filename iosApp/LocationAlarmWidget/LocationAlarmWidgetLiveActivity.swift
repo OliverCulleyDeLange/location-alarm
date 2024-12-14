@@ -24,10 +24,16 @@ struct LocationAlarmWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LocationAlarmWidgetAttributes.self) { context in
             // Live Activity UI
-            VStack {
+            HStack {
                 Text("\(getText(context))")
                     .fontWeight(.bold)
                     .foregroundStyle(.primary)
+                    
+                if (context.state.alarmTriggered){
+                    Link(destination: URL(string: "uk.co.oliverdelange.locationalarm://action/stop_alarm")!) {
+                        Text("Stop Alarm")
+                    }
+                }
             }
             .activityBackgroundTint(context.state.alarmTriggered ? Color.orange : nil)
         } dynamicIsland: { context in

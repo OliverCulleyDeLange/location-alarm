@@ -1,4 +1,6 @@
 class AlarmManager {
+    static let shared = AlarmManager()
+
     private var vibrator: Vibrator = Vibrator()
     private var alarmPlayer: AlarmPlayer = AlarmPlayer()
     
