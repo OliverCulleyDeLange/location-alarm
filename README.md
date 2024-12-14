@@ -11,9 +11,7 @@ MVP:
 - IOS
   - Location when backgrounded
   - Sticky notification on lock screen with distance to alarm
-    - Red when alarm going off
     - Stop alarm action
-    - Open app on tap
 
 Cool things i wanna do eventually, maybe:
 

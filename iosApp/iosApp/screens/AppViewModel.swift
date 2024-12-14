@@ -34,12 +34,19 @@ class AppViewModel: Shared.AppViewModel, Cancellable {
         // TODO DRY + This doesn't feel nice yet, but its better than having it in a .task in the view
         createPublisher(for: stateFlow)
             .assertNoFailure()
-            .map { state in state.distanceToGeofencePerimeter }
+            .filter { state in state.alarmEnabled}
+            .map { DistanceAndTriggered(
+                distanceToGeofencePerimeter: $0.distanceToGeofencePerimeter?.intValue,
+                alarmTriggered: $0.alarmTriggered
+            ) }
             .removeDuplicates()
-            .sink { distanceToAlarm in
-                guard let distanceToAlarm = distanceToAlarm else { return }
+            .sink { holder in
+                guard let distanceToAlarm = holder.distanceToGeofencePerimeter else { return }
                 Task {
-                    await ActivityManager.shared.updateActivity(newDistanceToAlarm: distanceToAlarm.intValue)
+                    await ActivityManager.shared.updateActivity(
+                        newDistanceToAlarm: distanceToAlarm,
+                        alarmTriggered: holder.alarmTriggered
+                    )
                 }
             }
             .store(in: &cancellables)
@@ -51,4 +58,10 @@ class AppViewModel: Shared.AppViewModel, Cancellable {
         }
         cancellables = []
     }
+}
+
+// TODO This is annoying to have to have, but i couldn't work out how to use a tuple with the publisher chain
+private struct DistanceAndTriggered: Equatable {
+    let distanceToGeofencePerimeter: Int?
+    let alarmTriggered: Bool
 }

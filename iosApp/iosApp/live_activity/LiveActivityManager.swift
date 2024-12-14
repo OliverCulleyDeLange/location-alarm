@@ -15,7 +15,7 @@ final class ActivityManager: ObservableObject {
     private func startNewLiveActivity() async {
         let attributes = LocationAlarmWidgetAttributes()
         let initialContentState = ActivityContent(
-            state: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil),
+            state: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil, alarmTriggered: false),
             staleDate: nil
         )
         
@@ -33,13 +33,18 @@ final class ActivityManager: ObservableObject {
         }
     }
     
-    func updateActivity(newDistanceToAlarm: Int) async {
+    func updateActivity(newDistanceToAlarm: Int, alarmTriggered: Bool) async {
         guard let activityID = await activityID,
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
             logger.warning("Activity to update isn't running")
             return
         }
-        await runningActivity.update(using: LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: String(newDistanceToAlarm)))
+        await runningActivity.update(
+            using: LocationAlarmWidgetAttributes.ContentState(
+                distanceToAlarm: "\(String(newDistanceToAlarm))m",
+                alarmTriggered: alarmTriggered
+            )
+        )
     }
     
     func stop() async {
@@ -47,7 +52,7 @@ final class ActivityManager: ObservableObject {
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
             return
         }
-        let initialContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: "todo")
+        let initialContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil, alarmTriggered: false)
 
         await runningActivity.end(
             ActivityContent(state: initialContentState, staleDate: Date.distantFuture),
@@ -61,7 +66,10 @@ final class ActivityManager: ObservableObject {
     
     func cancelAllRunningActivities() async {
         for activity in Activity<LocationAlarmWidgetAttributes>.activities {
-            let initialContentState = LocationAlarmWidgetAttributes.ContentState(distanceToAlarm: nil)
+            let initialContentState = LocationAlarmWidgetAttributes.ContentState(
+                distanceToAlarm: nil,
+                alarmTriggered: false
+            )
             
             await activity.end(
                 ActivityContent(state: initialContentState, staleDate: Date()),
