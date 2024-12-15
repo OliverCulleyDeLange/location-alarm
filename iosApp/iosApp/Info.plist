@@ -28,6 +28,10 @@
 	<string>Your location is required to wake you up when you get near your destination</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is required to wake you up when you get near your destination</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription
+NSLocationAlwaysAndWhenInUseUsageDescription
+NS</key>
+	<string>Your location is required to wake you up when you get near your destination</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

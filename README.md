@@ -1,19 +1,14 @@
 # Location Alarm
 
-An app that sounds an alarm when you enter a geofence.
-Also an excuse to learn multiplatform app development with KMM
+- An app that sounds an alarm when you enter a geofence.
+- Also an excuse to learn multiplatform app development with KMM.
+- Also an excuse to play with fun things like ios widgets, voice commands, watch apps, ya know,
+  cool shit you wouldn't usually play with.
 
-MVP:
+Things i wanna do eventually, maybe:
 
-- Android Only
-  - Unit Tests & refactoring
-  - UI Tests?
-- IOS
-  - Location when backgrounded
-
-Cool things i wanna do eventually, maybe:
-
-- IOS Lock screen widget
+- Unit Tests & refactoring
+- UI Tests?
 - Code quality
 - CI / CD
 - Bug & crash reporting

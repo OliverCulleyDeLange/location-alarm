@@ -6,6 +6,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     var locationManager: CLLocationManager = CLLocationManager()
     public var delegate: LocationServiceDelegate? = nil
     
+    private var listeningForLocationUpdates: Bool = false
+    
     protocol LocationServiceDelegate {
         func onLocationUpdate(locations: Array<Shared.Location>)
     }
@@ -39,19 +41,24 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func requestPermissions() {
-        logger.debug("requestPermissions")
+        logger.debug("requestalways Permissions")
         locationManager.requestAlwaysAuthorization()
-        locationManager.allowsBackgroundLocationUpdates = true
     }
     
     func listenForUpdates() {
         logger.debug("listenForUpdates")
-        locationManager.startUpdatingLocation()
+        if (!listeningForLocationUpdates){
+            logger.debug("actually listening for updates")
+            locationManager.allowsBackgroundLocationUpdates = true
+            locationManager.startUpdatingLocation()
+            listeningForLocationUpdates = true
+        }
     }
     
     func stopListeningForUpdates() {
         logger.debug("stopListeningForUpdates")
         locationManager.stopUpdatingLocation()
+        listeningForLocationUpdates = false
     }
     
     // CLLocationManagerDelegate method for location updates
@@ -71,7 +78,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             logger.debug("Location access granted")
-            locationManager.startUpdatingLocation()
+            listenForUpdates()
         case .denied, .restricted:
             logger.debug("Location access denied or restricted")
         case .notDetermined:

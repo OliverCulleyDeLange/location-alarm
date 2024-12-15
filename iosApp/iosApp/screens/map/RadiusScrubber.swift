@@ -29,12 +29,13 @@ struct RadiusScrubber: View {
                     .padding(8)
                     .gesture(DragGesture()
                         .onChanged { change in
-                            print("Change \(change.translation.height)")
                             if radiusAtDragStart == nil {
                                 radiusAtDragStart = Optional(CGFloat(radiusMeters))
                             }
                             // *5 just to increase the rate of change a bit
                             radiusMeters = Int32(radiusAtDragStart! - (change.translation.height * 5))
+                            //FIXME This logic exists in the viewmodel but isn't recpected here
+                            if (radiusMeters < 10) { radiusMeters = 10}
                             onRadiusChanged(Int32(radiusMeters))
                             
                         }

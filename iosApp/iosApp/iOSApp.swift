@@ -7,7 +7,6 @@ struct iOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-
             MapScreen(
                 viewModel: viewModel
             )

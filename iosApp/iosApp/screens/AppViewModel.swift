@@ -3,14 +3,19 @@ import Foundation
 import Combine
 import KMPNativeCoroutinesCombine
 
-class AppViewModel: Shared.AppViewModel, Cancellable {
-
-    private var cancellables = Set<AnyCancellable>()
+class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationServiceDelegate {
+    private var locationService: LocationService = LocationService()
+    private var alarmManager: AlarmManager = AlarmManager.shared
+    private var activityManager: ActivityManager = ActivityManager.shared
     
+    private var cancellables = Set<AnyCancellable>()
+        
     @Published var alarmButtonText: String  = "Disable alarm"
-
+    
     override init() {
         super.init()
+        locationService.delegate = self
+        
         createPublisher(for: stateFlow)
             .assertNoFailure()
             .removeDuplicates()
@@ -53,6 +58,19 @@ class AppViewModel: Shared.AppViewModel, Cancellable {
                 }
             }
             .store(in: &cancellables)
+        
+        createPublisher(for: stateFlow)
+            .assertNoFailure()
+            .map { $0.alarmTriggered }
+            .removeDuplicates()
+            .sink { alarmTriggered in
+                if (alarmTriggered){
+                    self.alarmManager.startAlarm()
+                } else {
+                    self.alarmManager.stopAlarm()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func cancel() {
@@ -60,6 +78,14 @@ class AppViewModel: Shared.AppViewModel, Cancellable {
             c.cancel()
         }
         cancellables = []
+    }
+    
+    func onLocationUpdate(locations: Array<Shared.Location>) {
+        onLocationChange(locations: locations)
+    }
+    
+    func onViewDidAppear() {
+        locationService.checkLocationPermissionsAndStartListening()
     }
 }
 

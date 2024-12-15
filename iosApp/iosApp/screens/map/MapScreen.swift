@@ -3,10 +3,8 @@ import Shared
 import KMPObservableViewModelSwiftUI
 @_spi(Experimental) import MapboxMaps
 
-struct MapScreen: View, LocationService.LocationServiceDelegate {
+struct MapScreen: View {
     @StateViewModel var viewModel: AppViewModel
-    @State private var locationService: LocationService = LocationService()
-    @State private var alarmManager: AlarmManager = AlarmManager.shared
     
     var body: some View {
         ZStack {
@@ -77,15 +75,13 @@ struct MapScreen: View, LocationService.LocationServiceDelegate {
         }
         .onAppear {
             logger.debug("Map did appear")
-            locationService.delegate = self
-            locationService.checkLocationPermissionsAndStartListening()
+            viewModel.onViewDidAppear()
         }.onDisappear{
             logger.debug("Map did dissapear")
-            locationService.stopListeningForUpdates()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             logger.debug("Did receive UIApplication.didBecomeActiveNotification")
-            locationService.checkLocationPermissionsAndStartListening()
+            viewModel.onViewDidAppear()
         }
         // TODO I'm not sure about these stacked tasks - they feel a bit clunky code cleanliness wise.
         // Maybe Just extracting the functions out will help?
@@ -105,19 +101,8 @@ struct MapScreen: View, LocationService.LocationServiceDelegate {
                 }
             }
         }
-        .task(id: viewModel.state.alarmTriggered) {
-            if (viewModel.state.alarmTriggered){
-                alarmManager.startAlarm()
-            } else {
-                alarmManager.stopAlarm()
-            }
-        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea()
-    }
-    
-    func onLocationUpdate(locations: Array<Shared.Location>) {
-        viewModel.onLocationChange(locations: locations)
     }
 }
 
