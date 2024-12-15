@@ -41,18 +41,15 @@ struct MapScreen: View {
             
             VStack {
                 Spacer()
-                
-                VStack(alignment: .leading) {
-                    // FIXME Move strings to viewmodel & handle optionalness
-                    Text("\(viewModel.state.distanceToGeofence?.stringValue ?? "?")m -> Destination")
-                        .font(.caption)
+                // FIXME Move strings to viewmodel & handle optionalness
+                if (viewModel.state.alarmEnabled){
                     Text("\(viewModel.state.distanceToGeofencePerimeter?.stringValue ?? "?")m -> Alarm")
-                        .font(.caption)
+                    .font(.caption)
+                    .padding(8)
+                    .background(Color(.primaryContainer))
+                    .cornerRadius(8)
+                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                 }
-                .padding(8)
-                .background(Color(.primaryContainer))
-                .cornerRadius(8)
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                 
                 Button(action: { viewModel.onToggleAlarm()}){
                     Text(viewModel.alarmButtonText)

@@ -79,15 +79,16 @@ fun MapScreen(
             Modifier.align(Alignment.BottomEnd),
             horizontalAlignment = Alignment.End
         ) {
-            Column(
-                Modifier
-                    .padding(horizontal = 24.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-                    .padding(8.dp)
-            ) {
-                Text("${state.distanceToGeofence}m -> Destination", color = MaterialTheme.colorScheme.secondary)
-                Text("${state.distanceToGeofencePerimeter}m -> Alarm", color = MaterialTheme.colorScheme.secondary)
+            if (state.alarmEnabled) {
+                Column(
+                    Modifier
+                        .padding(horizontal = 24.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .padding(8.dp)
+                ) {
+                    Text("${state.distanceToGeofencePerimeter}m -> Alarm", color = MaterialTheme.colorScheme.secondary)
+                }
             }
             Button(
                 modifier = Modifier
