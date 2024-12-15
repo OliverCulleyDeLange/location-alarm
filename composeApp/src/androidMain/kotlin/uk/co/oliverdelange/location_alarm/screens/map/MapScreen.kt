@@ -33,6 +33,7 @@ import model.domain.MapFeatureState
 import model.domain.granted
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
+import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
 
 @OptIn(MapboxExperimental::class)
 @Composable
@@ -45,6 +46,7 @@ fun MapScreen(
     onRadiusChange: (Int) -> Unit,
     onTapLocationIcon: () -> Unit,
     onFinishFlyingToUsersLocation: () -> Unit,
+    onRequestNotificationPermissions: () -> Unit,
 ) {
     Box {
         val geofenceSourceState = rememberGeoJsonSourceState(sourceId = MapboxIDs.SOURCE_GEOFENCE)
@@ -79,6 +81,11 @@ fun MapScreen(
             Modifier.align(Alignment.BottomEnd),
             horizontalAlignment = Alignment.End
         ) {
+            if (state.shouldShowNotificationPermissionDeniedMessage) {
+                NotificationPermissionDeniedAlert(
+                    requestPermissions = { onRequestNotificationPermissions() }
+                )
+            }
             if (state.alarmEnabled) {
                 Column(
                     Modifier
@@ -95,7 +102,8 @@ fun MapScreen(
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp, top = 8.dp),
                 onClick = onToggleAlarm,
-                elevation = ButtonDefaults.elevatedButtonElevation()
+                elevation = ButtonDefaults.elevatedButtonElevation(),
+                enabled = state.enableAlarmButtonEnabled
             ) {
                 Text(
                     text = alarmButtonText.uppercase(),
@@ -124,4 +132,4 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {})

@@ -1,4 +1,5 @@
 import Shared
+import UserNotifications
 import Foundation
 import Combine
 import KMPNativeCoroutinesCombine
@@ -9,14 +10,14 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
     private var activityManager: ActivityManager = ActivityManager.shared
     
     private var cancellables = Set<AnyCancellable>()
-        
+    
     @Published var alarmButtonText: String  = "Disable alarm"
     
     override init() {
         super.init()
         locationService.delegate = self
         
-        ///  Compute UI strings 
+        ///  Compute UI strings
         createPublisher(for: stateFlow)
             .assertNoFailure()
             .removeDuplicates()
@@ -103,6 +104,21 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
     
     func onTapAllowLocationPermissions() {
         locationService.requestPermissions()
+    }
+    
+    func requestNotificationPermissions()  {
+        Task {
+            let center = UNUserNotificationCenter.current()
+            do {
+                let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
+                logger.debug("Notification permissions granted: \(granted)")
+                await MainActor.run {
+                    onNotificationPermissionResult(granted: granted)
+                }
+            } catch {
+                logger.debug("Error requesting notification permissions: \(error)")
+            }
+        }
     }
     
     /// Request location updates when map is open to update the geofence location initially

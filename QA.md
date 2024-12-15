@@ -17,6 +17,6 @@
 ## Notification Permissions
 
 - [ ] Fresh app install - On map screen - Tap enable alarm - I see notification permissions dialog
-- [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' -
+- [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is enabled
 - [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
   permissions denied message

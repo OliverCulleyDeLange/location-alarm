@@ -23,6 +23,13 @@ data class MapFeatureState(
     // If this is set we should fly to it. The UI should listen for changes to this state and fly to new values.
     val usersLocationToFlyTo: Location? = null,
 ) : AppState {
+
+    // If the user has denied notification permissions, we should disable the button
+    val enableAlarmButtonEnabled = notificationPermissionState != PermissionState.Denied
+
     // Whether the alarm has been triggered (the users location is within the geofence bounds)
     val alarmTriggered = alarmEnabled && distanceToGeofencePerimeter?.let { it <= 0 } ?: false
+
+    // If a user denied notification permissions when trying to enable the alarm, show a UI message
+    val shouldShowNotificationPermissionDeniedMessage = notificationPermissionState == PermissionState.Denied
 }

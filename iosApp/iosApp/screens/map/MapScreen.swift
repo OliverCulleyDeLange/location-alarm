@@ -39,9 +39,13 @@ struct MapScreen: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            VStack {
+            VStack(alignment: .trailing) {
                 Spacer()
                 // FIXME Move strings to viewmodel & handle optionalness
+                if (viewModel.state.shouldShowNotificationPermissionDeniedMessage){
+                    NotificationPermissionDeniedAlert()
+                }
+                
                 if (viewModel.state.alarmEnabled){
                     Text("\(viewModel.state.distanceToGeofencePerimeter?.stringValue ?? "?")m -> Alarm")
                     .font(.caption)
@@ -55,8 +59,11 @@ struct MapScreen: View {
                     Text(viewModel.alarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
                         .fontWeight(.semibold)
-                }.buttonStyle(.borderedProminent)
-                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
+                .disabled(!viewModel.state.enableAlarmButtonEnabled)
+                
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             
@@ -95,14 +102,7 @@ struct MapScreen: View {
                 viewModel.state.userRequestedAlarmEnable &&
                 viewModel.state.notificationPermissionState != Shared.PermissionState.granted
             ){
-                let center = UNUserNotificationCenter.current()
-                do {
-                    let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
-                    logger.debug("Notification permissions granted: \(granted)")
-                    viewModel.onNotificationPermissionResult(granted: granted)
-                } catch {
-                    logger.debug("Error requesting notification permissions: \(error)")
-                }
+                viewModel.requestNotificationPermissions()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

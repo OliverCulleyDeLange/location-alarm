@@ -1,0 +1,50 @@
+package uk.co.oliverdelange.location_alarm.screens.permissions
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun NotificationPermissionDeniedAlert(
+    requestPermissions: () -> Unit
+) {
+    Column(
+        Modifier
+            .padding(horizontal = 40.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.errorContainer)
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Notification Permission Denied",
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Text(
+            text = "You have denied notification permissions. This is required to alert you when you have reached your destination.",
+            color = MaterialTheme.colorScheme.onErrorContainer,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        TextButton(onClick = { requestPermissions() }) {
+            Text(
+                text = "Allow Notification Permissions",
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun NotificationPermissionDeniedAlert_Preview() {
+    NotificationPermissionDeniedAlert { }
+}

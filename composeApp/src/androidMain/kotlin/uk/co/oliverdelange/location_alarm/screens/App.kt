@@ -77,7 +77,8 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
                     },
                     onRadiusChange = { radius -> viewmodel.onRadiusChanged(radius) },
                     onTapLocationIcon = { viewmodel.onTapLocationIcon() },
-                    onFinishFlyingToUsersLocation = { viewmodel.onFinishFlyingToUsersLocation() }
+                    onFinishFlyingToUsersLocation = { viewmodel.onFinishFlyingToUsersLocation() },
+                    onRequestNotificationPermissions = { notificationPermissionState.launchPermissionRequest() }
                 )
             } else if (state.locationPermissionState == PermissionState.Unknown) {
                 LocationPermissionsRequiredScreen {
