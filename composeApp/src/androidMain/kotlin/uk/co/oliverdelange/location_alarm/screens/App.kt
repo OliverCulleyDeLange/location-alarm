@@ -92,7 +92,7 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
                 }
             }
             AlarmAlert(state.alarmTriggered) {
-                viewmodel.onSetAlarm(false)
+                viewmodel.onTapStopAlarm()
             }
         }
     }

@@ -1,5 +1,6 @@
 import SwiftUI
 import KMPObservableViewModelSwiftUI
+import Shared
 
 @main
 struct iOSApp: App {
@@ -7,15 +8,21 @@ struct iOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MapScreen(
-                viewModel: viewModel
-            )
+            if (viewModel.state.locationPermissionState == Shared.PermissionState.granted){
+                MapScreen(
+                    viewModel: viewModel
+                )
                 .onOpenURL { url in
                     if url.scheme == "uk.co.oliverdelange.locationalarm" {
                         logger.info("Deeplink: \(url)")
                         viewModel.onSetAlarm(enabled: false)
                     }
                 }
+            } else {
+                LocationPermissionsRequiredScreen {
+                    viewModel.onTapAllowLocationPermissions()
+                }
+            }
         }
     }
 }

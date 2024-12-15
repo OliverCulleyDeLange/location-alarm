@@ -16,6 +16,7 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
         super.init()
         locationService.delegate = self
         
+        ///  Compute UI strings 
         createPublisher(for: stateFlow)
             .assertNoFailure()
             .removeDuplicates()
@@ -25,18 +26,29 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
             .store(in: &cancellables)
         
         // TODO DRY + This doesn't feel nice yet, but its better than having it in a .task in the view
+        /// Listen to location updates and start live activity when alarm enabled
         createPublisher(for: stateFlow)
             .assertNoFailure()
             .map { state in state.alarmEnabled }
             .removeDuplicates()
             .sink { alarmEnabled in
                 Task {
-                    await alarmEnabled ? ActivityManager.shared.start(newDistanceToAlarm: self.state.distanceToGeofencePerimeter?.intValue, alarmTriggered: self.state.alarmTriggered) : ActivityManager.shared.stop()
+                    if (alarmEnabled){
+                        /// TODO Location should already be listening if the app if foregrounded, so i don't think this is required
+                        self.locationService.checkLocationPermissionsAndStartListening()
+                        await ActivityManager.shared.start(
+                            newDistanceToAlarm: self.state.distanceToGeofencePerimeter?.intValue,
+                            alarmTriggered: self.state.alarmTriggered
+                        )
+                    } else {
+                        await ActivityManager.shared.stop()
+                    }
                 }
             }
             .store(in: &cancellables)
         
         // TODO DRY + This doesn't feel nice yet, but its better than having it in a .task in the view
+        /// Update live activity while alarm enbled
         createPublisher(for: stateFlow)
             .assertNoFailure()
             .filter { state in state.alarmEnabled}
@@ -59,6 +71,7 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
             }
             .store(in: &cancellables)
         
+        /// Sound alarm and vibrate when alarm triggered
         createPublisher(for: stateFlow)
             .assertNoFailure()
             .map { $0.alarmTriggered }
@@ -84,8 +97,24 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
         onLocationChange(locations: locations)
     }
     
+    func onLocationPermissionChanged(state: PermissionState) {
+        onLocationPermissionResult(state: state)
+    }
+    
+    func onTapAllowLocationPermissions() {
+        locationService.requestPermissions()
+    }
+    
+    /// Request location updates when map is open to update the geofence location initially
     func onViewDidAppear() {
         locationService.checkLocationPermissionsAndStartListening()
+    }
+    
+    /// If the alarm isn't enabled, stop listening for location updates
+    func onViewDidDissapear() {
+        if (!state.alarmEnabled){
+            locationService.stopListeningForUpdates()
+        }
     }
 }
 

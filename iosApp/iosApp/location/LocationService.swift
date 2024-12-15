@@ -7,9 +7,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     public var delegate: LocationServiceDelegate? = nil
     
     private var listeningForLocationUpdates: Bool = false
+    private var shouldStartListeningAfterPermissionGranted: Bool = false
     
     protocol LocationServiceDelegate {
         func onLocationUpdate(locations: Array<Shared.Location>)
+        func onLocationPermissionChanged(state: PermissionState)
     }
     
     override init() {
@@ -29,6 +31,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         case CLAuthorizationStatus.notDetermined,
             CLAuthorizationStatus.denied,
             CLAuthorizationStatus.restricted:
+            shouldStartListeningAfterPermissionGranted = true
             requestPermissions()
         @unknown default:
             fatalError()
@@ -41,8 +44,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func requestPermissions() {
-        logger.debug("requestalways Permissions")
-        locationManager.requestAlwaysAuthorization()
+        logger.debug("request location 'when in use' Permissions")
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func listenForUpdates() {
@@ -56,9 +59,13 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func stopListeningForUpdates() {
-        logger.debug("stopListeningForUpdates")
-        locationManager.stopUpdatingLocation()
-        listeningForLocationUpdates = false
+        if (listeningForLocationUpdates){
+            logger.debug("stopListeningForUpdates")
+            locationManager.stopUpdatingLocation()
+            listeningForLocationUpdates = false
+        } else {
+            logger.debug("Request to stop listening for location updates when not listening")
+        }
     }
     
     // CLLocationManagerDelegate method for location updates
@@ -78,13 +85,19 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             logger.debug("Location access granted")
-            listenForUpdates()
+            delegate?.onLocationPermissionChanged(state: PermissionState.granted)
+            if (shouldStartListeningAfterPermissionGranted){
+                listenForUpdates()
+                shouldStartListeningAfterPermissionGranted = false
+            }
         case .denied, .restricted:
             logger.debug("Location access denied or restricted")
+            delegate?.onLocationPermissionChanged(state: PermissionState.denied)
         case .notDetermined:
             logger.debug("Location access not determined yet")
+            delegate?.onLocationPermissionChanged(state: PermissionState.unknown)
         @unknown default:
-            logger.debug("Unknown authorization status")
+            logger.error("Unknown authorization status")
         }
     }
 }

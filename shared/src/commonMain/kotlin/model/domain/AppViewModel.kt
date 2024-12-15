@@ -16,11 +16,13 @@ open class AppViewModel : ViewModel() {
     val state: StateFlow<MapFeatureState> = _state.asStateFlow()
 
     fun onLocationPermissionResult(granted: Boolean) {
-        Logger.d { "Location permission granted: $granted" }
+        onLocationPermissionResult(if (granted) PermissionState.Granted else PermissionState.Denied)
+    }
+
+    fun onLocationPermissionResult(state: PermissionState) {
+        Logger.d { "Location permission state: $state" }
         _state.update { current ->
-            current.copy(
-                locationPermissionState = if (granted) PermissionState.Granted else PermissionState.Denied
-            )
+            current.copy(locationPermissionState = state)
         }
     }
 
@@ -86,6 +88,10 @@ open class AppViewModel : ViewModel() {
         _state.update { state ->
             state.copy(usersLocationToFlyTo = state.usersLocation)
         }
+    }
+
+    fun onTapStopAlarm() {
+        onSetAlarm(false)
     }
 
     fun onFinishFlyingToUsersLocation() {

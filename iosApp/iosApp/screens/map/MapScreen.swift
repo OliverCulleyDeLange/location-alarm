@@ -69,19 +69,26 @@ struct MapScreen: View {
                 title: Text("Wakey Wakey"),
                 message: Text("You have reached your destination."),
                 dismissButton: .default(Text("Stop Alarm")){
-                    viewModel.onSetAlarm(enabled: false)
+                    logger.debug("Tapped Stop Alarm")
+                    viewModel.onTapStopAlarm()
                 }
             )
         }
         .onAppear {
             logger.debug("Map did appear")
             viewModel.onViewDidAppear()
-        }.onDisappear{
-            logger.debug("Map did dissapear")
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             logger.debug("Did receive UIApplication.didBecomeActiveNotification")
             viewModel.onViewDidAppear()
+        }
+        .onDisappear{
+            logger.debug("Map did dissapear")
+            viewModel.onViewDidDissapear()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+            logger.debug("Did receive UIApplication.didEnterBackgroundNotification")
+            viewModel.onViewDidDissapear()
         }
         // TODO I'm not sure about these stacked tasks - they feel a bit clunky code cleanliness wise.
         // Maybe Just extracting the functions out will help?
