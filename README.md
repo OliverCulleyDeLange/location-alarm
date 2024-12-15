@@ -5,6 +5,12 @@
 - Also an excuse to play with fun things like ios widgets, voice commands, watch apps, ya know,
   cool shit you wouldn't usually play with.
 
+MVP:
+
+- App icon
+  - Replace dynamic island icons
+  - Add icon to live activity & notification
+
 Things i wanna do eventually, maybe:
 
 - Unit Tests & refactoring

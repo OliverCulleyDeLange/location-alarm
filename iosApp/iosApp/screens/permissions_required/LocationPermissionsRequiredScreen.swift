@@ -10,8 +10,7 @@ struct LocationPermissionsRequiredScreen: View {
             ).foregroundStyle(Color(.primary))
                 .padding()
                 .multilineTextAlignment(.center)
-            Spacer()
-                .frame(height: 24)
+            Spacer().frame(height: 24)
             Button(action: { onAllowLocationAccess() }) {
                 Text("Allow Location Access")
             }

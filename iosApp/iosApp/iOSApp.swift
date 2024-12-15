@@ -18,10 +18,12 @@ struct iOSApp: App {
                         viewModel.onSetAlarm(enabled: false)
                     }
                 }
-            } else {
+            } else if (viewModel.state.locationPermissionState == Shared.PermissionState.unknown) {
                 LocationPermissionsRequiredScreen {
                     viewModel.onTapAllowLocationPermissions()
                 }
+            } else {
+                LocationPermissionsDeniedScreen()
             }
         }
     }
