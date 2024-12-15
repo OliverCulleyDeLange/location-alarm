@@ -18,6 +18,7 @@ Things i wanna do eventually, maybe:
 - Code quality
 - CI / CD
 - Bug & crash reporting
+- Debugging tool that captures GPX file for alarm enabled session - to aid GPS issue debugging
 - Alarm config (sound, vibration pattern)
 - Recent geofences
 - Favourite geofences
