@@ -18,19 +18,26 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>uk.co.oliverdelange.locationalarm</string>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1Ijoib2xpdmVyZGVsYW5nZSIsImEiOiJjamlhZzNydnQwMHdvM3ZwY3o1NXRsbXF0In0.hxkqmnzrAyrooJix_YK04w</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is required to wake you up when you get near your destination</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is required to wake you up when you get near your destination</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription
 NSLocationAlwaysAndWhenInUseUsageDescription
 NS</key>
+	<string>Your location is required to wake you up when you get near your destination</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is required to wake you up when you get near your destination</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is required to wake you up when you get near your destination</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
@@ -55,17 +62,11 @@ NS</key>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>com.apple.developer.activity-types</key>
 	<array>
 		<string>live-activity</string>
-	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>uk.co.oliverdelange.locationalarm</string>
-		</dict>
 	</array>
 </dict>
 </plist>
