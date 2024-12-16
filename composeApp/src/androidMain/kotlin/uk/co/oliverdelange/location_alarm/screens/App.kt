@@ -75,6 +75,14 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
                         }
                         viewmodel.onToggleAlarm()
                     },
+                    onToggleAlarmWithDelay = {
+                        // FIXME Move out of click handler. Request permissions based on bool from state
+                        //FIXME DRY
+                        if (!notificationPermissionState.status.isGranted) {
+                            notificationPermissionState.launchPermissionRequest()
+                        }
+                        viewmodel.onToggleAlarmWithDelay(2)
+                    },
                     onRadiusChange = { radius -> viewmodel.onRadiusChanged(radius) },
                     onTapLocationIcon = { viewmodel.onTapLocationIcon() },
                     onFinishFlyingToUsersLocation = { viewmodel.onFinishFlyingToUsersLocation() },

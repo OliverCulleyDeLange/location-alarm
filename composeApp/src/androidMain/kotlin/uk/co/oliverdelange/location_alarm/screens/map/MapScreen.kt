@@ -31,6 +31,7 @@ import mapbox.MapboxIDs
 import model.domain.Location
 import model.domain.MapFeatureState
 import model.domain.granted
+import uk.co.oliverdelange.location_alarm.helpers.isDebug
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
@@ -43,6 +44,7 @@ fun MapScreen(
     onMapTap: (Location) -> Unit,
     onLocationUpdate: (List<Location>) -> Unit,
     onToggleAlarm: () -> Unit,
+    onToggleAlarmWithDelay: () -> Unit,
     onRadiusChange: (Int) -> Unit,
     onTapLocationIcon: () -> Unit,
     onFinishFlyingToUsersLocation: () -> Unit,
@@ -97,6 +99,16 @@ fun MapScreen(
                     Text("${state.distanceToGeofencePerimeter}m -> Alarm", color = MaterialTheme.colorScheme.secondary)
                 }
             }
+            if (isDebug()) {
+                Button(
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp)
+                        .padding(bottom = 24.dp, top = 8.dp),
+                    onClick = onToggleAlarmWithDelay,
+                ) {
+                    Text("Delayed start")
+                }
+            }
             Button(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
@@ -132,4 +144,4 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {}, {})

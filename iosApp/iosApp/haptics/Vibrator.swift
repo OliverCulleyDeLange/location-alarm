@@ -41,7 +41,7 @@ class Vibrator {
         }
     }
     
-    func startVibrating() {
+    func vibrate() {
         guard let hapticEngine = hapticEngine else {
             logger.warning("Tried to use haptics with uninitialised haptic engine")
             return
@@ -82,7 +82,7 @@ class Vibrator {
         }
     }
     
-    func stopVibrations() {
+    func stop() {
         if isEngineRunning {
             do {
                 try vibrationPattern?.stop(atTime: CHHapticTimeImmediate)

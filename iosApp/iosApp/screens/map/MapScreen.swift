@@ -55,7 +55,13 @@ struct MapScreen: View {
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                 }
                 
-                Button(action: { viewModel.onToggleAlarm()}){
+                // Dev tool to enable alarm but not trigger for a time period to allowe background / locked testing
+                #if DEBUG
+                Button("Delayed Start", action: { viewModel.onToggleAlarmWithDelay(locationUpdates: 3)})
+                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
+                #endif
+                
+                Button(action: {viewModel.onToggleAlarm()}) {
                     Text(viewModel.alarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
                         .font(.system(size: 20, weight: .semibold))

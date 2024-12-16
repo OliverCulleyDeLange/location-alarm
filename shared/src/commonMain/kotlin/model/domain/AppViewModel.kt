@@ -43,7 +43,12 @@ open class AppViewModel : ViewModel() {
     fun onLocationChange(locations: List<Location>) {
         Logger.v { "Location updated $locations" }
         locations.firstOrNull()?.let { firstLocation ->
-            _state.update { it.copy(usersLocation = firstLocation) }
+            _state.update {
+                it.copy(
+                    usersLocation = firstLocation,
+                    usersLocationHistory = it.usersLocationHistory.plus(firstLocation)
+                )
+            }
             if (!_state.value.mapInteracted) {
                 _state.update {
                     it.copy(geoFenceLocation = firstLocation)
@@ -121,6 +126,16 @@ open class AppViewModel : ViewModel() {
                 alarmEnabled = enabled,
                 mapInteracted = true,
                 userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable
+            )
+        }
+    }
+
+    // Dev tool to allow enabling the alarm, but not allow triggering until a given number of location updates have come through
+    fun onToggleAlarmWithDelay(locationUpdates: Int) {
+        onToggleAlarm()
+        _state.update { state ->
+            state.copy(
+                alarmTriggerDelayLocationHistorySize = state.usersLocationHistory.size + locationUpdates,
             )
         }
     }
