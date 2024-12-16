@@ -7,7 +7,7 @@ struct LocationPermissionsDeniedScreen: View {
         VStack {
             Text("You have denied location permissions")
                 .foregroundStyle(Color(.primary))
-                .fontWeight(.bold)
+                .font(.system(size:20, weight: .bold))
                 .padding()
                 .multilineTextAlignment(.center)
             

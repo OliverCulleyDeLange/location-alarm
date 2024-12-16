@@ -58,7 +58,7 @@ struct MapScreen: View {
                 Button(action: { viewModel.onToggleAlarm()}){
                     Text(viewModel.alarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
-                        .fontWeight(.semibold)
+                        .font(.system(size: 20, weight: .semibold))
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))

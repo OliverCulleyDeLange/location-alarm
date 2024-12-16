@@ -6,9 +6,9 @@ import KMPNativeCoroutinesCombine
 
 /// App side view model. Extends the shared kotlin view model and adds IOS specific functions.
 class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationServiceDelegate {
-    private var locationService: LocationService = LocationService()
-    private var alarmManager: AlarmManager = AlarmManager.shared
-    private var activityManager: LiveActivityManager = LiveActivityManager.shared
+    private var locationService = LocationService()
+    private var alarmManager = AlarmManager.shared
+    private var notificationManager = NotificationManager.shared
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -29,50 +29,56 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
         
         // TODO DRY + This doesn't feel nice yet, but its better than having it in a .task in the view
         /// Listen to location updates and start live activity when alarm enabled
-        createPublisher(for: stateFlow)
-            .assertNoFailure()
-            .map { state in state.alarmEnabled }
-            .removeDuplicates()
-            .sink { alarmEnabled in
-                Task {
-                    if (alarmEnabled){
-                        /// TODO Location should already be listening if the app if foregrounded, so i don't think this is required
-                        self.locationService.checkLocationPermissionsAndStartListening()
-                        await LiveActivityManager.shared.start(
-                            newDistanceToAlarm: self.state.distanceToGeofencePerimeter?.intValue,
-                            alarmTriggered: self.state.alarmTriggered
-                        )
-                    } else {
-                        await LiveActivityManager.shared.stop()
+        if #available(iOS 16.2, *) {
+            createPublisher(for: stateFlow)
+                .assertNoFailure()
+                .map { state in state.alarmEnabled }
+                .removeDuplicates()
+                .sink { alarmEnabled in
+                    Task {
+                        if (alarmEnabled){
+                            /// TODO Location should already be listening if the app if foregrounded, so i don't think this is required
+                            self.locationService.checkLocationPermissionsAndStartListening()
+                            guard let distanceToAlarm = self.state.distanceToGeofencePerimeter else {
+                                logger.warning("Trying to create live activity, but no available distance to alarm")
+                                return
+                            }
+                            await LiveActivityManager.shared.createLiveActivity(
+                                distanceToAlarm.intValue,
+                                self.state.alarmTriggered
+                            )
+                        } else {
+                            await LiveActivityManager.shared.stopLiveActivity()
+                        }
                     }
                 }
-            }
-            .store(in: &cancellables)
-        
-        // TODO DRY + This doesn't feel nice yet, but its better than having it in a .task in the view
-        /// Update live activity while alarm enbled
-        createPublisher(for: stateFlow)
-            .assertNoFailure()
-            .filter { state in state.alarmEnabled}
-            .map { DistanceAndTriggered(
-                distanceToGeofencePerimeter: $0.distanceToGeofencePerimeter?.intValue,
-                alarmTriggered: $0.alarmTriggered
-            ) }
-            .removeDuplicates()
-            .sink { holder in
-                guard let distanceToAlarm = holder.distanceToGeofencePerimeter else {
-                    logger.warning("Trying to update live location, but no available distance to alarm")
-                    return
+                .store(in: &cancellables)
+            
+            
+            // TODO DRY + This doesn't feel nice yet, but its better than having it in a .task in the view
+            /// Update live activity while alarm enbled
+            createPublisher(for: stateFlow)
+                .assertNoFailure()
+                .filter { state in state.alarmEnabled}
+                .map { DistanceAndTriggered(
+                    distanceToGeofencePerimeter: $0.distanceToGeofencePerimeter?.intValue,
+                    alarmTriggered: $0.alarmTriggered
+                ) }
+                .removeDuplicates()
+                .sink { holder in
+                    guard let distanceToAlarm = holder.distanceToGeofencePerimeter else {
+                        logger.warning("Trying to update live location, but no available distance to alarm")
+                        return
+                    }
+                    Task {
+                        await LiveActivityManager.shared.updatePersistentNotification(
+                            distanceToAlarm,
+                            holder.alarmTriggered
+                        )
+                    }
                 }
-                Task {
-                    await LiveActivityManager.shared.updateActivity(
-                        newDistanceToAlarm: distanceToAlarm,
-                        alarmTriggered: holder.alarmTriggered
-                    )
-                }
-            }
-            .store(in: &cancellables)
-        
+                .store(in: &cancellables)
+        }
         /// Sound alarm and vibrate when alarm triggered
         createPublisher(for: stateFlow)
             .assertNoFailure()
@@ -81,8 +87,14 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
             .sink { alarmTriggered in
                 if (alarmTriggered){
                     self.alarmManager.startAlarm()
+                    if #available(iOS 16.2, *) {} else {
+                        self.notificationManager.createAlarmNotification()
+                    }
                 } else {
                     self.alarmManager.stopAlarm()
+                    if #available(iOS 16.2, *) {} else {
+                        self.notificationManager.removeAlarmNotification()
+                    }
                 }
             }
             .store(in: &cancellables)

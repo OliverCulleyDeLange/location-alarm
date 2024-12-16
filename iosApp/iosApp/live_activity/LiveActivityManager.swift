@@ -3,18 +3,21 @@ import Combine
 import Foundation
 import UserNotifications
 
-/// Handles creation and destruction of Live Activities (Widget used as a persistent notification)
+/// Handles creation and destruction of Live Activities (Widget used as a persistent notification) on IOS 16 and above 
+@available(iOS 16.2, *)
 final class LiveActivityManager: ObservableObject {
+    
     @MainActor @Published private(set) var activityID: String?
     
     static let shared = LiveActivityManager()
     
-    func start(newDistanceToAlarm: Int?, alarmTriggered: Bool) async {
-        await stop()
+    func createLiveActivity(_ newDistanceToAlarm: Int, _ alarmTriggered: Bool) async {
+        await stopLiveActivity()
         await startNewLiveActivity(newDistanceToAlarm, alarmTriggered)
     }
     
-    private func startNewLiveActivity(_ newDistanceToAlarm: Int?, _ alarmTriggered: Bool) async {
+    
+    private func startNewLiveActivity(_ newDistanceToAlarm: Int, _ alarmTriggered: Bool) async {
         let attributes = LocationAlarmWidgetAttributes()
         let initialContentState = ActivityContent(
             state: getContentStateFrom(newDistanceToAlarm, alarmTriggered),
@@ -35,7 +38,7 @@ final class LiveActivityManager: ObservableObject {
         }
     }
     
-    func updateActivity(newDistanceToAlarm: Int, alarmTriggered: Bool) async {
+    func updatePersistentNotification(_ newDistanceToAlarm: Int, _ alarmTriggered: Bool) async {
         guard let activityID = await activityID,
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
             logger.warning("Activity to update isn't running")
@@ -47,7 +50,7 @@ final class LiveActivityManager: ObservableObject {
         )
     }
     
-    func stop() async {
+    func stopLiveActivity() async {
         guard let activityID = await activityID,
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(
                 where: { $0.id == activityID }
@@ -62,24 +65,6 @@ final class LiveActivityManager: ObservableObject {
         
         await MainActor.run {
             self.activityID = nil
-        }
-    }
-    
-    func cancelAllRunningActivities() async {
-        for activity in Activity<LocationAlarmWidgetAttributes>.activities {
-            let initialContentState = LocationAlarmWidgetAttributes.ContentState(
-                distanceToAlarm: nil,
-                alarmTriggered: false
-            )
-            
-            await activity.end(
-                ActivityContent(state: initialContentState, staleDate: Date()),
-                dismissalPolicy: .immediate
-            )
-        }
-        
-        await MainActor.run {
-            activityID = nil
         }
     }
     

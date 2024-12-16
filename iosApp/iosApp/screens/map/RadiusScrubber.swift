@@ -19,7 +19,7 @@ struct RadiusScrubber: View {
                 VStack {
                     Text("Radius:")
                         .foregroundStyle(.secondary)
-                        .fontWeight(.bold)
+                        .font(.system(size: 16, weight: .bold))
                     Text("\(radiusMeters)")
                         .font(.title)
                         .fontWeight(.black)
