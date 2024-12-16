@@ -32,4 +32,28 @@ class NotificationManager {
         UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [notificationId])
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId])
     }
+    
+    func requestPermissions( onNotificationPermissionResult: @escaping (Bool) -> Void) {
+        Task {
+            let center = UNUserNotificationCenter.current()
+            do {
+                let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
+                logger.debug("Notification permissions granted: \(granted)")
+                await MainActor.run {
+                    onNotificationPermissionResult(granted)
+                }
+            } catch {
+                logger.debug("Error requesting notification permissions: \(error)")
+            }
+        }
+    }
+    
+    func checkPermissions(onNotificationPermissionResult: @escaping (Bool) -> Void) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                let hasNotificationPermission = settings.authorizationStatus == .authorized
+                onNotificationPermissionResult(hasNotificationPermission)
+            }
+        }
+    }
 }

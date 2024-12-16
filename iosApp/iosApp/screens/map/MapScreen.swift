@@ -106,7 +106,7 @@ struct MapScreen: View {
         .task(id: viewModel.state.userRequestedAlarmEnable) {
             if(
                 viewModel.state.userRequestedAlarmEnable &&
-                viewModel.state.notificationPermissionState != Shared.PermissionState.granted
+                !(viewModel.state.notificationPermissionState is Shared.PermissionStateGranted)
             ){
                 viewModel.requestNotificationPermissions()
             }

@@ -19,15 +19,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.rememberPermissionState
 import model.domain.PermissionState
 import model.ui.MapUiState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import uk.co.oliverdelange.location_alarm.screens.map.MapScreen
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsDeniedScreen
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsRequiredScreen
+import uk.co.oliverdelange.location_alarm.ui.PermissionHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -37,22 +36,21 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
     val state by viewmodel.state.collectAsStateWithLifecycle()
     val uiState by viewmodel.uiState.collectAsStateWithLifecycle(MapUiState())
 
-    val notificationPermissionState = rememberPermissionState(POST_NOTIFICATIONS)
     val locationPermissionState = rememberMultiplePermissionsState(listOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION))
     var hasRequestedLocationPermissions by remember { mutableStateOf(false) }
 
     AppTheme {
         // Sync ui permissions with state
-        LaunchedEffect(notificationPermissionState.status.isGranted) {
-            viewmodel.onNotificationPermissionResult(notificationPermissionState.status.isGranted)
+        // TODO Handle API 31
+        PermissionHandler(POST_NOTIFICATIONS, state.userRequestedAlarmEnable) {
+            viewmodel.onNotificationPermissionResult(it)
         }
         LaunchedEffect(locationPermissionState.permissions, hasRequestedLocationPermissions) {
-//            Timber.e("OCD OCD $hasRequestedLocationPermissions ${locationPermissionState.permissions.joinToString { it.permission + "" + it.status }}")
+            //TODO Extract mapper function
             viewmodel.onLocationPermissionResult(when {
                 locationPermissionState.allPermissionsGranted -> PermissionState.Granted
                 hasRequestedLocationPermissions && locationPermissionState.permissions
-                    .any { it.status is PermissionStatus.Denied } -> PermissionState.Denied
-
+                    .any { it.status is PermissionStatus.Denied } -> PermissionState.Denied(false)
                 else -> PermissionState.Unknown
             })
         }
@@ -68,25 +66,11 @@ fun App(viewmodel: MapUiViewModel = viewModel()) {
                     uiState.toggleAlarmButtonText,
                     onLocationUpdate = { locations -> viewmodel.onLocationChange(locations) },
                     onMapTap = { location -> viewmodel.onMapTap(location) },
-                    onToggleAlarm = {
-                        // FIXME Move out of click handler. Request permissions based on bool from state
-                        if (!notificationPermissionState.status.isGranted) {
-                            notificationPermissionState.launchPermissionRequest()
-                        }
-                        viewmodel.onToggleAlarm()
-                    },
-                    onToggleAlarmWithDelay = {
-                        // FIXME Move out of click handler. Request permissions based on bool from state
-                        //FIXME DRY
-                        if (!notificationPermissionState.status.isGranted) {
-                            notificationPermissionState.launchPermissionRequest()
-                        }
-                        viewmodel.onToggleAlarmWithDelay(2)
-                    },
+                    onToggleAlarm = { viewmodel.onToggleAlarm() },
+                    onToggleAlarmWithDelay = { viewmodel.onToggleAlarmWithDelay(2) },
                     onRadiusChange = { radius -> viewmodel.onRadiusChanged(radius) },
                     onTapLocationIcon = { viewmodel.onTapLocationIcon() },
-                    onFinishFlyingToUsersLocation = { viewmodel.onFinishFlyingToUsersLocation() },
-                    onRequestNotificationPermissions = { notificationPermissionState.launchPermissionRequest() }
+                    onFinishFlyingToUsersLocation = { viewmodel.onFinishFlyingToUsersLocation() }
                 )
             } else if (state.locationPermissionState == PermissionState.Unknown) {
                 LocationPermissionsRequiredScreen {

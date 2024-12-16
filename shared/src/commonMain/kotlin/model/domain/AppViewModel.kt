@@ -15,26 +15,23 @@ open class AppViewModel : ViewModel() {
     @NativeCoroutinesState
     val state: StateFlow<MapFeatureState> = _state.asStateFlow()
 
-    fun onLocationPermissionResult(granted: Boolean) {
-        onLocationPermissionResult(if (granted) PermissionState.Granted else PermissionState.Denied)
-    }
-
     fun onLocationPermissionResult(state: PermissionState) {
-        Logger.d { "Location permission state: $state" }
+        Logger.d { "Location permission updated: $state" }
         _state.update { current ->
             current.copy(locationPermissionState = state)
         }
     }
 
     fun onNotificationPermissionResult(granted: Boolean) {
-        Logger.d { "Notification permission granted: $granted" }
-        _state.update { current ->
-            current.copy(
-                notificationPermissionState = if (granted) PermissionState.Granted else PermissionState.Denied
-            )
-        }
+        onNotificationPermissionResult(if (granted) PermissionState.Granted else PermissionState.Denied(false))
+    }
+
+    fun onNotificationPermissionResult(state: PermissionState) {
+        Logger.d { "Notification permission updated: $state" }
+        _state.update { current -> current.copy(notificationPermissionState = state) }
+
         // If notification permissions are granted and the user is requesting the enable the alarm, we should honor this
-        if (granted && _state.value.userRequestedAlarmEnable) {
+        if (state == PermissionState.Granted && _state.value.userRequestedAlarmEnable) {
             onSetAlarm(true)
         }
     }

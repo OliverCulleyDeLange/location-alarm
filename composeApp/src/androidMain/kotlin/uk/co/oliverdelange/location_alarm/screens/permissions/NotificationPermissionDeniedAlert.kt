@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun NotificationPermissionDeniedAlert(
+    shouldShowRationale: Boolean,
     requestPermissions: () -> Unit
 ) {
     Column(
@@ -27,17 +28,27 @@ fun NotificationPermissionDeniedAlert(
         Text(
             text = "Notification Permission Denied",
             color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(bottom = 4.dp)
         )
         Text(
             text = "You have denied notification permissions. This is required to alert you when you have reached your destination.",
             color = MaterialTheme.colorScheme.onErrorContainer,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(bottom = 4.dp)
         )
-        TextButton(onClick = { requestPermissions() }) {
+        if (shouldShowRationale) {
+            TextButton(onClick = { requestPermissions() }) {
+                Text(
+                    text = "Allow Notification Permissions",
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        } else {
             Text(
-                text = "Allow Notification Permissions",
-                color = MaterialTheme.colorScheme.error
+                "Please go to settings to enable notification permissions",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
@@ -45,6 +56,9 @@ fun NotificationPermissionDeniedAlert(
 
 @Preview
 @Composable
-fun NotificationPermissionDeniedAlert_Preview() {
-    NotificationPermissionDeniedAlert { }
+private fun NotificationPermissionDeniedAlert_Preview() {
+    Column {
+        NotificationPermissionDeniedAlert(true) { }
+        NotificationPermissionDeniedAlert(false) { }
+    }
 }

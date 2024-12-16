@@ -88,17 +88,17 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             logger.debug("Location access granted")
-            delegate?.onLocationPermissionChanged(state: PermissionState.granted)
+            delegate?.onLocationPermissionChanged(state: PermissionStateGranted())
             if (shouldStartListeningAfterPermissionGranted){
                 listenForUpdates()
                 shouldStartListeningAfterPermissionGranted = false
             }
         case .denied, .restricted:
             logger.debug("Location access denied or restricted")
-            delegate?.onLocationPermissionChanged(state: PermissionState.denied)
+            delegate?.onLocationPermissionChanged(state: PermissionStateDenied(shouldShowRationale: false))
         case .notDetermined:
             logger.debug("Location access not determined yet")
-            delegate?.onLocationPermissionChanged(state: PermissionState.unknown)
+            delegate?.onLocationPermissionChanged(state: PermissionStateUnknown())
         @unknown default:
             logger.error("Unknown authorization status")
         }

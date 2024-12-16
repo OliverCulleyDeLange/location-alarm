@@ -18,6 +18,8 @@ granted.
     - [ ] I tap 'allow while using app' - I see the map screen
     - [ ] I tap 'don't allow' - I see location permissions denied message
 - [ ] Location permissions denied previously - I see location permissions denied message
+- [ ] Deny location permissions - Manually enable via settings - Reopen app (don't force close) - I
+  see the map screen
 
 ## Notification Permissions
 
@@ -26,8 +28,11 @@ Notification permissions are requested the first time the alarm is enabled.
 - [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is enabled
 - [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
   permissions denied message - 'Enable alarm' button is disabled
-- [ ] Notification permissions denied previously - On map screen - I see notification permissions
+- [ ] Notification permissions denied previously - Open app - On map screen - I see notification
+  permissions
   denied message - 'Enable alarm' button is disabled
+- [ ] Notification permissions denied previously - Manually enable in settings - Open app - On map
+  screen - 'Enable alarm' works as expected
 
 ## Set Geofence
 

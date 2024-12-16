@@ -8,7 +8,7 @@ struct iOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if (viewModel.state.locationPermissionState == Shared.PermissionState.granted){
+            if (viewModel.state.locationPermissionState is Shared.PermissionStateGranted){
                 MapScreen(
                     viewModel: viewModel
                 )
@@ -18,7 +18,7 @@ struct iOSApp: App {
                         viewModel.onSetAlarm(enabled: false)
                     }
                 }
-            } else if (viewModel.state.locationPermissionState == Shared.PermissionState.unknown) {
+            } else if (viewModel.state.locationPermissionState is Shared.PermissionStateUnknown) {
                 LocationPermissionsRequiredScreen {
                     viewModel.onTapAllowLocationPermissions()
                 }

@@ -1,5 +1,6 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -24,6 +25,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
@@ -31,12 +34,13 @@ import mapbox.MapboxIDs
 import model.domain.Location
 import model.domain.MapFeatureState
 import model.domain.granted
+import model.domain.shouldShowRationale
 import uk.co.oliverdelange.location_alarm.helpers.isDebug
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
 
-@OptIn(MapboxExperimental::class)
+@OptIn(MapboxExperimental::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
     state: MapFeatureState,
@@ -48,9 +52,10 @@ fun MapScreen(
     onRadiusChange: (Int) -> Unit,
     onTapLocationIcon: () -> Unit,
     onFinishFlyingToUsersLocation: () -> Unit,
-    onRequestNotificationPermissions: () -> Unit,
 ) {
     Box {
+        val notificationPermissionState = rememberPermissionState(POST_NOTIFICATIONS)
+
         val geofenceSourceState = rememberGeoJsonSourceState(sourceId = MapboxIDs.SOURCE_GEOFENCE)
         // Update geofence geojson source only when geofence location or radius changes
         LaunchedEffect(state.geoFenceLocation, state.perimeterRadiusMeters) {
@@ -85,7 +90,8 @@ fun MapScreen(
         ) {
             if (state.shouldShowNotificationPermissionDeniedMessage) {
                 NotificationPermissionDeniedAlert(
-                    requestPermissions = { onRequestNotificationPermissions() }
+                    state.notificationPermissionState.shouldShowRationale(),
+                    requestPermissions = { notificationPermissionState.launchPermissionRequest() }
                 )
             }
             if (state.alarmEnabled) {
@@ -144,4 +150,4 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {})
