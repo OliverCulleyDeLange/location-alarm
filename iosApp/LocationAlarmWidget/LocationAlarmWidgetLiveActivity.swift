@@ -40,7 +40,7 @@ struct LocationAlarmWidgetLiveActivity: Widget {
             // Expanded UI
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    LocationAlarmIcons(state: context.state)
+                    LocationAlarmIcons(alarmTriggered: context.state.alarmTriggered)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     Text("\(getText(context))")
@@ -48,7 +48,7 @@ struct LocationAlarmWidgetLiveActivity: Widget {
             }
             // Compact UI
             compactLeading: {
-                LocationAlarmIcons(state: context.state)
+                LocationAlarmIcons(alarmTriggered: context.state.alarmTriggered)
             }
             compactTrailing: {
                 let text = context.state.alarmTriggered ? "Arrived!" :
@@ -59,7 +59,7 @@ struct LocationAlarmWidgetLiveActivity: Widget {
             }
             // Minimal UI
             minimal: {
-                Image(systemName: "location")
+                Image("LocationAlarmIcon")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .foregroundStyle(context.state.alarmTriggered ? Color.orange : Color.green)
@@ -99,26 +99,4 @@ extension LocationAlarmWidgetAttributes.ContentState {
     LocationAlarmWidgetLiveActivity()
 } contentStates: {
     LocationAlarmWidgetAttributes.ContentState.withDistanceTriggered
-}
-
-struct LocationAlarmIcons: View {
-    let state: LocationAlarmWidgetAttributes.ContentState
-    
-    var body: some View {
-        HStack {
-            Image(systemName: "location")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(.primary)
-            Image(systemName: "alarm")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(.primary)
-            Image(systemName: state.alarmTriggered ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(state.alarmTriggered ? .orange : .green)
-                .padding(2)
-        }
-    }
 }
