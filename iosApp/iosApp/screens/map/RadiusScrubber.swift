@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// UI Component that allows dragging the radius value up and down
 struct RadiusScrubber: View {
     @State var radiusMeters: Int32
     var onRadiusChanged: (Int32) -> Void = {_ in}
@@ -34,7 +35,7 @@ struct RadiusScrubber: View {
                             }
                             // *5 just to increase the rate of change a bit
                             radiusMeters = Int32(radiusAtDragStart! - (change.translation.height * 5))
-                            //FIXME This logic exists in the viewmodel but isn't recpected here
+                            //FIXME This logic exists in the viewmodel but isn't respected here
                             if (radiusMeters < 10) { radiusMeters = 10}
                             onRadiusChanged(Int32(radiusMeters))
                             

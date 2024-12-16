@@ -41,12 +41,12 @@ struct MapScreen: View {
             
             VStack(alignment: .trailing) {
                 Spacer()
-                // FIXME Move strings to viewmodel & handle optionalness
                 if (viewModel.state.shouldShowNotificationPermissionDeniedMessage){
                     NotificationPermissionDeniedAlert()
                 }
                 
                 if (viewModel.state.alarmEnabled){
+                    // FIXME Move strings to viewmodel & handle optionalness
                     Text("\(viewModel.state.distanceToGeofencePerimeter?.stringValue ?? "?")m -> Alarm")
                     .font(.caption)
                     .padding(8)

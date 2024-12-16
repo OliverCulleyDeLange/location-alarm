@@ -2,13 +2,16 @@ import Foundation
 import Shared
 import MapboxMaps
 
+/// Handles requesting location updates and permissions.
+/// A wrapper for CLLocationManager
 class LocationService: NSObject, CLLocationManagerDelegate {
-    var locationManager: CLLocationManager = CLLocationManager()
     public var delegate: LocationServiceDelegate? = nil
     
+    private var locationManager: CLLocationManager = CLLocationManager()
     private var listeningForLocationUpdates: Bool = false
     private var shouldStartListeningAfterPermissionGranted: Bool = false
     
+    /// A delegate which receives location updates and permission changes
     protocol LocationServiceDelegate {
         func onLocationUpdate(locations: Array<Shared.Location>)
         func onLocationPermissionChanged(state: PermissionState)
@@ -49,7 +52,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func listenForUpdates() {
-        logger.debug("listenForUpdates")
+        logger.debug("listenForUpdates request")
         if (!listeningForLocationUpdates){
             logger.debug("actually listening for updates")
             locationManager.allowsBackgroundLocationUpdates = true

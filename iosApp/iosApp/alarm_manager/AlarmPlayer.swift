@@ -1,6 +1,7 @@
 
 import AudioToolbox
 
+/// Handles playing alarm sounds 
 class AlarmPlayer {
     // Whether the alarm sound shoul play because playAlarm has been called
     private var shouldPlay: Bool = false

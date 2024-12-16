@@ -4,14 +4,15 @@ import Foundation
 import Combine
 import KMPNativeCoroutinesCombine
 
+/// App side view model. Extends the shared kotlin view model and adds IOS specific functions.
 class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationServiceDelegate {
     private var locationService: LocationService = LocationService()
     private var alarmManager: AlarmManager = AlarmManager.shared
-    private var activityManager: ActivityManager = ActivityManager.shared
+    private var activityManager: LiveActivityManager = LiveActivityManager.shared
     
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var alarmButtonText: String  = "Disable alarm"
+    @Published var alarmButtonText: String  = "Enable alarm"
     
     override init() {
         super.init()
@@ -37,12 +38,12 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
                     if (alarmEnabled){
                         /// TODO Location should already be listening if the app if foregrounded, so i don't think this is required
                         self.locationService.checkLocationPermissionsAndStartListening()
-                        await ActivityManager.shared.start(
+                        await LiveActivityManager.shared.start(
                             newDistanceToAlarm: self.state.distanceToGeofencePerimeter?.intValue,
                             alarmTriggered: self.state.alarmTriggered
                         )
                     } else {
-                        await ActivityManager.shared.stop()
+                        await LiveActivityManager.shared.stop()
                     }
                 }
             }
@@ -64,7 +65,7 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
                     return
                 }
                 Task {
-                    await ActivityManager.shared.updateActivity(
+                    await LiveActivityManager.shared.updateActivity(
                         newDistanceToAlarm: distanceToAlarm,
                         alarmTriggered: holder.alarmTriggered
                     )

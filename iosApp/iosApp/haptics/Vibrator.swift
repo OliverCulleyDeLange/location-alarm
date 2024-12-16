@@ -1,5 +1,6 @@
 import CoreHaptics
 
+/// Sexy class handling good vibrations
 class Vibrator {
     private var hapticEngine: CHHapticEngine?
     private var player: CHHapticAdvancedPatternPlayer? = nil
@@ -31,7 +32,7 @@ class Vibrator {
         do {
             let events: [CHHapticEvent] = [
                 CHHapticEvent(
-                    eventType: .hapticTransient, // Short vibration
+                    eventType: .hapticTransient,
                     parameters: [],
                     relativeTime: 0.0
                 ),

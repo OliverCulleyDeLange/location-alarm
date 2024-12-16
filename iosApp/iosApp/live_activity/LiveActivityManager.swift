@@ -3,10 +3,11 @@ import Combine
 import Foundation
 import UserNotifications
 
-final class ActivityManager: ObservableObject {
+/// Handles creation and destruction of Live Activities (Widget used as a persistent notification)
+final class LiveActivityManager: ObservableObject {
     @MainActor @Published private(set) var activityID: String?
     
-    static let shared = ActivityManager()
+    static let shared = LiveActivityManager()
     
     func start(newDistanceToAlarm: Int?, alarmTriggered: Bool) async {
         await stop()
