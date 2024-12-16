@@ -25,11 +25,18 @@ struct LocationAlarmWidgetLiveActivity: Widget {
         ActivityConfiguration(for: LocationAlarmWidgetAttributes.self) { context in
             // Live Activity UI
             HStack {
+                Image("Icon")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundStyle(.primary)
+                Spacer().frame(width: 8)
                 Text("\(getText(context))")
+                    .multilineTextAlignment(.center)
                     .fontWeight(.bold)
                     .foregroundStyle(.primary)
                     
                 if (context.state.alarmTriggered){
+                    Spacer().frame(width: 16)
                     Link(destination: URL(string: "uk.co.oliverdelange.locationalarm://action/stop_alarm")!) {
                         Text("Stop Alarm")
                     }
