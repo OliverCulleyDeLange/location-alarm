@@ -32,7 +32,7 @@ struct MapScreen: View {
                     .resizable()
                     .frame(width: 40, height: 40)
                     .foregroundStyle(Color(.primary))
-                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 0))
+                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 32, trailing: 0))
                     .onTapGesture { viewModel.onTapLocationIcon() }
                     .ignoresSafeArea()
                 
