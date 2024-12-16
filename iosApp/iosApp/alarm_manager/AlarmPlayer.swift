@@ -1,34 +1,29 @@
 
 import AudioToolbox
+import AVFoundation
+import UIKit
 
-/// Handles playing alarm sounds 
+/// Handles playing alarm sounds
 class AlarmPlayer {
-    // Whether the alarm sound shoul play because playAlarm has been called
-    private var shouldPlay: Bool = false
-    // Whether the alarm sound is currently playing - used for sound looping mechanism
-    private var isPlaying: Bool = false
-    // Task which runs the sound playing, for cancallation
-    private var task: Task<Void, any Error>? = nil
+    var audioPlayer: AVAudioPlayer?
     
     func playAlarm() {
-        shouldPlay = true
-        task = Task {
-            while (shouldPlay){
-                if (isPlaying){
-                    try await sleepFor(milliseconds: 100)
-                } else {
-                    isPlaying = true
-                    // https://github.com/TUNER88/iOSSystemSoundsLibrary
-                    AudioServicesPlaySystemSoundWithCompletion(1304) {
-                        self.isPlaying = false
-                    }
-                }
-            }
+        guard let audioData = NSDataAsset(name: "AlarmSound")?.data else {
+            fatalError("AlarmSound asset doesn't exist")
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(data: audioData)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } catch {
+            print("Error initializing audio player: \(error.localizedDescription)")
+            
         }
     }
     
     func stopAlarm() {
-        shouldPlay = false
-        task?.cancel()
+        audioPlayer?.stop()
+        audioPlayer = nil
     }
 }
