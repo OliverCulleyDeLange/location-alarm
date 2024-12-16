@@ -19,7 +19,7 @@ import uk.co.oliverdelange.location_alarm.ui.theme.errorLight
  * */
 fun buildAlarmNotification(context: Context, title: String, subtitle: String, alarmTriggered: Boolean): Notification {
     return Notification.Builder(context, NOTIFICATION_CHANNEL_ID_MAIN)
-        .setSmallIcon(R.drawable.ic_notification_icon)
+        .setSmallIcon(R.drawable.ic_location_alarm)
         .setContentTitle(title)
         .setContentText(subtitle)
         .setContentIntent(
