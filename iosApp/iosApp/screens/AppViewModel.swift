@@ -87,14 +87,10 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
             .sink { alarmTriggered in
                 if (alarmTriggered){
                     self.alarmManager.startAlarm()
-                    if #available(iOS 16.2, *) {} else {
-                        self.notificationManager.createAlarmNotification()
-                    }
+                    self.notificationManager.createAlarmNotification()
                 } else {
                     self.alarmManager.stopAlarm()
-                    if #available(iOS 16.2, *) {} else {
-                        self.notificationManager.removeAlarmNotification()
-                    }
+                    self.notificationManager.removeAlarmNotification()
                 }
             }
             .store(in: &cancellables)
