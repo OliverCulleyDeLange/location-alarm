@@ -66,7 +66,7 @@ struct LocationAlarmWidgetLiveActivity: Widget {
             }
             // Minimal UI
             minimal: {
-                Image("LocationAlarmIcon")
+                Image("Icon")
                     .resizable()
                     .frame(width: 20, height: 20)
                     .foregroundStyle(context.state.alarmTriggered ? Color.orange : Color.green)
