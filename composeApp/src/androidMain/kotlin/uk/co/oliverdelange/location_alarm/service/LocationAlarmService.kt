@@ -99,15 +99,17 @@ class LocationAlarmService : Service() {
         serviceScope.launch {
             viewModel.state.map { it.alarmTriggered }.distinctUntilChanged().collect { alarmTriggered ->
                 if (alarmTriggered) {
-                    Timber.d("Triggering alarm sound & vibration")
                     alarmPlayer?.let {
-                        if (!it.isPlaying) it.start()
+                        if (!it.isPlaying) {
+                            Timber.d("Triggering alarm sound & vibration")
+                            it.start()
+                        }
                     } ?: Timber.e("Alarm player is null")
                     vibrator.vibrateAlarm()
                 } else {
-                    Timber.d("Stopping alarm sound & vibration")
                     alarmPlayer?.let {
                         if (it.isPlaying) {
+                            Timber.d("Stopping alarm sound & vibration")
                             it.stop()
                             it.prepare()
                         }

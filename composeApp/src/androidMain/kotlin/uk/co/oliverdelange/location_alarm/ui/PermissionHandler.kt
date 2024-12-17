@@ -11,7 +11,6 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import model.domain.PermissionState
-import timber.log.Timber
 
 /**
  * A horribly complicated wrapper to handle the fact that the android permissions
@@ -56,7 +55,6 @@ fun PermissionHandler(
     // This means that the user has fully denied the permission
     LaunchedEffect(hasRequestedPermissions) {
         if (hasRequestedPermissions && !permissionState.status.isGranted && prevShouldShowRationale == permissionState.status.shouldShowRationale) {
-            Timber.w("OCD request but denied and unchanged")
             onPermissionChanged(PermissionState.Denied(permissionState.status.shouldShowRationale))
         }
     }

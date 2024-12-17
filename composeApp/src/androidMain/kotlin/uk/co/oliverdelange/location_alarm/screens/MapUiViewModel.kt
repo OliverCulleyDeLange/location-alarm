@@ -35,12 +35,19 @@ class MapUiViewModel(val context: Context, val stringProvider: StringProvider) :
                 val intent = Intent(context, LocationAlarmService::class.java)
                 if (enabled) {
                     Timber.i("Starting LocationAlarmService")
+                    // TODO Check if wunning before starting
                     context.startForegroundService(intent)
                 } else {
                     Timber.i("Stopping LocationAlarmService")
+                    // TODO Check if running before stopping
                     context.stopService(intent)
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        Timber.w("onCleared MapUiViewModel")
+        super.onCleared()
     }
 }

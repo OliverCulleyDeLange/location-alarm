@@ -8,6 +8,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.di.androidModule
+import uk.co.oliverdelange.location_alarm.logging.CustomDebugTree
 
 class MainApplication : Application() {
 
@@ -20,7 +21,7 @@ class MainApplication : Application() {
             modules(sharedModule + androidModule)
         }
         setupSharedLogging()
-        Timber.plant(Timber.DebugTree())
+        Timber.plant(CustomDebugTree())
         Timber.d("Koin started")
     }
 }
