@@ -124,8 +124,8 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
     /// Request location updates when map is open to update the geofence location initially
     func onViewDidAppear() {
         locationService.checkLocationPermissionsAndStartListening()
-        notificationManager.checkPermissions{ granted in
-            self.onNotificationPermissionResult(granted: granted)
+        notificationManager.checkPermissions{ state in
+            self.onNotificationPermissionResult(state: state)
         }
     }
     

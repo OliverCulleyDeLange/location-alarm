@@ -1,5 +1,5 @@
 import UserNotifications
-
+import Shared
 
 /// Handles firing local notifications
 class NotificationManager {
@@ -48,11 +48,21 @@ class NotificationManager {
         }
     }
     
-    func checkPermissions(onNotificationPermissionResult: @escaping (Bool) -> Void) {
+    func checkPermissions(onNotificationPermissionResult: @escaping (PermissionState) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
-                let hasNotificationPermission = settings.authorizationStatus == .authorized
-                onNotificationPermissionResult(hasNotificationPermission)
+                let state: PermissionState = {switch(settings.authorizationStatus) {
+                case .authorized, .ephemeral:
+                    return PermissionStateGranted()
+                case .denied, .provisional:
+                    return PermissionStateDenied(shouldShowRationale: true)
+                case .notDetermined:
+                    return PermissionStateUnknown()
+                @unknown default:
+                    logger.error("Unexpected code path")
+                    return PermissionStateUnknown()
+                }}()
+                onNotificationPermissionResult(state)
             }
         }
     }
