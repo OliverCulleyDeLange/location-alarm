@@ -1,4 +1,4 @@
-# QA
+# QA ✅❌
 
 ## What is this?
 
@@ -6,6 +6,8 @@
   with the version number and platform like `QA_1.0.0_android.md`
 - Ideally replace these with automated UI tests eventually.
 - Acts as a complete list of everything the app should do.
+
+Copy me, paste me ✅ ❌
 
 ## Location Permissions
 
@@ -16,7 +18,7 @@ granted.
   - [ ] I see location permissions rationale
   - I tap 'allow location access'
     - [ ] I see location permission dialog
-    - I tap 'allow once'
+    - I tap 'allow once' (IOS) / 'Only this time' (Android)
       - [ ] I see the map screen
       - [ ] I see the map screen - I force close and reopen app - I see location permissions
         rationale

@@ -1,9 +1,9 @@
-# QA
+# QA ✅❌
 
 ## What is this?
 
-- Manual tests to complete before releasing. Copy this file into the [qa](./qa) directory and rename
-  with the version number like `QA_1.0.0.md`
+- Manual tests to complete before releasing. Copy this file into the [qa]() directory and rename
+  with the version number and platform like `QA_1.0.0_android.md`
 - Ideally replace these with automated UI tests eventually.
 - Acts as a complete list of everything the app should do.
 
@@ -20,14 +20,11 @@ granted.
         - ✅ I see location permission dialog
         - I tap 'allow once' (IOS) / 'Only this time' (Android)
             - ✅ I see the map screen
-            - ❌ I see the map screen - I force close and reopen app - I see location permissions
+            - ✅ I see the map screen - I force close and reopen app - I see location permissions
               rationale
-                - `Potentially i don't understand how the once permission works on android`
-        - [ ] I tap 'allow while using app' - I see the map screen
+        - ✅ I tap 'allow while using app' - I see the map screen
         - ✅ I tap 'don't allow' - I see location permissions denied message
-- ❌ Location permissions denied previously - I see location permissions denied message
-    -
-    `I saw rationale, and when i denied again then i saw the denied message. The next time, same thing, except when i tapped allow it went straight to the denied message. Probably just a quick of the permissions system`
+- ✅ Location permissions denied previously - I see location permissions denied message
 - ✅ Deny location permissions - Manually enable via settings - Reopen app (don't force close) - I
   see the map screen
 
@@ -35,14 +32,13 @@ granted.
 
 Notification permissions are requested the first time the alarm is enabled.
 
-- ✅Fresh app install - On map screen - Tap enable alarm - I see notification permissions dialog
-- ✅❌Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is enabled
-    -
-    `alarm enabled but saw 'nullm -> alarm' as emulator didn't have internet connection, so no known distance to alarm`
-- ✅Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
+- ✅ Fresh app install - On map screen - Tap enable alarm - I see notification permissions dialog
+- ✅ Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is enabled
+- ✅ Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
   permissions denied message - 'Enable alarm' button is disabled
 - ✅ Notification permissions denied previously - Open app - On map screen - I see notification
-  permissions denied message - 'Enable alarm' button is disabled
+  permissions
+  denied message - 'Enable alarm' button is disabled
 - ✅ Notification permissions denied previously - Manually enable in settings - Open app - On map
   screen - 'Enable alarm' works as expected
 
