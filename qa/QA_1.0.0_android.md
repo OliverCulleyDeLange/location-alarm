@@ -123,18 +123,12 @@ See [Notification Permissions](#notification-permissions).
 ### Platform specific
 
 - ✅ Android system alarm volume is respected
-- [ ] IOS Dynamic Island works on iPhone 14Pro and above
 - [ ] Android emulator crap check:
     - [ ] Android 12 (31)
     - [ ] Android 13 (33)
     - [ ] Android 14 (34)
     - [ ] Android 15 (35)
     - [ ] Android 16 (36) (preview)
-- [ ] IOS simulator crap check:
-    - [ ] IOS 15
-    - [ ] IOS 16
-    - [ ] IOS 17
-    - [ ] IOS 18
 
 ## Fly to current location
 

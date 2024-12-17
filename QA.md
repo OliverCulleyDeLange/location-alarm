@@ -107,11 +107,19 @@ See [Notification Permissions](#notification-permissions).
 - Location alarm works as in [alarm triggered](#alarm-triggered) when:
   - [ ] I have battery saver mode enabled
   - [ ] My phone is on silent
+- [ ] When i have headphones connected, the alarm is heard through the headphones
 
 ### Platform specific
 
 - [ ] Android system alarm volume is respected
 - [ ] IOS Dynamic Island works on iPhone 14Pro and above
+  - Minimal icon is white when active, and orange when triggered
+  - Compact view shows icon in white and green check when active, and orange warning triangle when
+    triggered
+  - Compact Text says distance when active and 'Arrived!' when triggered
+  - Expanded view shows icon in white and green check when active, and orange warning triangle when
+    triggered
+  - Compact Text says distance when active and 'You have reached your destination!' when triggered
 - [ ] Android emulator crap check:
   - [ ] Android 12 (31)
   - [ ] Android 13 (33)
