@@ -46,8 +46,7 @@ struct MapScreen: View {
                 }
                 
                 if (viewModel.state.alarmEnabled){
-                    // FIXME Move strings to viewmodel & handle optionalness
-                    Text("\(viewModel.state.distanceToGeofencePerimeter?.stringValue ?? "?")m -> Alarm")
+                    Text(viewModel.distanceToAlarmText)
                     .font(.caption)
                     .padding(8)
                     .background(Color(.primaryContainer))

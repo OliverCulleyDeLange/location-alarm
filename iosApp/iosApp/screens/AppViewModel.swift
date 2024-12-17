@@ -13,6 +13,7 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
     private var cancellables = Set<AnyCancellable>()
     
     @Published var alarmButtonText: String  = "Enable alarm"
+    @Published var distanceToAlarmText: String  = ""
     
     override init() {
         super.init()
@@ -23,7 +24,10 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
             .assertNoFailure()
             .removeDuplicates()
             .sink { state in
+                //FIXME seems kind pointless duplicating strings in both app projects
+                // I know android has good string handling but ios doesn't really, so might make sense to handle in shared code
                 self.alarmButtonText = state.alarmEnabled ? "Disable alarm" : "Enable Alarm"
+                self.distanceToAlarmText = state.distanceToGeofencePerimeter != nil ? "\(state.distanceToGeofencePerimeter)m to alarm" : "Alarm active"
             }
             .store(in: &cancellables)
         

@@ -24,7 +24,11 @@ granted.
         rationale
     - [ ] I tap 'allow while using app' - I see the map screen
     - [ ] I tap 'don't allow' - I see location permissions denied message
-- [ ] Location permissions denied previously - I see location permissions denied message
+- [ ] IOS: Location permissions denied previously - I see location permissions denied message
+- [ ] Android: Location permissions denied previously - I see location permissions rationale
+- [ ] Android: Location permissions denied previously - I tap 'allow location access' - I Deny - I
+  see location permissions denied message
+
 - [ ] Deny location permissions - Manually enable via settings - Reopen app (don't force close) - I
   see the map screen
 

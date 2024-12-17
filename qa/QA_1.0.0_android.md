@@ -25,9 +25,9 @@ granted.
                 - `Potentially i don't understand how the once permission works on android`
       - ✅ I tap 'allow while using app' - I see the map screen
         - ✅ I tap 'don't allow' - I see location permissions denied message
-- ❌ Location permissions denied previously - I see location permissions denied message
-    -
-    `I saw rationale, and when i denied again then i saw the denied message. The next time, same thing, except when i tapped allow it went straight to the denied message. Probably just a quick of the permissions system`
+- ✅ Location permissions denied previously - I see location permissions rationale
+- ✅ Location permissions denied previously - I tap 'allow location access' - I Deny - I see location
+  permissions denied message
 - ✅ Deny location permissions - Manually enable via settings - Reopen app (don't force close) - I
   see the map screen
 
@@ -36,9 +36,7 @@ granted.
 Notification permissions are requested the first time the alarm is enabled.
 
 - ✅Fresh app install - On map screen - Tap enable alarm - I see notification permissions dialog
-- ✅❌Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is enabled
-    -
-    `alarm enabled but saw 'nullm -> alarm' as emulator didn't have internet connection, so no known distance to alarm`
+- ✅Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is enabled
 - ✅Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
   permissions denied message - 'Enable alarm' button is disabled
 - ✅ Notification permissions denied previously - Open app - On map screen - I see notification
@@ -119,6 +117,10 @@ See [Notification Permissions](#notification-permissions).
     - ✅ I have battery saver mode enabled (Not tested with extreme as i don't think i should support
       that)
     - ✅ My phone is on silent
+- ✅ My device (emulator) doesn't have internet - I open the app and enable the alarm - I see 'Alarm
+  active' in place of distance to alarm
+    -
+    `Ideally we should disable the enable alarm button until users location is known and there's a geofence. Added to TODO P1`
 
 ### Platform specific
 

@@ -102,7 +102,10 @@ fun MapScreen(
                         .background(MaterialTheme.colorScheme.secondaryContainer)
                         .padding(8.dp)
                 ) {
-                    Text("${state.distanceToGeofencePerimeter}m -> Alarm", color = MaterialTheme.colorScheme.secondary)
+                    val text = state.distanceToGeofencePerimeter?.let {
+                        "${it}m to alarm"
+                    } ?: "Alarm active"
+                    Text(text, color = MaterialTheme.colorScheme.secondary)
                 }
             }
             if (isDebug()) {

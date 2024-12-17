@@ -7,6 +7,8 @@
 
 # Priority 1
 
+- Disable enable alarm button if no current location or geofence
+  - On tap show alert explaining why disabled
 - M Tutorial
 - S Draw path of route while alarm enabled
 - L Unit Tests & refactoring
