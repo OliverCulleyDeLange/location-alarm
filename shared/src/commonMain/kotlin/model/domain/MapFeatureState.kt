@@ -37,12 +37,19 @@ data class MapFeatureState(
     /** Whether the alarm should be allowed to trigger due to [alarmTriggerDelayLocationHistorySize] */
     private val alarmNotDelayed = usersLocationHistory.size > alarmTriggerDelayLocationHistorySize
 
-    // If the user has denied notification permissions, we should disable the button
-    val enableAlarmButtonEnabled = notificationPermissionState !is PermissionState.Denied
+    /** Enable the alarm button if:
+     * - User has not denied notification permissions
+     * - We know the users current location
+     * - Geofence is set
+     * */
+    val enableAlarmButtonEnabled = notificationPermissionState !is PermissionState.Denied &&
+        usersLocation != null &&
+        geoFenceLocation != null
 
     // Whether the alarm has been triggered (the users location is within the geofence bounds)
     val alarmTriggered = alarmNotDelayed && alarmEnabled && distanceToGeofencePerimeter?.let { it <= 0 } ?: false
 
     // If a user denied notification permissions when trying to enable the alarm, show a UI message
     val shouldShowNotificationPermissionDeniedMessage = notificationPermissionState is PermissionState.Denied
+
 }

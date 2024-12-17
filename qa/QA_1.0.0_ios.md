@@ -114,7 +114,7 @@ See [Notification Permissions](#notification-permissions).
 - Location alarm works as in [alarm triggered](#alarm-triggered) when:
     - ✅ I have battery saver mode enabled
     - ✅❌ My phone is on silent
-        - `Sound isn't heard hwen in silent`
+        - `Sound isn't heard when in silent`
 
 ### Platform specific
 
