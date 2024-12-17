@@ -98,9 +98,9 @@ See [Notification Permissions](#notification-permissions).
 
 #### Update Alarm Geofence while alarm enabled
 
-- Map screen - Tap enable alarm - Increase radius until my location is within geofence - Alarm
+- [ ] Map screen - Tap enable alarm - Increase radius until my location is within geofence - Alarm
   sounds & vibrates
-- Map screen - Tap enable alarm - Tap my location on the map - Alarm sounds & vibrates
+- [ ] Map screen - Tap enable alarm - Tap my location on the map - Alarm sounds & vibrates
 
 ### Edge cases
 
