@@ -31,7 +31,7 @@ import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 
 class LocationAlarmService : Service() {
     companion object {
-        val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
+        const val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
     }
 
     private val notificationId = 60494
@@ -57,7 +57,7 @@ class LocationAlarmService : Service() {
             setAudioAttributes(alarmAudioAttributes)
             isLooping = true
             prepare()
-            setOnErrorListener { mp, what, extra ->
+            setOnErrorListener { _, what, extra ->
                 Timber.e("Media player occurred: what=$what, extra=$extra")
                 true
             }
@@ -125,8 +125,9 @@ class LocationAlarmService : Service() {
                 .distinctUntilChanged()
                 .collect { (distanceToGeofencePerimeter, alarmTriggered) ->
                     distanceToGeofencePerimeter?.let {
-                        if (checkPermission()) {
+                        if (checkNotificationPermission()) {
                             val notificationManager = NotificationManagerCompat.from(this@LocationAlarmService)
+                            Timber.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
                             notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
                         }
                     }
@@ -153,7 +154,7 @@ class LocationAlarmService : Service() {
         return null // We're not allowing binding
     }
 
-    private fun checkPermission() = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    private fun checkNotificationPermission() = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
 
     private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?, alarmTriggered: Boolean): Notification {
         val subtitle = when {
