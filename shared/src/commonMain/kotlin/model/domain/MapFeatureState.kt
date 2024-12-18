@@ -1,7 +1,10 @@
 package model.domain
 
 data class MapFeatureState(
+    val shouldRequestNotificationPermissions: Boolean = false,
     val notificationPermissionState: PermissionState = PermissionState.Unknown,
+
+    val shouldRequestLocationPermissions: Boolean = false,
     val locationPermissionState: PermissionState = PermissionState.Unknown,
     // Most up to date user location - may be used fort the geofence if they haven't manually moved it
     val usersLocation: Location? = null,

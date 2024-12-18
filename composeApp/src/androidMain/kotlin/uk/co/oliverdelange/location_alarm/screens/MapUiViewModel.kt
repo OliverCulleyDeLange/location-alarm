@@ -47,7 +47,7 @@ class MapUiViewModel(val context: Context, val stringProvider: StringProvider) :
     }
 
     override fun onCleared() {
-        Timber.w("onCleared MapUiViewModel")
+        Timber.d("onCleared MapUiViewModel")
         super.onCleared()
     }
 }

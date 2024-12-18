@@ -99,17 +99,6 @@ struct MapScreen: View {
             logger.debug("Did receive UIApplication.didEnterBackgroundNotification")
             viewModel.onViewDidDissapear()
         }
-        // TODO I'm not sure about these stacked tasks - they feel a bit clunky code cleanliness wise.
-        // Maybe Just extracting the functions out will help?
-        // There's probably a smarter way to use the observable state here
-        .task(id: viewModel.state.userRequestedAlarmEnable) {
-            if(
-                viewModel.state.userRequestedAlarmEnable &&
-                !(viewModel.state.notificationPermissionState is Shared.PermissionStateGranted)
-            ){
-                viewModel.requestNotificationPermissions()
-            }
-        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea()
     }

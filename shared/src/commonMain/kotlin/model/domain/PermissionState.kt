@@ -7,6 +7,6 @@ sealed interface PermissionState {
 }
 
 
-fun PermissionState.granted(): Boolean = this == PermissionState.Granted
+fun PermissionState.granted(): Boolean = this is PermissionState.Granted
 fun PermissionState.shouldShowRationale(): Boolean = this is PermissionState.Denied && this.shouldShowRationale
 

@@ -15,10 +15,22 @@ open class AppViewModel : ViewModel() {
     @NativeCoroutinesState
     val state: StateFlow<MapFeatureState> = _state.asStateFlow()
 
+    fun onTapAllowLocationPermissions() {
+        Logger.d { "onTapAllowLocationPermissions" }
+        _state.update { it.copy(shouldRequestLocationPermissions = true) }
+    }
+
+    fun onRequestedLocationPermissions() {
+        _state.update { it.copy(shouldRequestLocationPermissions = false) }
+    }
+
     fun onLocationPermissionResult(state: PermissionState) {
         Logger.d { "Location permission updated: $state" }
         _state.update { current ->
-            current.copy(locationPermissionState = state)
+            current.copy(
+                locationPermissionState = state,
+                shouldRequestLocationPermissions = false,
+            )
         }
     }
 
@@ -28,7 +40,12 @@ open class AppViewModel : ViewModel() {
 
     fun onNotificationPermissionResult(state: PermissionState) {
         Logger.d { "Notification permission updated: $state" }
-        _state.update { current -> current.copy(notificationPermissionState = state) }
+        _state.update { current ->
+            current.copy(
+                notificationPermissionState = state,
+                shouldRequestNotificationPermissions = false,
+            )
+        }
 
         // If notification permissions are granted and the user is requesting the enable the alarm, we should honor this
         if (state == PermissionState.Granted && _state.value.userRequestedAlarmEnable) {
@@ -112,7 +129,12 @@ open class AppViewModel : ViewModel() {
             }
 
             else -> {
-                _state.update { state -> state.copy(userRequestedAlarmEnable = true) }
+                _state.update { state ->
+                    state.copy(
+                        userRequestedAlarmEnable = true,
+                        shouldRequestNotificationPermissions = true,
+                    )
+                }
             }
         }
     }
