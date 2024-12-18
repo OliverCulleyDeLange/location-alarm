@@ -4,9 +4,12 @@ import co.touchlab.kermit.Logger
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import com.rickclephas.kmp.observableviewmodel.MutableStateFlow
 import com.rickclephas.kmp.observableviewmodel.ViewModel
+import com.rickclephas.kmp.observableviewmodel.launch
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.datetime.Clock
 import kotlin.math.roundToInt
 
 open class AppViewModel : ViewModel() {
@@ -68,17 +71,31 @@ open class AppViewModel : ViewModel() {
                     it.copy(geoFenceLocation = firstLocation)
                 }
             }
-            _state.update { state ->
-                state.copy(
-                    distanceToGeofence = getDistanceToGeofence(state.usersLocation, state.geoFenceLocation),
-                    distanceToGeofencePerimeter = getDistanceToGeofencePerimeter(
-                        state.usersLocation,
-                        state.geoFenceLocation,
-                        state.perimeterRadiusMeters
-                    )
-                )
-            }
+            recomputeDistancesAndTriggered()
         } ?: Logger.w { "Location update contains no location" }
+    }
+
+    /** Recompute distances to alarm, and triggered state
+     * */
+    private fun recomputeDistancesAndTriggered() {
+        _state.update { state ->
+            val distanceToGeofence = getDistanceToGeofence(state.usersLocation, state.geoFenceLocation)
+            val distanceToGeofencePerimeter = getDistanceToGeofencePerimeter(
+                state.usersLocation,
+                state.geoFenceLocation,
+                state.perimeterRadiusMeters
+            )
+            val alarmDelayed = state.alarmDelayed()
+            val triggered = state.alarmEnabled
+                && !alarmDelayed
+                && (distanceToGeofencePerimeter?.let { it <= 0 } ?: false)
+
+            state.copy(
+                distanceToGeofence = distanceToGeofence,
+                distanceToGeofencePerimeter = distanceToGeofencePerimeter,
+                alarmTriggered = triggered
+            )
+        }
     }
 
     fun onRadiusChanged(radius: Int) {
@@ -143,19 +160,21 @@ open class AppViewModel : ViewModel() {
         _state.update { state ->
             state.copy(
                 alarmEnabled = enabled,
+                alarmEnabledAt = if (enabled) Clock.System.now() else state.alarmEnabledAt,
                 mapInteracted = true,
-                userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable
+                userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable,
+                delayAlarmTriggering = false
             )
         }
     }
 
     // Dev tool to allow enabling the alarm, but not allow triggering until a given number of location updates have come through
-    fun onToggleAlarmWithDelay(locationUpdates: Int) {
+    fun onToggleAlarmWithDelay() {
         onToggleAlarm()
-        _state.update { state ->
-            state.copy(
-                alarmTriggerDelayLocationHistorySize = state.usersLocationHistory.size + locationUpdates,
-            )
+        _state.update { it.copy(delayAlarmTriggering = true) }
+        viewModelScope.launch {
+            delay(5000)
+            recomputeDistancesAndTriggered()
         }
     }
 

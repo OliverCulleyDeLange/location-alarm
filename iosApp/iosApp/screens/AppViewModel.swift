@@ -21,6 +21,7 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
         
         computeUiStrings()
         soundAlarmAndVibrateWhenAlarmTriggered()
+        toggleAudioSession()
         listenAndRequestLocationPermissions()
         listenAndRequestNotificationPermissions()
         
@@ -79,6 +80,21 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
                     self.distanceToAlarmText = "\(distanceToGeofencePerimeter)m to alarm"
                 } else {
                     self.distanceToAlarmText = "Alarm active"
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    fileprivate func toggleAudioSession() {
+        createPublisher(for: stateFlow)
+            .assertNoFailure()
+            .map { $0.alarmEnabled }
+            .removeDuplicates()
+            .sink { enabled in
+                if (enabled){
+                    self.alarmManager.activateAudioSession()
+                } else {
+                    self.alarmManager.deactivateAudioSession()
                 }
             }
             .store(in: &cancellables)

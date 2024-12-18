@@ -5,7 +5,7 @@ import UIKit
 
 /// Handles playing alarm sounds
 class AlarmPlayer {
-    var audioPlayer: AVAudioPlayer?
+    private var audioPlayer: AVAudioPlayer?
     
     func playAlarm() {
         guard let audioData = NSDataAsset(name: "AlarmSound")?.data else {

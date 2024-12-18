@@ -11,6 +11,7 @@ class SystemVibrator {
     
     func vibrate() {
         shouldVibrate = true
+        task?.cancel()
         task = Task {
             while (shouldVibrate){
                 if (isVibrating){

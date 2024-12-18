@@ -54,9 +54,9 @@ struct MapScreen: View {
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                 }
                 
-                // Dev tool to enable alarm but not trigger for a time period to allowe background / locked testing
+                // Dev tool to enable alarm but not trigger for a time period to allow background / locked testing
                 #if DEBUG
-                Button("Delayed Start", action: { viewModel.onToggleAlarmWithDelay(locationUpdates: 3)})
+                Button("Delayed Start", action: { viewModel.onToggleAlarmWithDelay()})
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
                 #endif
                 

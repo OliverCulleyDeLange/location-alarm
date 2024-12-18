@@ -1,5 +1,11 @@
 package model.domain
 
+import co.touchlab.kermit.Logger
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.Instant
+import kotlinx.datetime.until
+
 data class MapFeatureState(
     val shouldRequestNotificationPermissions: Boolean = false,
     val notificationPermissionState: PermissionState = PermissionState.Unknown,
@@ -21,6 +27,10 @@ data class MapFeatureState(
     val userRequestedAlarmEnable: Boolean = false,
     // Whether the user has enabled the alarm
     val alarmEnabled: Boolean = false,
+    // The instant that the alarm was enabled at
+    val alarmEnabledAt: Instant? = null,
+    // Whether the alarm has been triggered (the users location is within the geofence bounds)
+    val alarmTriggered: Boolean = false,
     // The distance in meters from the users location to the geofence perimeter (distance until alarm sounds)
     val distanceToGeofencePerimeter: Int? = null,
     // The distance in meters from the users location to the geofence location
@@ -31,14 +41,24 @@ data class MapFeatureState(
 
 
     /* Dev tools */
-    /** The number of locations that need to be in [usersLocationHistory] to allow triggering the alarm
-     * This is to allow delaying the alarm for testing on real devices
+    /** Whether to delay alarm triggering by a harccoded 5 seconds. This is a dumb hack to manually test in a situation where you don't have reliable GPS (like indoors at your desk)
      * TODO this shouldn't really be in prod code - how to extract it out into debug only code
      * */
-    val alarmTriggerDelayLocationHistorySize: Int = 0,
+    val delayAlarmTriggering: Boolean = false,
 ) : AppState {
-    /** Whether the alarm should be allowed to trigger due to [alarmTriggerDelayLocationHistorySize] */
-    private val alarmNotDelayed = usersLocationHistory.size > alarmTriggerDelayLocationHistorySize
+    /** Whether the alarm should be allowed to trigger due to [delayAlarmTriggering] */
+    fun alarmDelayed(): Boolean {
+        return if (delayAlarmTriggering) {
+            val now = Clock.System.now()
+            alarmEnabledAt?.until(now, DateTimeUnit.SECOND)?.let {
+                val delayAlarm = it < 5 // Delay alarm triggering by 5 seconds
+                Logger.w("delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
+                delayAlarm
+            } ?: false.also {
+                Logger.w("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")
+            }
+        } else false
+    }
 
     /** Enable the alarm button if:
      * - User has not denied notification permissions
@@ -48,9 +68,6 @@ data class MapFeatureState(
     val enableAlarmButtonEnabled = notificationPermissionState !is PermissionState.Denied &&
         usersLocation != null &&
         geoFenceLocation != null
-
-    // Whether the alarm has been triggered (the users location is within the geofence bounds)
-    val alarmTriggered = alarmNotDelayed && alarmEnabled && distanceToGeofencePerimeter?.let { it <= 0 } ?: false
 
     // If a user denied notification permissions when trying to enable the alarm, show a UI message
     val shouldShowNotificationPermissionDeniedMessage = notificationPermissionState is PermissionState.Denied
