@@ -60,7 +60,7 @@ struct MapScreen: View {
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
                 #endif
                 
-                Button(action: {viewModel.onToggleAlarm()}) {
+                Button(action: {viewModel.onToggleAlarm(delay: false)}) {
                     Text(viewModel.alarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
                         .font(.system(size: 20, weight: .semibold))

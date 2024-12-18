@@ -85,6 +85,23 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
             .store(in: &cancellables)
     }
     
+    fileprivate func soundAlarmAndVibrateWhenAlarmTriggered() {
+        createPublisher(for: stateFlow)
+            .assertNoFailure()
+            .map { $0.alarmTriggered }
+            .removeDuplicates()
+            .sink { alarmTriggered in
+                if (alarmTriggered){
+                    self.alarmManager.startAlarm()
+                    self.notificationManager.createAlarmNotification()
+                } else {
+                    self.alarmManager.stopAlarm()
+                    self.notificationManager.removeAlarmNotification()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     fileprivate func toggleAudioSession() {
         createPublisher(for: stateFlow)
             .assertNoFailure()
@@ -171,23 +188,6 @@ class AppViewModel: Shared.AppViewModel, Cancellable, LocationService.LocationSe
                         distanceToAlarm,
                         holder.alarmTriggered
                     )
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
-    fileprivate func soundAlarmAndVibrateWhenAlarmTriggered() {
-        createPublisher(for: stateFlow)
-            .assertNoFailure()
-            .map { $0.alarmTriggered }
-            .removeDuplicates()
-            .sink { alarmTriggered in
-                if (alarmTriggered){
-                    self.alarmManager.startAlarm()
-                    self.notificationManager.createAlarmNotification()
-                } else {
-                    self.alarmManager.stopAlarm()
-                    self.notificationManager.removeAlarmNotification()
                 }
             }
             .store(in: &cancellables)

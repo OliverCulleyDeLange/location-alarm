@@ -2,6 +2,7 @@ import AVFAudio
 class AlarmManager {
     static let shared = AlarmManager()
 
+//    private var vibrator: Vibrator = Vibrator()
     private var vibrator: SystemVibrator = SystemVibrator()
     private var alarmPlayer: AlarmPlayer = AlarmPlayer()
     private let audioSession = AVAudioSession.sharedInstance()
@@ -37,11 +38,13 @@ class AlarmManager {
     
     /// Begins playing alarm sounds and vibrations
     func startAlarm() {
+        logger.warning("STARTING ALARM")
         vibrator.vibrate()
         alarmPlayer.playAlarm()
     }
     
     func stopAlarm() {
+        logger.warning("STOPPING ALARM")
         vibrator.stop()
         alarmPlayer.stopAlarm()
     }

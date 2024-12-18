@@ -18,6 +18,14 @@ open class AppViewModel : ViewModel() {
     @NativeCoroutinesState
     val state: StateFlow<MapFeatureState> = _state.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            state.collect {
+                Logger.w("NEW STATE: ${it.toDebugString()}")
+            }
+        }
+    }
+
     fun onTapAllowLocationPermissions() {
         Logger.d { "onTapAllowLocationPermissions" }
         _state.update { it.copy(shouldRequestLocationPermissions = true) }
@@ -85,9 +93,8 @@ open class AppViewModel : ViewModel() {
                 state.geoFenceLocation,
                 state.perimeterRadiusMeters
             )
-            val alarmDelayed = state.alarmDelayed()
             val triggered = state.alarmEnabled
-                && !alarmDelayed
+                && !state.shouldDelayAlarm()
                 && (distanceToGeofencePerimeter?.let { it <= 0 } ?: false)
 
             state.copy(
@@ -137,12 +144,13 @@ open class AppViewModel : ViewModel() {
     }
 
     /** Check notification permissions and enable if granted
-     * Otherwise, request notification permissions */
-    fun onToggleAlarm() {
+     * Otherwise, request notification permissions
+     * @param delay: Dev tool do delay alarm triggering by 5 seconds */
+    fun onToggleAlarm(delay: Boolean = false) {
         when (_state.value.notificationPermissionState) {
             PermissionState.Granted -> {
                 val alarmEnabled = !state.value.alarmEnabled
-                onSetAlarm(alarmEnabled)
+                onSetAlarm(alarmEnabled, delay)
             }
 
             else -> {
@@ -156,22 +164,22 @@ open class AppViewModel : ViewModel() {
         }
     }
 
-    fun onSetAlarm(enabled: Boolean) {
+    fun onSetAlarm(enabled: Boolean, delay: Boolean = false) {
         _state.update { state ->
             state.copy(
                 alarmEnabled = enabled,
                 alarmEnabledAt = if (enabled) Clock.System.now() else state.alarmEnabledAt,
                 mapInteracted = true,
                 userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable,
-                delayAlarmTriggering = false
+                delayAlarmTriggering = delay
             )
         }
+        recomputeDistancesAndTriggered()
     }
 
-    // Dev tool to allow enabling the alarm, but not allow triggering until a given number of location updates have come through
+    // Dev tool to allow enabling the alarm, but not allow triggering until a given time has passed
     fun onToggleAlarmWithDelay() {
-        onToggleAlarm()
-        _state.update { it.copy(delayAlarmTriggering = true) }
+        onToggleAlarm(true)
         viewModelScope.launch {
             delay(5000)
             recomputeDistancesAndTriggered()

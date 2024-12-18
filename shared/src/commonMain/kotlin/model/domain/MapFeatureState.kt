@@ -1,10 +1,6 @@
 package model.domain
 
-import co.touchlab.kermit.Logger
-import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
-import kotlinx.datetime.until
 
 data class MapFeatureState(
     val shouldRequestNotificationPermissions: Boolean = false,
@@ -12,6 +8,7 @@ data class MapFeatureState(
 
     val shouldRequestLocationPermissions: Boolean = false,
     val locationPermissionState: PermissionState = PermissionState.Unknown,
+
     // Most up to date user location - may be used fort the geofence if they haven't manually moved it
     val usersLocation: Location? = null,
     // A store of all location updates while the app is running
@@ -46,19 +43,8 @@ data class MapFeatureState(
      * */
     val delayAlarmTriggering: Boolean = false,
 ) : AppState {
-    /** Whether the alarm should be allowed to trigger due to [delayAlarmTriggering] */
-    fun alarmDelayed(): Boolean {
-        return if (delayAlarmTriggering) {
-            val now = Clock.System.now()
-            alarmEnabledAt?.until(now, DateTimeUnit.SECOND)?.let {
-                val delayAlarm = it < 5 // Delay alarm triggering by 5 seconds
-                Logger.w("delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
-                delayAlarm
-            } ?: false.also {
-                Logger.w("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")
-            }
-        } else false
-    }
+    fun toDebugString() =
+        "Enabled: ${alarmEnabled}, Triggered: ${alarmTriggered}, delayAlarmTriggering: ${delayAlarmTriggering}, distanceToGeofencePerimeter: $distanceToGeofencePerimeter"
 
     /** Enable the alarm button if:
      * - User has not denied notification permissions

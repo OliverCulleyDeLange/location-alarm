@@ -15,6 +15,7 @@ class AlarmPlayer {
         do {
             audioPlayer = try AVAudioPlayer(data: audioData)
             audioPlayer?.prepareToPlay()
+            audioPlayer?.numberOfLoops = -1 // Infinitley
             audioPlayer?.play()
         } catch {
             print("Error initializing audio player: \(error.localizedDescription)")
