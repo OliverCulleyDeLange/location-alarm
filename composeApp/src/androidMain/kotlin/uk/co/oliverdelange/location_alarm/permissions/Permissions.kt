@@ -3,6 +3,7 @@ package uk.co.oliverdelange.location_alarm.permissions
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import model.domain.PermissionState
@@ -126,6 +127,7 @@ enum class AndroidPermission(val string: String) {
     AccessCoarseLocation(ACCESS_COARSE_LOCATION), ;
 
     companion object {
+        @SuppressLint("NewApi")
         fun fromAndroidString(permission: String): AndroidPermission {
             return when (permission) {
                 POST_NOTIFICATIONS -> PostNotifications

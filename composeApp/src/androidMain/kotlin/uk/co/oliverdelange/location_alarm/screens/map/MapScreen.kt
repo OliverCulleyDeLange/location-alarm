@@ -1,6 +1,7 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -56,7 +57,9 @@ fun MapScreen(
     onFinishFlyingToUsersLocation: () -> Unit,
 ) {
     Box {
-        val notificationPermissionState = rememberPermissionState(POST_NOTIFICATIONS)
+        val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            rememberPermissionState(POST_NOTIFICATIONS)
+        } else null
 
         val geofenceSourceState = rememberGeoJsonSourceState(sourceId = MapboxIDs.SOURCE_GEOFENCE)
         // Update geofence geojson source only when geofence location or radius changes
@@ -97,7 +100,7 @@ fun MapScreen(
             if (state.shouldShowNotificationPermissionDeniedMessage) {
                 NotificationPermissionDeniedAlert(
                     state.notificationPermissionState.shouldShowRationale(),
-                    requestPermissions = { notificationPermissionState.launchPermissionRequest() }
+                    requestPermissions = { notificationPermissionState?.launchPermissionRequest() }
                 )
             }
             if (state.alarmEnabled) {

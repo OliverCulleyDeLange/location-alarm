@@ -1,7 +1,7 @@
 package uk.co.oliverdelange.location_alarm.screens
 
 import android.Manifest.permission.POST_NOTIFICATIONS
-import android.os.Build
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,6 +24,7 @@ import uk.co.oliverdelange.location_alarm.ui.PermissionHandler
 import uk.co.oliverdelange.location_alarm.ui.PermissionsHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 
+@SuppressLint("InlinedApi")
 @Composable
 @Preview
 fun App(viewModel: MapUiViewModel = viewModel()) {
@@ -32,10 +33,8 @@ fun App(viewModel: MapUiViewModel = viewModel()) {
 
     AppTheme {
         // Permissions
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            PermissionHandler(POST_NOTIFICATIONS, state.userRequestedAlarmEnable) {
-                viewModel.onNotificationPermissionResult(it)
-            }
+        PermissionHandler(POST_NOTIFICATIONS, state.userRequestedAlarmEnable) {
+            viewModel.onNotificationPermissionResult(it)
         }
         PermissionsHandler(
             permission = RequestablePermission.Location,

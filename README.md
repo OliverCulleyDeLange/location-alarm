@@ -7,7 +7,6 @@
 
 # Priority 1
 
-- Fix POST_NOTIFICATIONS only being available from api 33
 - Fix alarm sound on ios
   - When on silent mode
   - When in background
