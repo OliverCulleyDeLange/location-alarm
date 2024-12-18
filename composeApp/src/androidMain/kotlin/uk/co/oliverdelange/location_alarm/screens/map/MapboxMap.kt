@@ -1,10 +1,18 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
@@ -53,6 +61,18 @@ fun MapboxMap(
             true
         },
         scaleBar = {},
+        compass = {
+            Compass(
+                alignment = Alignment.BottomStart,
+                contentPadding = PaddingValues(start = 72.dp, bottom = 24.dp),
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .size(40.dp)
+                    .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
+            )
+        },
+        logo = { Logo(alignment = Alignment.TopStart, modifier = Modifier.statusBarsPadding()) },
+        attribution = { Attribution(alignment = Alignment.TopEnd, modifier = Modifier.statusBarsPadding()) },
         style = { MapStyle(if (darkMap) Style.DARK else Style.LIGHT) }
     ) {
         val color = MaterialTheme.colorScheme.primary

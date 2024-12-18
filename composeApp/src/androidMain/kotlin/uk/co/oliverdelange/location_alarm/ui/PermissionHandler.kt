@@ -15,6 +15,7 @@ import model.domain.PermissionState
 /**
  * A horribly complicated wrapper to handle the fact that the android permissions
  * model doesn't tell you when the user hasn't granted any permissions yet
+ * TODO Use [PermissionsHandler] instead as its simplified into domain logic now
  * */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

@@ -6,8 +6,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
@@ -74,7 +76,9 @@ fun MapScreen(
         )
         FlyToCurrentLocationButton(
             onTapLocationIcon,
-            Modifier.align(Alignment.BottomStart)
+            Modifier
+                .align(Alignment.BottomStart)
+                .navigationBarsPadding()
         )
 
         RadiusScrubber(
@@ -85,7 +89,9 @@ fun MapScreen(
             onRadiusChange = onRadiusChange
         )
         Column(
-            Modifier.align(Alignment.BottomEnd),
+            Modifier
+                .align(Alignment.BottomEnd)
+                .navigationBarsPadding(),
             horizontalAlignment = Alignment.End
         ) {
             if (state.shouldShowNotificationPermissionDeniedMessage) {
@@ -112,7 +118,7 @@ fun MapScreen(
                 Button(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)
-                        .padding(bottom = 24.dp, top = 8.dp),
+                        .padding(bottom = 8.dp, top = 8.dp),
                     onClick = onToggleAlarmWithDelay,
                 ) {
                     Text("Delayed start")
@@ -140,9 +146,9 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
     IconButton(
         onClick = { onTapLocationIcon() },
         modifier = modifier
-            .padding(horizontal = 24.dp, vertical = 32.dp)
+            .padding(horizontal = 24.dp, vertical = 24.dp) // Make same padding as main button
+            .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
             .size(40.dp)
-            .border(3.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(24.dp))
     ) {
         Icon(
             Icons.Default.LocationOn, null,

@@ -1,6 +1,7 @@
 package uk.co.oliverdelange.location_alarm.screens
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,9 +32,10 @@ fun App(viewModel: MapUiViewModel = viewModel()) {
 
     AppTheme {
         // Permissions
-        // TODO Handle API 31
-        PermissionHandler(POST_NOTIFICATIONS, state.userRequestedAlarmEnable) {
-            viewModel.onNotificationPermissionResult(it)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            PermissionHandler(POST_NOTIFICATIONS, state.userRequestedAlarmEnable) {
+                viewModel.onNotificationPermissionResult(it)
+            }
         }
         PermissionsHandler(
             permission = RequestablePermission.Location,
