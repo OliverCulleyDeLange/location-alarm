@@ -5,7 +5,7 @@ import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
 import model.domain.Location
-import toLocation
+import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
 
 /** Listens to locaiton updates from mapbox's inbuilt location service,
  * calls a callback with domain locations

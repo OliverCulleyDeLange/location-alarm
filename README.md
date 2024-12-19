@@ -2,15 +2,14 @@
 
 - An app that sounds an alarm when you enter a geofence.
 - Also an excuse to learn multiplatform app development with KMM.
-- Also an excuse to play with fun things like ios widgets, voice commands, watch apps, ya know,
+- Also an excuse to play with fun things like maps, location, notifications, ios widgets, voice
+  commands, watch apps, ya know,
   cool shit you wouldn't usually play with.
 
 # Priority 1
-- M Tutorial
-- S Draw path of route while alarm enabled
+
 - L Unit Tests & refactoring
 - L UI Tests?
-- S Code quality
 - M CI / CD
 - S Bug & crash reporting
 - Debugging tools
@@ -18,6 +17,9 @@
   - M Show app logs
   - M Show location updates (Graph data)
   - M Capture GPX file for alarm enabled session - to aid GPS issue debugging
+
+- M Tutorial
+- S Draw path of route while alarm enabled
 
 ## Priority 2
 
@@ -32,6 +34,7 @@
 
 ### Priority 3
 
+- S Code quality
 - Polygonal geofence areas
 - Allow multiple geofences to be active
 - Other actions when in geofence

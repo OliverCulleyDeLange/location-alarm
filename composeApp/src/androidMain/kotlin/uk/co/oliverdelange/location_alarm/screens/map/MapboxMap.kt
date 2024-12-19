@@ -35,9 +35,9 @@ import com.mapbox.maps.plugin.viewport.viewport
 import mapbox.MapboxIDs
 import model.domain.Location
 import timber.log.Timber
-import toLocation
 import uk.co.oliverdelange.location_alarm.location.MapboxLocationConsumer
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
+import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
 
 @Composable
 @OptIn(MapboxExperimental::class)
