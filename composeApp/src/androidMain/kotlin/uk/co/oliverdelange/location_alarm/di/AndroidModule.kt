@@ -9,6 +9,6 @@ import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 
 val androidModule = module {
     single<StringProvider> { ApplicationStringProvider(get()) }
-    single { MapUiViewModel(androidContext(), get()) }
+    single { MapUiViewModel(get()) }
     single { Vibrator(androidContext()) }
 }

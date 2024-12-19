@@ -8,7 +8,7 @@
 
 # Priority 1
 
-- L Unit Tests & refactoring
+- M Refactoring & TODOS
 - L UI Tests?
 - M CI / CD
 - S Bug & crash reporting

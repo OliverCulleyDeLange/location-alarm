@@ -1,14 +1,9 @@
 package uk.co.oliverdelange.location_alarm.screens
 
-import android.content.Context
-import android.content.Intent
-import com.rickclephas.kmp.observableviewmodel.launch
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.resources.StringProvider
-import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
 import uk.co.oliverdelange.locationalarm.model.domain.AppViewModel
 import uk.co.oliverdelange.locationalarm.model.domain.MapFeatureState
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
@@ -17,7 +12,7 @@ import uk.co.oliverdelange.locationalarm.model.ui.UiViewModel
 /** App side extension of the shared view model
  * Handles app side ui model mapping
  * */
-class MapUiViewModel(val context: Context, val stringProvider: StringProvider) : AppViewModel(), UiViewModel<MapFeatureState, MapUiState> {
+class MapUiViewModel(val stringProvider: StringProvider) : AppViewModel(), UiViewModel<MapFeatureState, MapUiState> {
     override val uiState = state
         .map(::mapUiState)
 
@@ -26,24 +21,6 @@ class MapUiViewModel(val context: Context, val stringProvider: StringProvider) :
         return MapUiState(
             toggleAlarmButtonText = stringProvider.getString(toggleAlarmButtonTextResId)
         )
-    }
-
-    init {
-        viewModelScope.launch {
-            // Start and stop the foreground service based on alarm enabled state
-            state.map { it.alarmEnabled }.distinctUntilChanged().collect { enabled ->
-                val intent = Intent(context, LocationAlarmService::class.java)
-                if (enabled) {
-                    Timber.i("Starting LocationAlarmService")
-                    // TODO Check if wunning before starting
-                    context.startForegroundService(intent)
-                } else {
-                    Timber.i("Stopping LocationAlarmService")
-                    // TODO Check if running before stopping
-                    context.stopService(intent)
-                }
-            }
-        }
     }
 
     override fun onCleared() {
