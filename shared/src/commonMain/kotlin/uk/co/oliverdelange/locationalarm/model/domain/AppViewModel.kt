@@ -9,10 +9,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
+import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
+import uk.co.oliverdelange.locationalarm.provider.TimeProvider
 import kotlin.math.roundToInt
 
-open class AppViewModel : ViewModel() {
+open class AppViewModel(
+    private val timeProvider: TimeProvider = SystemTimeProvider()
+) : ViewModel() {
     private val _state = MutableStateFlow(viewModelScope, MapFeatureState())
 
     @NativeCoroutinesState
@@ -133,14 +136,14 @@ open class AppViewModel : ViewModel() {
         }
     }
 
-    fun onTapStopAlarm() {
-        onSetAlarm(false)
-    }
-
     fun onFinishFlyingToUsersLocation() {
         _state.update { state ->
             state.copy(usersLocationToFlyTo = null)
         }
+    }
+
+    fun onTapStopAlarm() {
+        onSetAlarm(false)
     }
 
     /** Check notification permissions and enable if granted
@@ -168,7 +171,7 @@ open class AppViewModel : ViewModel() {
         _state.update { state ->
             state.copy(
                 alarmEnabled = enabled,
-                alarmEnabledAt = if (enabled) Clock.System.now() else state.alarmEnabledAt,
+                alarmEnabledAt = if (enabled) timeProvider.now() else state.alarmEnabledAt,
                 mapInteracted = true,
                 userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable,
             )
