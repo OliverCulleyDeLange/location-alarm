@@ -35,27 +35,22 @@ data class MapFeatureState(
     // Tapping on the location icon zooms to the users current location.
     // If this is set we should fly to it. The UI should listen for changes to this state and fly to new values.
     val usersLocationToFlyTo: Location? = null,
-
-
-    /* Dev tools */
-    /** Whether to delay alarm triggering by a harccoded 5 seconds. This is a dumb hack to manually test in a situation where you don't have reliable GPS (like indoors at your desk)
-     * TODO this shouldn't really be in prod code - how to extract it out into debug only code
-     * */
-    val delayAlarmTriggering: Boolean = false,
 ) : AppState {
     fun toDebugString() =
-        "Enabled: ${alarmEnabled}, Triggered: ${alarmTriggered}, delayAlarmTriggering: ${delayAlarmTriggering}, distanceToGeofencePerimeter: $distanceToGeofencePerimeter"
+        "Enabled: ${alarmEnabled}, Triggered: ${alarmTriggered}, delayAlarmTriggering: $delayAlarmTriggering, distanceToGeofencePerimeter: $distanceToGeofencePerimeter"
 
     /** Enable the alarm button if:
      * - User has not denied notification permissions
      * - We know the users current location
      * - Geofence is set
+     * // FIXME This is UI state, not domain state. Seperate the two properly.
      * */
     val enableAlarmButtonEnabled = notificationPermissionState !is PermissionState.Denied &&
         usersLocation != null &&
         geoFenceLocation != null
 
     // If a user denied notification permissions when trying to enable the alarm, show a UI message
+    // FIXME This is UI state, not domain state. Seperate the two properly.
     val shouldShowNotificationPermissionDeniedMessage = notificationPermissionState is PermissionState.Denied
 
 }

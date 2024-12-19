@@ -15,7 +15,7 @@ struct iOSApp: App {
                 .onOpenURL { url in
                     if url.scheme == "uk.co.oliverdelange.locationalarm" {
                         logger.info("Deeplink: \(url)")
-                        viewModel.onSetAlarm(enabled: false, delay: false)
+                        viewModel.onSetAlarm(enabled: false)
                     }
                 }
             } else if (viewModel.state.locationPermissionState is Shared.PermissionStateUnknown) {

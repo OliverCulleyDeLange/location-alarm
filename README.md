@@ -6,10 +6,6 @@
   cool shit you wouldn't usually play with.
 
 # Priority 1
-
-- Fix alarm sound on ios
-  - When on silent mode
-  - When in background
 - M Tutorial
 - S Draw path of route while alarm enabled
 - L Unit Tests & refactoring

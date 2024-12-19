@@ -146,11 +146,11 @@ open class AppViewModel : ViewModel() {
     /** Check notification permissions and enable if granted
      * Otherwise, request notification permissions
      * @param delay: Dev tool do delay alarm triggering by 5 seconds */
-    fun onToggleAlarm(delay: Boolean = false) {
+    fun onToggleAlarm() {
         when (_state.value.notificationPermissionState) {
             PermissionState.Granted -> {
                 val alarmEnabled = !state.value.alarmEnabled
-                onSetAlarm(alarmEnabled, delay)
+                onSetAlarm(alarmEnabled)
             }
 
             else -> {
@@ -164,14 +164,13 @@ open class AppViewModel : ViewModel() {
         }
     }
 
-    fun onSetAlarm(enabled: Boolean, delay: Boolean = false) {
+    fun onSetAlarm(enabled: Boolean) {
         _state.update { state ->
             state.copy(
                 alarmEnabled = enabled,
                 alarmEnabledAt = if (enabled) Clock.System.now() else state.alarmEnabledAt,
                 mapInteracted = true,
                 userRequestedAlarmEnable = if (enabled) false else state.userRequestedAlarmEnable,
-                delayAlarmTriggering = delay
             )
         }
         recomputeDistancesAndTriggered()
@@ -179,7 +178,8 @@ open class AppViewModel : ViewModel() {
 
     // Dev tool to allow enabling the alarm, but not allow triggering until a given time has passed
     fun onToggleAlarmWithDelay() {
-        onToggleAlarm(true)
+        delayAlarmTriggering = true
+        onToggleAlarm()
         viewModelScope.launch {
             delay(5000)
             recomputeDistancesAndTriggered()
