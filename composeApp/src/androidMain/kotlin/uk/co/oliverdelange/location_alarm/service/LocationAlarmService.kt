@@ -11,6 +11,7 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
@@ -129,6 +130,8 @@ class LocationAlarmService : Service() {
                             val notificationManager = NotificationManagerCompat.from(this@LocationAlarmService)
                             Timber.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
                             notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
+                        } else {
+                            Timber.w("Notification permissions aren't granted. Can't update notification")
                         }
                     }
                 }
@@ -154,7 +157,14 @@ class LocationAlarmService : Service() {
         return null // We're not allowing binding
     }
 
-    private fun checkNotificationPermission() = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    private fun checkNotificationPermission(): Boolean {
+        val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+        return granted
+    }
 
     private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?, alarmTriggered: Boolean): Notification {
         val subtitle = when {

@@ -23,7 +23,7 @@ fun MapFeatureState.shouldDelayAlarm(): Boolean {
         val now = Clock.System.now()
         alarmEnabledAt?.until(now, DateTimeUnit.SECOND)?.let {
             val delayAlarm = it < 5 // Delay alarm triggering by 5 seconds
-            Logger.w("delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
+            Logger.w("shouldDelayAlarm::: delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
             delayAlarm
         } ?: false.also {
             Logger.w("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")

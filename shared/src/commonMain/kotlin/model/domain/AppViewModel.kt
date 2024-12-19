@@ -174,6 +174,7 @@ open class AppViewModel : ViewModel() {
             )
         }
         recomputeDistancesAndTriggered()
+        if (!enabled) delayAlarmTriggering = false
     }
 
     // Dev tool to allow enabling the alarm, but not allow triggering until a given time has passed
