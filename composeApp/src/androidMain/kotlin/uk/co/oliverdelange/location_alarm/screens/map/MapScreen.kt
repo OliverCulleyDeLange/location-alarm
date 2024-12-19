@@ -38,14 +38,12 @@ import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
 import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
-import uk.co.oliverdelange.locationalarm.model.domain.MapFeatureState
-import uk.co.oliverdelange.locationalarm.model.domain.granted
-import uk.co.oliverdelange.locationalarm.model.domain.shouldShowRationale
+import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 
 @OptIn(MapboxExperimental::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
-    state: MapFeatureState,
+    state: MapUiState,
     alarmButtonText: String,
     onMapTap: (uk.co.oliverdelange.locationalarm.model.domain.Location) -> Unit,
     onLocationUpdate: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit,
@@ -70,7 +68,7 @@ fun MapScreen(
         MapboxMap(
             isSystemInDarkTheme(),
             state.usersLocationToFlyTo,
-            state.locationPermissionState.granted(),
+            state.shouldEnableMapboxLocationComponent,
             onLocationUpdate = onLocationUpdate,
             onMapTap = onMapTap,
             onFinishFlyingToUsersLocation = onFinishFlyingToUsersLocation,
@@ -98,11 +96,11 @@ fun MapScreen(
         ) {
             if (state.shouldShowNotificationPermissionDeniedMessage) {
                 NotificationPermissionDeniedAlert(
-                    state.notificationPermissionState.shouldShowRationale(),
+                    state.shouldShowNotificationPermissionRationale,
                     requestPermissions = { notificationPermissionState?.launchPermissionRequest() }
                 )
             }
-            if (state.alarmEnabled) {
+            if (state.shouldShowDistanceToAlarmText) {
                 Column(
                     Modifier
                         .padding(horizontal = 24.dp)
@@ -110,10 +108,7 @@ fun MapScreen(
                         .background(MaterialTheme.colorScheme.secondaryContainer)
                         .padding(8.dp)
                 ) {
-                    val text = state.distanceToGeofencePerimeter?.let {
-                        "${it}m to alarm"
-                    } ?: "Alarm active"
-                    Text(text, color = MaterialTheme.colorScheme.secondary)
+                    Text(state.distanceToAlarmText, color = MaterialTheme.colorScheme.secondary)
                 }
             }
             if (isDebug()) {
@@ -161,4 +156,4 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
 
 @Preview
 @Composable
-fun Preview_MapScreen() = MapScreen(MapFeatureState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {})
+fun Preview_MapScreen() = MapScreen(MapUiState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {})

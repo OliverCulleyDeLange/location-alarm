@@ -4,7 +4,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.Instant
-import uk.co.oliverdelange.locationalarm.model.domain.AppViewModel
+import uk.co.oliverdelange.locationalarm.model.ui.MapViewModel
 import uk.co.oliverdelange.locationalarm.model.domain.Location
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.provider.MockTimeProvider
@@ -18,7 +18,7 @@ class AppViewModelTest {
 
     private lateinit var timeProvider: MockTimeProvider
 
-    private lateinit var vm: AppViewModel
+    private lateinit var vm: MapViewModel
     private val someLocation = Location(51.49434994606447, 0.04302039031141709) // The reach
     private val someOtherLocation = Location(51.49332877322526, -0.0607650466109374) // The arch
     private val notGrantedPermissions = listOf(PermissionState.Unknown, PermissionState.Denied(true), PermissionState.Denied(false))
@@ -27,7 +27,7 @@ class AppViewModelTest {
     fun before() {
         Dispatchers.setMain(StandardTestDispatcher())
         timeProvider = MockTimeProvider()
-        vm = AppViewModel(timeProvider)
+        vm = MapViewModel(timeProvider)
     }
 
     @AfterTest

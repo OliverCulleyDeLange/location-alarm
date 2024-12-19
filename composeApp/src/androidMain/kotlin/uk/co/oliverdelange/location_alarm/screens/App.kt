@@ -19,21 +19,19 @@ import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermission
 import uk.co.oliverdelange.location_alarm.ui.PermissionHandler
 import uk.co.oliverdelange.location_alarm.ui.PermissionsHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
-import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
-import uk.co.oliverdelange.locationalarm.model.domain.granted
+import uk.co.oliverdelange.locationalarm.model.ui.MapUiScreenState
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 
 @SuppressLint("InlinedApi")
 @Composable
 @Preview
 fun App(viewModel: MapUiViewModel = viewModel()) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle(MapUiState())
+    val state by viewModel.state.collectAsStateWithLifecycle(MapUiState())
 
     AppTheme {
         // Permissions
-        PermissionHandler(POST_NOTIFICATIONS, state.userRequestedAlarmEnable) {
+        PermissionHandler(POST_NOTIFICATIONS, state.shouldRequestNotificationPermissions) {
             viewModel.onNotificationPermissionResult(it)
         }
         PermissionsHandler(
@@ -51,10 +49,10 @@ fun App(viewModel: MapUiViewModel = viewModel()) {
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            if (state.locationPermissionState.granted()) {
-                MapScreen(
+            when (state.screenState) {
+                MapUiScreenState.ShowMap -> MapScreen(
                     state,
-                    uiState.toggleAlarmButtonText,
+                    state.toggleAlarmButtonText,
                     onLocationUpdate = { locations -> viewModel.onLocationChange(locations) },
                     onMapTap = { location -> viewModel.onMapTap(location) },
                     onToggleAlarm = { viewModel.onToggleAlarm() },
@@ -63,14 +61,14 @@ fun App(viewModel: MapUiViewModel = viewModel()) {
                     onTapLocationIcon = { viewModel.onTapLocationIcon() },
                     onFinishFlyingToUsersLocation = { viewModel.onFinishFlyingToUsersLocation() }
                 )
-            } else if (state.locationPermissionState == PermissionState.Unknown) {
-                LocationPermissionsRequiredScreen {
+
+                MapUiScreenState.LocationPermissionRequired -> LocationPermissionsRequiredScreen {
                     viewModel.onTapAllowLocationPermissions()
                 }
-            } else {
-                LocationPermissionsDeniedScreen()
+
+                MapUiScreenState.LocationPermissionDenied -> LocationPermissionsDeniedScreen()
             }
-            AlarmAlert(state.alarmTriggered) {
+            AlarmAlert(state.shouldShowAlarmAlert) {
                 viewModel.onTapStopAlarm()
             }
         }

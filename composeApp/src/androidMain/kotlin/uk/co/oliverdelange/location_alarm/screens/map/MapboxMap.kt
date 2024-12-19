@@ -43,7 +43,7 @@ import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
 fun MapboxMap(
     darkMap: Boolean,
     usersLocationToFlyTo: uk.co.oliverdelange.locationalarm.model.domain.Location?,
-    locationPermissionStateGranted: Boolean,
+    shouldEnableMapboxLocationComponent: Boolean,
     onMapTap: (uk.co.oliverdelange.locationalarm.model.domain.Location) -> Unit,
     onLocationUpdate: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit,
     onFinishFlyingToUsersLocation: () -> Unit,
@@ -87,9 +87,9 @@ fun MapboxMap(
             fillColor = ColorValue(color),
             fillOpacity = DoubleValue(0.3)
         )
-        MapEffect(locationPermissionStateGranted) { mapView ->
+        MapEffect(shouldEnableMapboxLocationComponent) { mapView ->
             with<MapView, Unit>(mapView) {
-                if (locationPermissionStateGranted) {
+                if (shouldEnableMapboxLocationComponent) {
                     location.locationPuck = createDefault2DPuck(withBearing = false)
                     location.enabled = true
                     viewport.transitionTo(

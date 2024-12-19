@@ -15,10 +15,10 @@ import kotlinx.datetime.until
  * */
 var delayAlarmTriggering: Boolean = false
 
-/** Whether the alarm should be allowed to trigger due to [MapFeatureState.delayAlarmTriggering]
+/** Whether the alarm should be allowed to trigger due to [AppState.delayAlarmTriggering]
  * Delays alarm if the alarmStartTime is less than 5 seconds in the past
  * */
-fun MapFeatureState.shouldDelayAlarm(): Boolean {
+fun AppState.shouldDelayAlarm(): Boolean {
     return if (delayAlarmTriggering) {
         val now = Clock.System.now()
         alarmEnabledAt?.until(now, DateTimeUnit.SECOND)?.let {

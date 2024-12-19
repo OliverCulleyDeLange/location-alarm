@@ -13,13 +13,13 @@ import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
 import kotlin.math.roundToInt
 
-open class AppViewModel(
+open class AppStateStore(
     private val timeProvider: TimeProvider = SystemTimeProvider()
 ) : ViewModel() {
-    private val _state = MutableStateFlow(viewModelScope, MapFeatureState())
+    private val _state = MutableStateFlow(viewModelScope, AppState())
 
     @NativeCoroutinesState
-    val state: StateFlow<MapFeatureState> = _state.asStateFlow()
+    val state: StateFlow<AppState> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {

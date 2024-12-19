@@ -28,7 +28,7 @@ import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.haptics.Vibrator
 import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
-import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
+import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 
 class LocationAlarmService : Service() {
     companion object {
@@ -40,7 +40,7 @@ class LocationAlarmService : Service() {
     private val notificationManager by lazy { NotificationManagerCompat.from(this) }
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
-    private val viewModel: MapUiViewModel = get()
+    private val appStateStore: AppStateStore = get()
     private val vibrator: Vibrator = get()
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -74,7 +74,7 @@ class LocationAlarmService : Service() {
         Timber.d("LocationAlarmService onStartCommand")
         when (intent?.action) {
             ACTION_STOP_AND_CANCEL_ALARM -> {
-                viewModel.onSetAlarm(false)
+                appStateStore.onSetAlarm(false)
             }
 
             else -> setupAlarm()
@@ -96,14 +96,14 @@ class LocationAlarmService : Service() {
             this,
             notificationId,
             buildAlarmNotification(
-                viewModel.state.value.distanceToGeofencePerimeter,
-                viewModel.state.value.alarmTriggered
+                appStateStore.state.value.distanceToGeofencePerimeter,
+                appStateStore.state.value.alarmTriggered
             ),
             FOREGROUND_SERVICE_TYPE_LOCATION
         )
 
         serviceScope.launch {
-            viewModel.state.map { it.alarmTriggered }
+            appStateStore.state.map { it.alarmTriggered }
                 .distinctUntilChanged()
                 .collect { alarmTriggered ->
                     if (alarmTriggered) {
@@ -128,13 +128,13 @@ class LocationAlarmService : Service() {
         }
 
         serviceScope.launch {
-            viewModel.state
+            appStateStore.state
                 .map { it.distanceToGeofencePerimeter to it.alarmTriggered }
                 .distinctUntilChanged()
                 .collect { (distanceToGeofencePerimeter, alarmTriggered) ->
                     distanceToGeofencePerimeter?.let {
                         // Check the alarm is still enabled here as this service scope doesnt seem to get cancelled immediately
-                        if (checkNotificationPermission() && viewModel.state.value.alarmEnabled) {
+                        if (checkNotificationPermission() && appStateStore.state.value.alarmEnabled) {
                             Timber.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
                             notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
                         } else {
