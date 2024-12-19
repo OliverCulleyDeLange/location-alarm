@@ -89,8 +89,7 @@ See [Notification Permissions](#notification-permissions).
     - ❌ A notification is shown to draw attention to the alarm being triggered which gives the
       option to stop alarm
         - `No notification pops down`
-        - `Notification persists after stopping the alarm with negative distance number`
-        - `Notification updates when ealarm is disabled and radius changes `
+      - `Notification updates when alarm is disabled and radius changes `
     - ✅ Persistent notification in notification drawer becomes bright color and gives option to
       stop alarm
     - ✅Tap stop alarm in persistent notification - App opens, alarm stops, persistent

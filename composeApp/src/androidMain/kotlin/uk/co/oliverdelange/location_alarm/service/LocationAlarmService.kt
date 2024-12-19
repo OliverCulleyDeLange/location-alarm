@@ -35,6 +35,7 @@ class LocationAlarmService : Service() {
         const val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
     }
 
+    private val notificationManager by lazy { NotificationManagerCompat.from(this) }
     private val notificationId = 60494
     private var alarmPlayer: MediaPlayer? = null
     private val viewModel: MapUiViewModel = get()
@@ -98,26 +99,28 @@ class LocationAlarmService : Service() {
         )
 
         serviceScope.launch {
-            viewModel.state.map { it.alarmTriggered }.distinctUntilChanged().collect { alarmTriggered ->
-                if (alarmTriggered) {
-                    alarmPlayer?.let {
-                        if (!it.isPlaying) {
-                            Timber.d("Triggering alarm sound & vibration")
-                            it.start()
-                        }
-                    } ?: Timber.e("Alarm player is null")
-                    vibrator.vibrateAlarm()
-                } else {
-                    alarmPlayer?.let {
-                        if (it.isPlaying) {
-                            Timber.d("Stopping alarm sound & vibration")
-                            it.stop()
-                            it.prepare()
-                        }
-                    } ?: Timber.e("Alarm player is null")
-                    vibrator.cancelVibration()
+            viewModel.state.map { it.alarmTriggered }
+                .distinctUntilChanged()
+                .collect { alarmTriggered ->
+                    if (alarmTriggered) {
+                        alarmPlayer?.let {
+                            if (!it.isPlaying) {
+                                Timber.d("Triggering alarm sound & vibration")
+                                it.start()
+                            }
+                        } ?: Timber.e("Alarm player is null")
+                        vibrator.vibrateAlarm()
+                    } else {
+                        alarmPlayer?.let {
+                            if (it.isPlaying) {
+                                Timber.d("Stopping alarm sound & vibration")
+                                it.stop()
+                                it.prepare()
+                            }
+                        } ?: Timber.e("Alarm player is null")
+                        vibrator.cancelVibration()
+                    }
                 }
-            }
         }
 
         serviceScope.launch {
@@ -126,8 +129,8 @@ class LocationAlarmService : Service() {
                 .distinctUntilChanged()
                 .collect { (distanceToGeofencePerimeter, alarmTriggered) ->
                     distanceToGeofencePerimeter?.let {
-                        if (checkNotificationPermission()) {
-                            val notificationManager = NotificationManagerCompat.from(this@LocationAlarmService)
+                        // Check the alarm is still enabled here as this service scope doesnt seem to get cancelled immediately
+                        if (checkNotificationPermission() && viewModel.state.value.alarmEnabled) {
                             Timber.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
                             notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
                         } else {
@@ -148,7 +151,7 @@ class LocationAlarmService : Service() {
         alarmPlayer = null
         vibrator.cancelVibration()
         serviceScope.cancel()
-        NotificationManagerCompat.from(this).cancel(notificationId)
+        notificationManager.cancel(notificationId)
         Timber.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }

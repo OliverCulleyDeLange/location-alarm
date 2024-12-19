@@ -32,9 +32,9 @@ fun buildAlarmNotification(context: Context, title: String, subtitle: String, al
         )
         .setOngoing(true) // User can't dismiss notification
         .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
-        .setOnlyAlertOnce(true)
+        .setOnlyAlertOnce(!alarmTriggered)
         .setCategory(NotificationCompat.CATEGORY_ALARM)
-        .setPriority(Notification.PRIORITY_HIGH)
+        .setPriority(Notification.PRIORITY_MAX)
         .run {
             if (alarmTriggered) {
                 val stopAlarmIntent = PendingIntent.getForegroundService(
