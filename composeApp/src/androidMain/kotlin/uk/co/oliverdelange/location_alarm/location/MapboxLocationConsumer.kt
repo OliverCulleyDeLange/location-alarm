@@ -4,13 +4,12 @@ import android.animation.ValueAnimator
 import com.mapbox.common.location.LocationError
 import com.mapbox.geojson.Point
 import com.mapbox.maps.plugin.locationcomponent.LocationConsumer
-import model.domain.Location
 import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
 
 /** Listens to locaiton updates from mapbox's inbuilt location service,
  * calls a callback with domain locations
  * */
-class MapboxLocationConsumer(val onLocationChange: (List<Location>) -> Unit) : LocationConsumer {
+class MapboxLocationConsumer(val onLocationChange: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit) : LocationConsumer {
     override fun onLocationUpdated(vararg location: Point, options: (ValueAnimator.() -> Unit)?) {
         onLocationChange(location.map { it.toLocation() })
     }

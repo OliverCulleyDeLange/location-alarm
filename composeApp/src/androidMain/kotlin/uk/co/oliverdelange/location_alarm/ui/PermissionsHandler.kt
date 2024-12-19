@@ -10,12 +10,12 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
-import model.domain.PermissionState
-import model.domain.RequestablePermission
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.permissions.AndroidSystemPermissionState
 import uk.co.oliverdelange.location_alarm.permissions.Permissions
 import uk.co.oliverdelange.location_alarm.permissions.androidPermissionStrings
+import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
+import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
 import java.time.LocalDateTime
 
 /** Handles permission state changes in compose */

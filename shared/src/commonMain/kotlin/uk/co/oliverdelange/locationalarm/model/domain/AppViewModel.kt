@@ -1,4 +1,4 @@
-package model.domain
+package uk.co.oliverdelange.locationalarm.model.domain
 
 import co.touchlab.kermit.Logger
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
@@ -187,13 +187,20 @@ open class AppViewModel : ViewModel() {
         }
     }
 
-    private fun getDistanceToGeofence(usersLocation: Location?, geofenceLocation: Location?): Int? {
+    private fun getDistanceToGeofence(
+        usersLocation: Location?,
+        geofenceLocation: Location?
+    ): Int? {
         return if (usersLocation != null && geofenceLocation != null) {
             geofenceLocation.distanceTo(usersLocation).roundToInt()
         } else null
     }
 
-    private fun getDistanceToGeofencePerimeter(usersLocation: Location?, geofenceLocation: Location?, perimeterRadiusMeters: Int): Int? {
+    private fun getDistanceToGeofencePerimeter(
+        usersLocation: Location?,
+        geofenceLocation: Location?,
+        perimeterRadiusMeters: Int
+    ): Int? {
         return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
     }
 }

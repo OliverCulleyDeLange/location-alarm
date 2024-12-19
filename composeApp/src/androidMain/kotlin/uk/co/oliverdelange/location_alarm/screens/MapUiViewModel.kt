@@ -5,14 +5,14 @@ import android.content.Intent
 import com.rickclephas.kmp.observableviewmodel.launch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import model.domain.AppViewModel
-import model.domain.MapFeatureState
-import model.ui.MapUiState
-import model.ui.UiViewModel
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.resources.StringProvider
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
+import uk.co.oliverdelange.locationalarm.model.domain.AppViewModel
+import uk.co.oliverdelange.locationalarm.model.domain.MapFeatureState
+import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
+import uk.co.oliverdelange.locationalarm.model.ui.UiViewModel
 
 /** App side extension of the shared view model
  * Handles app side ui model mapping

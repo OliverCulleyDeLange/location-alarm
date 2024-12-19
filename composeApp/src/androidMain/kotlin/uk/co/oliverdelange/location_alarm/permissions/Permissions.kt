@@ -6,14 +6,14 @@ import android.Manifest.permission.POST_NOTIFICATIONS
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import model.domain.PermissionState
-import model.domain.RequestablePermission
-import model.domain.RequestablePermission.Location
-import model.domain.RequestablePermission.Notifications
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.permissions.AndroidPermission.AccessCoarseLocation
 import uk.co.oliverdelange.location_alarm.permissions.AndroidPermission.AccessFineLocation
 import uk.co.oliverdelange.location_alarm.permissions.AndroidPermission.PostNotifications
+import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
+import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
+import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission.Location
+import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission.Notifications
 
 /** An attempt to contain the madness of Android permissions
  * - Mainly adds functionality to detect when the user hasn't yet decided on a permission: [PermissionState.Unknown]

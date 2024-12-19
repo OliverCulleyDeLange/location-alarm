@@ -39,12 +39,14 @@ kotlin {
             api(libs.kotlinx.datetime)
             api(libs.kmp.observableviewmodel.core)
         }
-
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
     }
 }
 
 android {
-    namespace = "uk.co.oliverdelange.location_alarm.shared"
+    namespace = "uk.co.oliverdelange.locationalarm.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

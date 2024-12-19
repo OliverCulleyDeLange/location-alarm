@@ -1,4 +1,4 @@
-package model.domain
+package uk.co.oliverdelange.locationalarm.model.domain
 
 sealed interface PermissionState {
     data object Unknown : PermissionState

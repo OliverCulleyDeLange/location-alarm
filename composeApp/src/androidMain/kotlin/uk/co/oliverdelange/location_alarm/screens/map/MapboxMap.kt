@@ -32,21 +32,20 @@ import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.viewport
-import mapbox.MapboxIDs
-import model.domain.Location
 import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.location.MapboxLocationConsumer
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
+import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
 
 @Composable
 @OptIn(MapboxExperimental::class)
 fun MapboxMap(
     darkMap: Boolean,
-    usersLocationToFlyTo: Location?,
+    usersLocationToFlyTo: uk.co.oliverdelange.locationalarm.model.domain.Location?,
     locationPermissionStateGranted: Boolean,
-    onMapTap: (Location) -> Unit,
-    onLocationUpdate: (List<Location>) -> Unit,
+    onMapTap: (uk.co.oliverdelange.locationalarm.model.domain.Location) -> Unit,
+    onLocationUpdate: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit,
     onFinishFlyingToUsersLocation: () -> Unit,
     geofenceSourceState: GeoJsonSourceState,
 ) {

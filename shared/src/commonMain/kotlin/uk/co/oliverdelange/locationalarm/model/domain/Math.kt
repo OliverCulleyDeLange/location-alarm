@@ -1,4 +1,4 @@
-package model.domain
+package uk.co.oliverdelange.locationalarm.model.domain
 
 import kotlin.math.PI
 

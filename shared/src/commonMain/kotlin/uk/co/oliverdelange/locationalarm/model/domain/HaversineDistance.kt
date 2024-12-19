@@ -1,4 +1,4 @@
-package model.domain
+package uk.co.oliverdelange.locationalarm.model.domain
 
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -8,7 +8,10 @@ import kotlin.math.sqrt
 private val earthRadius = 6378137.0 // Earth's radius in meters
 
 // Returns the haversine distance in meters from a to b
-fun haversineDistance(source: Location, destination: Location): Double {
+fun haversineDistance(
+    source: Location,
+    destination: Location
+): Double {
     val dLat = toRadians(destination.lat - source.lat)
     val dLng = toRadians(destination.lng - source.lng)
 

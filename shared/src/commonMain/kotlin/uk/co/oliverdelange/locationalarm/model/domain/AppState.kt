@@ -1,7 +1,7 @@
-package model.domain
+package uk.co.oliverdelange.locationalarm.model.domain
 
-import model.ui.UiState
-import model.ui.UiViewModel
+import uk.co.oliverdelange.locationalarm.model.ui.UiState
+import uk.co.oliverdelange.locationalarm.model.ui.UiViewModel
 
 /** Shared domain level app state
  * - Should contain domain objects like [Location], [PermissionState] and numbers like [Int]s

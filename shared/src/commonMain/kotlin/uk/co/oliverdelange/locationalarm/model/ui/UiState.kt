@@ -1,4 +1,4 @@
-package model.ui
+package uk.co.oliverdelange.locationalarm.model.ui
 
 /** Shared UiState objects
  * - Should contain mainly display strings and booleans

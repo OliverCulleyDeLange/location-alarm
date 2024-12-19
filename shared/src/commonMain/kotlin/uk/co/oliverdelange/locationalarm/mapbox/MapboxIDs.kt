@@ -1,4 +1,4 @@
-package mapbox
+package uk.co.oliverdelange.locationalarm.mapbox
 
 object MapboxIDs {
     // Sources are geographic data sources, which layers use to display their UI

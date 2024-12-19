@@ -33,23 +33,22 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
-import mapbox.MapboxIDs
-import model.domain.Location
-import model.domain.MapFeatureState
-import model.domain.granted
-import model.domain.shouldShowRationale
 import uk.co.oliverdelange.location_alarm.helpers.isDebug
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
+import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
+import uk.co.oliverdelange.locationalarm.model.domain.MapFeatureState
+import uk.co.oliverdelange.locationalarm.model.domain.granted
+import uk.co.oliverdelange.locationalarm.model.domain.shouldShowRationale
 
 @OptIn(MapboxExperimental::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
     state: MapFeatureState,
     alarmButtonText: String,
-    onMapTap: (Location) -> Unit,
-    onLocationUpdate: (List<Location>) -> Unit,
+    onMapTap: (uk.co.oliverdelange.locationalarm.model.domain.Location) -> Unit,
+    onLocationUpdate: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit,
     onToggleAlarm: () -> Unit,
     onToggleAlarmWithDelay: () -> Unit,
     onRadiusChange: (Int) -> Unit,

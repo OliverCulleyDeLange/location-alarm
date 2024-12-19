@@ -1,4 +1,4 @@
-package model.domain
+package uk.co.oliverdelange.locationalarm.model.domain
 
 import co.touchlab.kermit.Logger
 import kotlinx.datetime.Clock

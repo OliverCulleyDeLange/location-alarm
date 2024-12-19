@@ -12,10 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import model.domain.PermissionState
-import model.domain.RequestablePermission
-import model.domain.granted
-import model.ui.MapUiState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import uk.co.oliverdelange.location_alarm.screens.map.MapScreen
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsDeniedScreen
@@ -23,6 +19,10 @@ import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermission
 import uk.co.oliverdelange.location_alarm.ui.PermissionHandler
 import uk.co.oliverdelange.location_alarm.ui.PermissionsHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
+import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
+import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
+import uk.co.oliverdelange.locationalarm.model.domain.granted
+import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 
 @SuppressLint("InlinedApi")
 @Composable
