@@ -55,8 +55,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         logger.debug("listenForUpdates request")
         if (!listeningForLocationUpdates){
             logger.debug("actually listening for updates")
-//            locationManager.allowsBackgroundLocationUpdates = true
-//            locationManager.startUpdatingLocation()
+            locationManager.allowsBackgroundLocationUpdates = true
+            locationManager.startUpdatingLocation()
             listeningForLocationUpdates = true
             delegate?.onLocationUpdate(locations: [Location(lat:51.49279212322023, lng:0.07192943692961544)])
         }

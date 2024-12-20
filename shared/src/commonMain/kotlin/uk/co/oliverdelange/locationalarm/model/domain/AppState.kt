@@ -9,6 +9,9 @@ data class AppState(
     val shouldRequestLocationPermissions: Boolean = false,
     val locationPermissionState: PermissionState = PermissionState.Unknown,
 
+    // Listen if map is open or alarm is enabled
+    val shouldListenForLocationUpdates: Boolean = false,
+
     // Most up to date user location - may be used fort the geofence if they haven't manually moved it
     val usersLocation: Location? = null,
     // A store of all location updates while the app is running
@@ -36,6 +39,13 @@ data class AppState(
     // If this is set we should fly to it. The UI should listen for changes to this state and fly to new values.
     val usersLocationToFlyTo: Location? = null,
 ) {
-    fun toDebugString() =
-        "Enabled: ${alarmEnabled}, Triggered: ${alarmTriggered}, delayAlarmTriggering: $delayAlarmTriggering, distanceToGeofencePerimeter: $distanceToGeofencePerimeter"
+    fun toDebugString() = """AppState:  ⤵︎
+        |   notificationPermissionState: $notificationPermissionState
+        |   locationPermissionState: $locationPermissionState
+        |   alarmEnabled: ${alarmEnabled}
+        |   alarmTriggered: ${alarmTriggered}
+        |   delayAlarmTriggering: $delayAlarmTriggering
+        |   distanceToGeofencePerimeter: $distanceToGeofencePerimeter
+        |
+    """.trimMargin()
 }

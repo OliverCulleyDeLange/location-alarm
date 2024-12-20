@@ -36,6 +36,7 @@ data class MapUiState(
     val distanceToAlarmText: String = "",
 ) : UiState {
     fun toDebugString() = """MapUiState: ⤵︎
+        |   screenState: $screenState
         |   shouldRequestNotificationPermissions : $shouldRequestNotificationPermissions
         |   shouldRequestLocationPermissions     : $shouldRequestLocationPermissions
         |   shouldEnableMapboxLocationComponent  : $shouldEnableMapboxLocationComponent

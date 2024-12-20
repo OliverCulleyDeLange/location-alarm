@@ -4,7 +4,7 @@ import KMPObservableViewModelSwiftUI
 @_spi(Experimental) import MapboxMaps
 
 struct MapScreen: View {
-    @StateViewModel var viewModel: AppViewModel
+    var viewModel: MapViewModelInterface
     
     var body: some View {
         ZStack {
@@ -45,8 +45,8 @@ struct MapScreen: View {
                     NotificationPermissionDeniedAlert()
                 }
                 
-                if (viewModel.state.alarmEnabled){
-                    Text(viewModel.distanceToAlarmText)
+                if (viewModel.state.shouldShowDistanceToAlarmText){
+                    Text(viewModel.state.distanceToAlarmText)
                     .font(.caption)
                     .padding(8)
                     .background(Color(.primaryContainer))
@@ -61,7 +61,7 @@ struct MapScreen: View {
                 #endif
                 
                 Button(action: {viewModel.onToggleAlarm()}) {
-                    Text(viewModel.alarmButtonText)
+                    Text(viewModel.state.toggleAlarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
                         .font(.system(size: 20, weight: .semibold))
                 }
@@ -73,7 +73,7 @@ struct MapScreen: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
             
         }
-        .alert(isPresented: .constant(viewModel.state.alarmTriggered)) {
+        .alert(isPresented: .constant(viewModel.state.shouldShowAlarmAlert)) {
             Alert(
                 title: Text("Wakey Wakey"),
                 message: Text("You have reached your destination."),
@@ -85,19 +85,19 @@ struct MapScreen: View {
         }
         .onAppear {
             logger.debug("Map did appear")
-            viewModel.onViewDidAppear()
+            viewModel.onMapShown()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             logger.debug("Did receive UIApplication.didBecomeActiveNotification")
-            viewModel.onViewDidAppear()
+            viewModel.onMapShown()
         }
         .onDisappear{
             logger.debug("Map did dissapear")
-            viewModel.onViewDidDissapear()
+            viewModel.onMapNotShown()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             logger.debug("Did receive UIApplication.didEnterBackgroundNotification")
-            viewModel.onViewDidDissapear()
+            viewModel.onMapNotShown()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea()
@@ -107,6 +107,8 @@ struct MapScreen: View {
 
 struct MapScreen_Previews: PreviewProvider {
     static var previews: some View {
-        MapScreen(viewModel: AppViewModel())
+        MapScreen(viewModel: FakeMapViewModel())
     }
 }
+
+class FakeMapViewModel : Shared.MapViewModelInterface {}

@@ -8,6 +8,7 @@ import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
 
 /** Listens to locaiton updates from mapbox's inbuilt location service,
  * calls a callback with domain locations
+ * //TODO Use normal location service - can't guarantee this will work when mapbox not shown!
  * */
 class MapboxLocationConsumer(val onLocationChange: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit) : LocationConsumer {
     override fun onLocationUpdated(vararg location: Point, options: (ValueAnimator.() -> Unit)?) {

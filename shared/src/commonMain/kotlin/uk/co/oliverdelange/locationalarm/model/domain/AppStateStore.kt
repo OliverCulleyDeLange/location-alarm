@@ -130,6 +130,18 @@ open class AppStateStore(
         }
     }
 
+    fun onMapShown() {
+        _state.update { state ->
+            state.copy(shouldListenForLocationUpdates = true)
+        }
+    }
+
+    fun onMapNotShown() {
+        _state.update { state ->
+            state.copy(shouldListenForLocationUpdates = state.alarmEnabled)
+        }
+    }
+
     fun onTapLocationIcon() {
         _state.update { state ->
             state.copy(usersLocationToFlyTo = state.usersLocation)

@@ -8,6 +8,7 @@
 
 # Priority 1
 
+- S Use Android Location instead of mapbox
 - M Refactoring & TODOS
 - L UI Tests?
 - M CI / CD
