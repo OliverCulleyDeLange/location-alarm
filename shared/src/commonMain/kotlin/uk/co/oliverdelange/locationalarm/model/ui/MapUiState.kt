@@ -6,6 +6,8 @@ enum class MapUiScreenState {
     ShowMap, LocationPermissionRequired, LocationPermissionDenied
 }
 
+
+//@Serializable
 data class MapUiState(
     val screenState: MapUiScreenState = MapUiScreenState.LocationPermissionRequired,
     // Alert dialog which appears when alarm is triggered - gives option to stop alarm
@@ -40,5 +42,8 @@ data class MapUiState(
         |   shouldRequestNotificationPermissions : $shouldRequestNotificationPermissions
         |   shouldRequestLocationPermissions     : $shouldRequestLocationPermissions
         |   shouldEnableMapboxLocationComponent  : $shouldEnableMapboxLocationComponent
+        |   usersLocation                        : $usersLocation
+        |   usersLocationToFlyTo                 : $usersLocationToFlyTo
+        |   geoFenceLocation                     : $geoFenceLocation
     """.trimMargin()
 }

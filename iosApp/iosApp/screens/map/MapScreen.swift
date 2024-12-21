@@ -4,24 +4,26 @@ import KMPObservableViewModelSwiftUI
 @_spi(Experimental) import MapboxMaps
 
 struct MapScreen: View {
-    var viewModel: MapViewModelInterface
+    
+    let state: MapUiState
+    let callbacks: MapScreenCallbacks
     
     var body: some View {
         ZStack {
             MapboxMap(
-                geofenceLocation: viewModel.state.geoFenceLocation,
-                usersLocationToFlyTo: viewModel.state.usersLocationToFlyTo,
-                perimeterRadiusMeters: Double(viewModel.state.perimeterRadiusMeters),
-                onMapTap: {viewModel.onMapTap(newGeofenceLocation: $0)},
-                onZoomedToUserLocation: { viewModel.onFinishFlyingToUsersLocation() }
+                geofenceLocation:state.geoFenceLocation,
+                usersLocationToFlyTo:state.usersLocationToFlyTo,
+                perimeterRadiusMeters: Double(state.perimeterRadiusMeters),
+                onMapTap: { callbacks.onMapTap(newGeofenceLocation: $0)},
+                onZoomedToUserLocation: { callbacks.onFinishFlyingToUsersLocation() }
             )
             
             HStack {
                 Spacer()
                 RadiusScrubber(
-                    radiusMeters: viewModel.state.perimeterRadiusMeters,
+                    radiusMeters: state.perimeterRadiusMeters,
                     onRadiusChanged: { radius in
-                        viewModel.onRadiusChanged(radius: radius)
+                        callbacks.onRadiusChanged(radius: radius)
                     }
                 )
             }
@@ -33,7 +35,7 @@ struct MapScreen: View {
                     .frame(width: 40, height: 40)
                     .foregroundStyle(Color(.primary))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 32, trailing: 0))
-                    .onTapGesture { viewModel.onTapLocationIcon() }
+                    .onTapGesture { callbacks.onTapLocationIcon() }
                     .ignoresSafeArea()
                 
             }
@@ -41,63 +43,63 @@ struct MapScreen: View {
             
             VStack(alignment: .trailing) {
                 Spacer()
-                if (viewModel.state.shouldShowNotificationPermissionDeniedMessage){
+                if (state.shouldShowNotificationPermissionDeniedMessage){
                     NotificationPermissionDeniedAlert()
                 }
                 
-                if (viewModel.state.shouldShowDistanceToAlarmText){
-                    Text(viewModel.state.distanceToAlarmText)
-                    .font(.caption)
-                    .padding(8)
-                    .background(Color(.primaryContainer))
-                    .cornerRadius(8)
-                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
+                if (state.shouldShowDistanceToAlarmText){
+                    Text(state.distanceToAlarmText)
+                        .font(.caption)
+                        .padding(8)
+                        .background(Color(.primaryContainer))
+                        .cornerRadius(8)
+                        .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
                 }
                 
                 // Dev tool to enable alarm but not trigger for a time period to allow background / locked testing
-                #if DEBUG
-                Button("Delayed Start", action: { viewModel.onToggleAlarmWithDelay()})
+#if DEBUG
+                Button("Delayed Start", action: { callbacks.onToggleAlarmWithDelay()})
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
-                #endif
+#endif
                 
-                Button(action: {viewModel.onToggleAlarm()}) {
-                    Text(viewModel.state.toggleAlarmButtonText)
+                Button(action: {callbacks.onToggleAlarm()}) {
+                    Text(state.toggleAlarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
                         .font(.system(size: 20, weight: .semibold))
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
-                .disabled(!viewModel.state.enableAlarmButtonEnabled)
+                .disabled(!state.enableAlarmButtonEnabled)
                 
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             
         }
-        .alert(isPresented: .constant(viewModel.state.shouldShowAlarmAlert)) {
+        .alert(isPresented: .constant(state.shouldShowAlarmAlert)) {
             Alert(
                 title: Text("Wakey Wakey"),
                 message: Text("You have reached your destination."),
                 dismissButton: .default(Text("Stop Alarm")){
                     logger.debug("Tapped Stop Alarm")
-                    viewModel.onTapStopAlarm()
+                    callbacks.onTapStopAlarm()
                 }
             )
         }
         .onAppear {
             logger.debug("Map did appear")
-            viewModel.onMapShown()
+            callbacks.onMapViewDidAppear()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             logger.debug("Did receive UIApplication.didBecomeActiveNotification")
-            viewModel.onMapShown()
+            callbacks.onMapViewDidAppear()
         }
         .onDisappear{
             logger.debug("Map did dissapear")
-            viewModel.onMapNotShown()
+            callbacks.onMapViewDidDissapear()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             logger.debug("Did receive UIApplication.didEnterBackgroundNotification")
-            viewModel.onMapNotShown()
+            callbacks.onMapViewDidDissapear()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea()
@@ -107,8 +109,12 @@ struct MapScreen: View {
 
 struct MapScreen_Previews: PreviewProvider {
     static var previews: some View {
-        MapScreen(viewModel: FakeMapViewModel())
+        MapScreen(state: Shared.MapUiState(), callbacks: EmptyMapScreenCallbacks())
     }
 }
 
-class FakeMapViewModel : Shared.MapViewModelInterface {}
+extension Shared.MapUiState {
+    convenience init(screenState: MapUiScreenState = MapUiScreenState.showmap) {
+        self.init(screenState: screenState, shouldShowAlarmAlert: false, toggleAlarmButtonText: "Enable Alarm", enableAlarmButtonEnabled: true, shouldRequestNotificationPermissions: false, shouldShowNotificationPermissionDeniedMessage: false, shouldShowNotificationPermissionRationale: false, shouldRequestLocationPermissions: false, shouldEnableMapboxLocationComponent: false, usersLocation: nil, geoFenceLocation: nil, usersLocationToFlyTo: nil, perimeterRadiusMeters: 200, shouldShowDistanceToAlarmText: true, distanceToAlarmText: "100m to alarm")
+    }
+}

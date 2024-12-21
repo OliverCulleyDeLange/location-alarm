@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+//    alias(libs.plugins.serialization)
     id("com.google.devtools.ksp") version "2.0.21-1.0.25"
     id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-37"
 }
@@ -35,6 +36,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.core)
             implementation(libs.kermit)
+//            implementation(libs.kotlinx.serialization.json)
             api(libs.kotlinx.datetime)
             api(libs.kmp.observableviewmodel.core)
         }

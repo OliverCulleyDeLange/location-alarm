@@ -21,21 +21,18 @@ struct AppUi: View {
         switch viewModel.state.screenState {
         case .showmap:
             MapScreen(
-                viewModel: viewModel
+                state: viewModel.state,
+                callbacks: viewModel
             )
             .onOpenURL { url in
                 if url.scheme == "uk.co.oliverdelange.locationalarm" {
                     logger.info("Deeplink: \(url)")
                     viewModel.onSetAlarm(enabled: false)
                 }
-            }.onAppear{
-                logger.warning("OCD map appear")
             }
         case .locationpermissionrequired:
             LocationPermissionsRequiredScreen {
                 viewModel.onTapAllowLocationPermissions()
-            }.onAppear{
-                logger.warning("OCD req appear")
             }
         default:
             LocationPermissionsDeniedScreen()

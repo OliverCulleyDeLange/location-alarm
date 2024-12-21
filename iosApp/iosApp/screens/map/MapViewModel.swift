@@ -6,7 +6,8 @@ import KMPNativeCoroutinesCombine
 
 
 /// App side view model. Extends the shared kotlin view model and adds IOS specific functions.
-class MapViewModel: Shared.MapViewModel, Cancellable, LocationService.LocationServiceDelegate {
+class MapViewModel: Shared.MapViewModel, MapScreenCallbacks, Cancellable, LocationService.LocationServiceDelegate {
+    
     private var locationService = LocationService()
     private var notificationManager = NotificationManager.shared
 
@@ -80,4 +81,85 @@ class MapViewModel: Shared.MapViewModel, Cancellable, LocationService.LocationSe
             }
             .store(in: &cancellables)
     }
+}
+
+protocol MapScreenCallbacks : Shared.MapViewModelInterface{
+    func onMapViewDidAppear()
+    func onMapViewDidDissapear()
+}
+
+class EmptyMapScreenCallbacks: MapScreenCallbacks{
+    func onMapViewDidAppear() {
+        
+    }
+    
+    func onMapViewDidDissapear() {
+        
+    }
+    
+    func onFinishFlyingToUsersLocation() {
+        
+    }
+    
+    func onLocationChange(locations: [Location]) {
+        
+    }
+    
+    func onLocationPermissionResult(state: any PermissionState) {
+        
+    }
+    
+    func onMapNotShown() {
+        
+    }
+    
+    func onMapShown() {
+        
+    }
+    
+    func onMapTap(newGeofenceLocation: Location) {
+        
+    }
+    
+    func onNotificationPermissionResult(granted: Bool) {
+        
+    }
+    
+    func onNotificationPermissionResult(state: any PermissionState) {
+        
+    }
+    
+    func onRadiusChanged(radius: Int32) {
+        
+    }
+    
+    func onRequestedLocationPermissions() {
+        
+    }
+    
+    func onSetAlarm(enabled: Bool) {
+        
+    }
+    
+    func onTapAllowLocationPermissions() {
+        
+    }
+    
+    func onTapLocationIcon() {
+        
+    }
+    
+    func onTapStopAlarm() {
+        
+    }
+    
+    func onToggleAlarm() {
+        
+    }
+    
+    func onToggleAlarmWithDelay() {
+        
+    }
+    
+    
 }

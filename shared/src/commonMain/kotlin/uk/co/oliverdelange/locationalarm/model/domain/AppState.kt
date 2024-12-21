@@ -40,12 +40,14 @@ data class AppState(
     val usersLocationToFlyTo: Location? = null,
 ) {
     fun toDebugString() = """AppState:  ⤵︎
-        |   notificationPermissionState: $notificationPermissionState
-        |   locationPermissionState: $locationPermissionState
-        |   alarmEnabled: ${alarmEnabled}
-        |   alarmTriggered: ${alarmTriggered}
-        |   delayAlarmTriggering: $delayAlarmTriggering
-        |   distanceToGeofencePerimeter: $distanceToGeofencePerimeter
+        |   notificationPermissionState:    $notificationPermissionState
+        |   locationPermissionState:        $locationPermissionState
+        |   shouldListenForLocationUpdates: $shouldListenForLocationUpdates
+        |   userRequestedAlarmEnable:       $userRequestedAlarmEnable
+        |   alarmEnabled:                   $alarmEnabled
+        |   alarmTriggered:                 $alarmTriggered
+        |   delayAlarmTriggering:           $delayAlarmTriggering
+        |   distanceToGeofencePerimeter:    $distanceToGeofencePerimeter
         |
     """.trimMargin()
 }
