@@ -33,8 +33,6 @@ import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 class LocationAlarmService : Service() {
     companion object {
         const val ACTION_STOP_AND_CANCEL_ALARM = "uk.co.oliverdelange.location_alarm.ACTION_STOP_AND_CANCEL_ALARM"
-        var isCreated: Boolean = false
-        var isRunning: Boolean = false
     }
 
     private val notificationManager by lazy { NotificationManagerCompat.from(this) }
@@ -67,7 +65,6 @@ class LocationAlarmService : Service() {
             }
         }
         super.onCreate()
-        isCreated = true
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -80,7 +77,6 @@ class LocationAlarmService : Service() {
             else -> setupAlarm()
         }
 
-        isRunning = true
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -158,7 +154,6 @@ class LocationAlarmService : Service() {
         notificationManager.cancel(notificationId)
         Timber.d("LocationAlarmService onDestroy")
         super.onDestroy()
-        isCreated = false
     }
 
     override fun onBind(intent: Intent?): IBinder? {

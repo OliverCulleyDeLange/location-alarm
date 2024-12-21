@@ -35,10 +35,10 @@ class MainActivity : ComponentActivity() {
             // Start and stop the foreground service based on alarm enabled state
             appStateStore.state.map { it.alarmEnabled }.distinctUntilChanged().collect { alarmEnabled ->
                 val intent = Intent(applicationContext, LocationAlarmService::class.java)
-                if (alarmEnabled && !LocationAlarmService.isRunning) {
+                if (alarmEnabled) {
                     Timber.i("Starting LocationAlarmService")
                     startForegroundService(intent)
-                } else if (!alarmEnabled && LocationAlarmService.isRunning) {
+                } else {
                     Timber.i("Stopping LocationAlarmService")
                     stopService(intent)
                 }
