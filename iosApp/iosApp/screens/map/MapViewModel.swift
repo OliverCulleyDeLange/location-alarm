@@ -6,11 +6,11 @@ import KMPNativeCoroutinesCombine
 
 
 /// App side view model. Extends the shared kotlin view model and adds IOS specific functions.
-class MapViewModel: Shared.MapViewModel, MapScreenCallbacks, Cancellable, LocationService.LocationServiceDelegate {
+class MapViewModel: Shared.MapViewModel, Cancellable, LocationService.LocationServiceDelegate {
     
     private var locationService = LocationService()
     private var notificationManager = NotificationManager.shared
-
+    
     private var cancellables = Set<AnyCancellable>()
     
     override init(appStateStore: AppStateStore, uiStateMapper: MapAppStateToMapUiState) {
@@ -19,6 +19,19 @@ class MapViewModel: Shared.MapViewModel, MapScreenCallbacks, Cancellable, Locati
         
         listenAndRequestLocationPermissions()
         listenAndRequestNotificationPermissions()
+    }
+    
+    override func onEvent(uiEvent: Shared.UiEvents){
+        switch uiEvent {
+        case is UiResultMapShown:
+            super.onEvent(uiEvent: uiEvent)
+            locationService.checkLocationPermissionsAndStartListening()
+            notificationManager.checkPermissions{ state in
+                self.onEvent(uiEvent: UiResultNotificationPermissionResult(state: state))
+            }
+        default:
+            super.onEvent(uiEvent: uiEvent)
+        }
     }
     
     func cancel() {
@@ -30,32 +43,12 @@ class MapViewModel: Shared.MapViewModel, MapScreenCallbacks, Cancellable, Locati
     
     // Overridden LocationService delegate methods simply pass through to viewmodel
     func onLocationUpdate(locations: Array<Shared.Location>) {
-        onLocationChange(locations: locations)
+        onEvent(uiEvent: UiResultLocationChanged(location: locations))
     }
     
     // Overridden LocationService delegate methods simply pass through to shared viewmodel
     func onLocationPermissionChanged(state: PermissionState) {
-        onLocationPermissionResult(state: state)
-    }
-    
-    func requestNotificationPermissions()  {
-        notificationManager.requestPermissions{ granted in
-            self.onNotificationPermissionResult(granted: granted)
-        }
-    }
-    
-    /// Request location updates when map is open to update the geofence location initially
-    func onMapViewDidAppear() {
-        onMapShown()
-        locationService.checkLocationPermissionsAndStartListening()
-        notificationManager.checkPermissions{ state in
-            self.onNotificationPermissionResult(state: state)
-        }
-    }
-    
-    /// If the alarm isn't enabled, stop listening for location updates
-    func onMapViewDidDissapear() {
-        onMapNotShown()
+        onEvent(uiEvent: UiResultLocationPermissionResult(state: state))
     }
     
     fileprivate func listenAndRequestNotificationPermissions() {
@@ -81,85 +74,11 @@ class MapViewModel: Shared.MapViewModel, MapScreenCallbacks, Cancellable, Locati
             }
             .store(in: &cancellables)
     }
-}
-
-protocol MapScreenCallbacks : Shared.MapViewModelInterface{
-    func onMapViewDidAppear()
-    func onMapViewDidDissapear()
-}
-
-class EmptyMapScreenCallbacks: MapScreenCallbacks{
-    func onMapViewDidAppear() {
-        
-    }
     
-    func onMapViewDidDissapear() {
-        
+    fileprivate func requestNotificationPermissions()  {
+        notificationManager.requestPermissions{ granted in
+            self.onEvent(uiEvent: UiResultNotificationPermissionResult(state: PermissionStateKt.permissionStateFrom(granted: granted)))
+        }
     }
-    
-    func onFinishFlyingToUsersLocation() {
-        
-    }
-    
-    func onLocationChange(locations: [Location]) {
-        
-    }
-    
-    func onLocationPermissionResult(state: any PermissionState) {
-        
-    }
-    
-    func onMapNotShown() {
-        
-    }
-    
-    func onMapShown() {
-        
-    }
-    
-    func onMapTap(newGeofenceLocation: Location) {
-        
-    }
-    
-    func onNotificationPermissionResult(granted: Bool) {
-        
-    }
-    
-    func onNotificationPermissionResult(state: any PermissionState) {
-        
-    }
-    
-    func onRadiusChanged(radius: Int32) {
-        
-    }
-    
-    func onRequestedLocationPermissions() {
-        
-    }
-    
-    func onSetAlarm(enabled: Bool) {
-        
-    }
-    
-    func onTapAllowLocationPermissions() {
-        
-    }
-    
-    func onTapLocationIcon() {
-        
-    }
-    
-    func onTapStopAlarm() {
-        
-    }
-    
-    func onToggleAlarm() {
-        
-    }
-    
-    func onToggleAlarmWithDelay() {
-        
-    }
-    
     
 }

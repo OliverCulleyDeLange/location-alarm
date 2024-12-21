@@ -6,7 +6,7 @@ struct AppUi: View {
     private var appStateStore: AppStateStore
     @StateViewModel private var viewModel: MapViewModel
     private var alarmManager: AlarmManager
-
+    
     
     init(appStateStore: AppStateStore, alarmManager: AlarmManager) {
         self.appStateStore = appStateStore
@@ -22,17 +22,23 @@ struct AppUi: View {
         case .showmap:
             MapScreen(
                 state: viewModel.state,
-                callbacks: viewModel
+                onEvent: { viewModel.onEvent(uiEvent: $0) }
             )
             .onOpenURL { url in
                 if url.scheme == "uk.co.oliverdelange.locationalarm" {
                     logger.info("Deeplink: \(url)")
-                    viewModel.onSetAlarm(enabled: false)
+                    switch url.relativePath {
+                    case "action/stop_alarm":
+                        viewModel.onEvent(uiEvent: UserEventOpenedDeepLinkStopAlarm())
+                        
+                    default:
+                        logger.warning("Unhandled deeplink \(url.relativePath)")
+                    }
                 }
             }
         case .locationpermissionrequired:
             LocationPermissionsRequiredScreen {
-                viewModel.onTapAllowLocationPermissions()
+                viewModel.onEvent(uiEvent: UserEventTappedAllowLocationPermissions())
             }
         default:
             LocationPermissionsDeniedScreen()

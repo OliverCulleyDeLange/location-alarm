@@ -6,7 +6,7 @@ import KMPObservableViewModelSwiftUI
 struct MapScreen: View {
     
     let state: MapUiState
-    let callbacks: MapScreenCallbacks
+    let onEvent: (UiEvents) -> Void
     
     var body: some View {
         ZStack {
@@ -14,8 +14,9 @@ struct MapScreen: View {
                 geofenceLocation:state.geoFenceLocation,
                 usersLocationToFlyTo:state.usersLocationToFlyTo,
                 perimeterRadiusMeters: Double(state.perimeterRadiusMeters),
-                onMapTap: { callbacks.onMapTap(newGeofenceLocation: $0)},
-                onZoomedToUserLocation: { callbacks.onFinishFlyingToUsersLocation() }
+                onMapTap: { onEvent(UserEventTappedMap(location: $0)) },
+//                onMapTap: { onEvent(UserEventTappedMap($0)) },
+                onZoomedToUserLocation: { onEvent(UiResultFinishedFLyingToUsersLocation()) }
             )
             
             HStack {
@@ -23,7 +24,7 @@ struct MapScreen: View {
                 RadiusScrubber(
                     radiusMeters: state.perimeterRadiusMeters,
                     onRadiusChanged: { radius in
-                        callbacks.onRadiusChanged(radius: radius)
+                        onEvent(UserEventDraggedRadiusControl(radius: radius))
                     }
                 )
             }
@@ -35,7 +36,7 @@ struct MapScreen: View {
                     .frame(width: 40, height: 40)
                     .foregroundStyle(Color(.primary))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 32, trailing: 0))
-                    .onTapGesture { callbacks.onTapLocationIcon() }
+                    .onTapGesture { onEvent(UserEventTappedLocationIcon()) }
                     .ignoresSafeArea()
                 
             }
@@ -58,11 +59,11 @@ struct MapScreen: View {
                 
                 // Dev tool to enable alarm but not trigger for a time period to allow background / locked testing
 #if DEBUG
-                Button("Delayed Start", action: { callbacks.onToggleAlarmWithDelay()})
+                Button("Delayed Start", action: { onEvent(UserEventToggledAlarmWithDelay()) })
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
 #endif
                 
-                Button(action: {callbacks.onToggleAlarm()}) {
+                Button(action: { onEvent(UserEventToggledAlarm()) }) {
                     Text(state.toggleAlarmButtonText)
                         .foregroundStyle(Color(.primaryContainer))
                         .font(.system(size: 20, weight: .semibold))
@@ -80,26 +81,25 @@ struct MapScreen: View {
                 title: Text("Wakey Wakey"),
                 message: Text("You have reached your destination."),
                 dismissButton: .default(Text("Stop Alarm")){
-                    logger.debug("Tapped Stop Alarm")
-                    callbacks.onTapStopAlarm()
+                    onEvent(UserEventTappedStopAlarm())
                 }
             )
         }
         .onAppear {
             logger.debug("Map did appear")
-            callbacks.onMapViewDidAppear()
+            onEvent(UiResultMapShown())
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             logger.debug("Did receive UIApplication.didBecomeActiveNotification")
-            callbacks.onMapViewDidAppear()
+            onEvent(UiResultMapShown())
         }
         .onDisappear{
             logger.debug("Map did dissapear")
-            callbacks.onMapViewDidDissapear()
+            onEvent(UiResultMapNotShown())
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
             logger.debug("Did receive UIApplication.didEnterBackgroundNotification")
-            callbacks.onMapViewDidDissapear()
+            onEvent(UiResultMapNotShown())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .ignoresSafeArea()
@@ -109,7 +109,7 @@ struct MapScreen: View {
 
 struct MapScreen_Previews: PreviewProvider {
     static var previews: some View {
-        MapScreen(state: Shared.MapUiState(), callbacks: EmptyMapScreenCallbacks())
+        MapScreen(state: Shared.MapUiState(), onEvent: {_ in})
     }
 }
 

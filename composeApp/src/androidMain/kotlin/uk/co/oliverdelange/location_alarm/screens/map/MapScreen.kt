@@ -38,13 +38,15 @@ import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
 import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
-import uk.co.oliverdelange.locationalarm.model.ui.MapViewModelInterface
+import uk.co.oliverdelange.locationalarm.model.ui.UiEvents
+import uk.co.oliverdelange.locationalarm.model.ui.UiResult
+import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
 
 @OptIn(MapboxExperimental::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
     state: MapUiState,
-    callbacks: MapViewModelInterface,
+    onEvent: (UiEvents) -> Unit,
 ) {
     Box {
         val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -62,13 +64,13 @@ fun MapScreen(
             isSystemInDarkTheme(),
             state.usersLocationToFlyTo,
             state.shouldEnableMapboxLocationComponent,
-            onLocationUpdate = callbacks::onLocationChange,
-            onMapTap = callbacks::onMapTap,
-            onFinishFlyingToUsersLocation = callbacks::onFinishFlyingToUsersLocation,
+            onLocationUpdate = { onEvent(UiResult.LocationChanged(it)) },
+            onMapTap = { onEvent(UserEvent.TappedMap(it)) },
+            onFinishFlyingToUsersLocation = { onEvent(UiResult.FinishedFLyingToUsersLocation) },
             geofenceSourceState = geofenceSourceState,
         )
         FlyToCurrentLocationButton(
-            callbacks::onTapLocationIcon,
+            { onEvent(UserEvent.TappedLocationIcon) },
             Modifier
                 .align(Alignment.BottomStart)
                 .navigationBarsPadding()
@@ -79,7 +81,7 @@ fun MapScreen(
                 .align(Alignment.CenterEnd)
                 .padding(16.dp),
             radius = state.perimeterRadiusMeters,
-            onRadiusChange = callbacks::onRadiusChanged
+            onRadiusChange = { onEvent(UserEvent.DraggedRadiusControl(it)) }
         )
         Column(
             Modifier
@@ -109,7 +111,7 @@ fun MapScreen(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)
                         .padding(bottom = 8.dp, top = 8.dp),
-                    onClick = callbacks::onToggleAlarmWithDelay,
+                    onClick = { onEvent(UserEvent.ToggledAlarmWithDelay) },
                 ) {
                     Text("Delayed start")
                 }
@@ -118,7 +120,7 @@ fun MapScreen(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp, top = 8.dp),
-                onClick = callbacks::onToggleAlarm,
+                onClick = { onEvent(UserEvent.ToggledAlarm) },
                 elevation = ButtonDefaults.elevatedButtonElevation(),
                 enabled = state.enableAlarmButtonEnabled
             ) {

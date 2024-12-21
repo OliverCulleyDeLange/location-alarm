@@ -183,6 +183,17 @@ class AppStateStoreTest {
     }
 
     @Test
+    fun onMapTap_setsTriggeredState() {
+        store.onLocationChange(listOf(someLocation))
+        store.onMapTap(someOtherLocation)
+        assertEquals(false, store.state.value.alarmTriggered)
+        store.onSetAlarm(true)
+        assertEquals(false, store.state.value.alarmTriggered)
+        store.onMapTap(someLocation)
+        assertEquals(true, store.state.value.alarmTriggered)
+    }
+
+    @Test
     fun testFlyToLocationFlow() {
         store.onLocationChange(listOf(someLocation))
         assertEquals(null, store.state.value.usersLocationToFlyTo)

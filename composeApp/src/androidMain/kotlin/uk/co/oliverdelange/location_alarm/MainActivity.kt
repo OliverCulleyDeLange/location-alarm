@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import uk.co.oliverdelange.location_alarm.screens.App
+import uk.co.oliverdelange.location_alarm.screens.AppUi
 import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            App(appViewModel)
+            AppUi(appViewModel)
         }
 
         lifecycleScope.launch {
@@ -51,5 +51,5 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    AppUi()
 }

@@ -124,10 +124,9 @@ open class AppStateStore(
             state.copy(
                 mapInteracted = true,
                 geoFenceLocation = newGeofenceLocation,
-                distanceToGeofence = getDistanceToGeofence(state.usersLocation, newGeofenceLocation),
-                distanceToGeofencePerimeter = getDistanceToGeofencePerimeter(state.usersLocation, newGeofenceLocation, state.perimeterRadiusMeters)
             )
         }
+        recomputeDistancesAndTriggered()
     }
 
     fun onMapShown() {

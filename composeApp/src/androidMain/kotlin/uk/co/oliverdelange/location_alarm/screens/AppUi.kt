@@ -22,24 +22,26 @@ import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiScreenState
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
+import uk.co.oliverdelange.locationalarm.model.ui.UiResult
+import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
 
 @SuppressLint("InlinedApi")
 @Composable
 @Preview
-fun App(viewModel: MapUiViewModel = viewModel()) {
+fun AppUi(viewModel: MapUiViewModel = viewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle(MapUiState())
 
     AppTheme {
         // Permissions
         PermissionHandler(POST_NOTIFICATIONS, state.shouldRequestNotificationPermissions) {
-            viewModel.onNotificationPermissionResult(it)
+            viewModel.onEvent(UiResult.NotificationPermissionResult(it))
         }
         PermissionsHandler(
             permission = RequestablePermission.Location,
             shouldRequestPermission = state.shouldRequestLocationPermissions,
-            onRequestedPermissions = { viewModel.onRequestedLocationPermissions() }
+            onRequestedPermissions = { viewModel.onEvent(UiResult.RequestedLocationPermission) }
         ) {
-            viewModel.onLocationPermissionResult(it)
+            viewModel.onEvent(UiResult.LocationPermissionResult(it))
         }
 
         // UI
@@ -50,16 +52,18 @@ fun App(viewModel: MapUiViewModel = viewModel()) {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             when (state.screenState) {
-                MapUiScreenState.ShowMap -> MapScreen(state, viewModel)
+                MapUiScreenState.ShowMap -> MapScreen(state) {
+                    viewModel.onEvent(it)
+                }
 
                 MapUiScreenState.LocationPermissionRequired -> LocationPermissionsRequiredScreen {
-                    viewModel.onTapAllowLocationPermissions()
+                    viewModel.onEvent(UserEvent.TappedAllowLocationPermissions)
                 }
 
                 MapUiScreenState.LocationPermissionDenied -> LocationPermissionsDeniedScreen()
             }
             AlarmAlert(state.shouldShowAlarmAlert) {
-                viewModel.onTapStopAlarm()
+                viewModel.onEvent(UserEvent.TappedStopAlarm)
             }
         }
     }
