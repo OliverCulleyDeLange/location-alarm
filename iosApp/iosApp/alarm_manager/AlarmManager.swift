@@ -29,7 +29,7 @@ class AlarmManager {
     
     fileprivate func setAudioSessionCategory() {
         do {
-            try audioSession.setCategory(.playback, mode: .default)
+            try audioSession.setCategory(.playback, mode: .default, policy: .default, options: .mixWithOthers)
             logger.debug("Set audio session category")
         } catch {
             logger.warning("Failed to set the audio session configuration")
