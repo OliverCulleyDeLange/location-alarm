@@ -18,7 +18,7 @@ import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 open class MapViewModel(
     private val appStateStore: AppStateStore,
     private val uiStateMapper: MapAppStateToMapUiState,
-) : ViewModel() {
+) : ViewModel(), MapViewModelInterface {
 
     @NativeCoroutinesState
     val state: StateFlow<MapUiState> = appStateStore.state
@@ -34,72 +34,72 @@ open class MapViewModel(
         }
     }
 
-    fun onTapAllowLocationPermissions() {
+    override fun onTapAllowLocationPermissions() {
         appStateStore.onTapAllowLocationPermissions()
     }
 
-    fun onRequestedLocationPermissions() {
+    override fun onRequestedLocationPermissions() {
         appStateStore.onRequestedLocationPermissions()
     }
 
-    fun onLocationPermissionResult(state: PermissionState) {
+    override fun onLocationPermissionResult(state: PermissionState) {
         appStateStore.onLocationPermissionResult(state)
     }
 
-    fun onNotificationPermissionResult(granted: Boolean) {
+    override fun onNotificationPermissionResult(granted: Boolean) {
         appStateStore.onNotificationPermissionResult(granted)
     }
 
-    fun onNotificationPermissionResult(state: PermissionState) {
+    override fun onNotificationPermissionResult(state: PermissionState) {
         appStateStore.onNotificationPermissionResult(state)
     }
 
     /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
-    fun onLocationChange(locations: List<Location>) {
+    override fun onLocationChange(locations: List<Location>) {
         appStateStore.onLocationChange(locations)
     }
 
-    fun onRadiusChanged(radius: Int) {
+    override fun onRadiusChanged(radius: Int) {
         appStateStore.onRadiusChanged(radius)
     }
 
-    fun onMapTap(newGeofenceLocation: Location) {
+    override fun onMapTap(newGeofenceLocation: Location) {
         appStateStore.onMapTap(newGeofenceLocation)
     }
 
-    fun onMapShown() {
+    override fun onMapShown() {
         appStateStore.onMapShown()
     }
 
-    fun onMapNotShown() {
+    override fun onMapNotShown() {
         appStateStore.onMapNotShown()
     }
 
-    fun onTapLocationIcon() {
+    override fun onTapLocationIcon() {
         appStateStore.onTapLocationIcon()
     }
 
-    fun onFinishFlyingToUsersLocation() {
+    override fun onFinishFlyingToUsersLocation() {
         appStateStore.onFinishFlyingToUsersLocation()
     }
 
-    fun onTapStopAlarm() {
+    override fun onTapStopAlarm() {
         appStateStore.onTapStopAlarm()
     }
 
     /** Check notification permissions and enable if granted
      * Otherwise, request notification permissions
      * @param delay: Dev tool do delay alarm triggering by 5 seconds */
-    fun onToggleAlarm() {
+    override fun onToggleAlarm() {
         appStateStore.onToggleAlarm()
     }
 
-    fun onSetAlarm(enabled: Boolean) {
+    override fun onSetAlarm(enabled: Boolean) {
         appStateStore.onSetAlarm(enabled)
     }
 
     // Dev tool to allow enabling the alarm, but not allow triggering until a given time has passed
-    fun onToggleAlarmWithDelay() {
+    override fun onToggleAlarmWithDelay() {
         appStateStore.onToggleAlarmWithDelay()
     }
 

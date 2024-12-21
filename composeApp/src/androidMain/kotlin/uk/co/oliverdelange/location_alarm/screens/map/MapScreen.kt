@@ -25,7 +25,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -39,19 +38,13 @@ import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
 import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
+import uk.co.oliverdelange.locationalarm.model.ui.MapViewModelInterface
 
 @OptIn(MapboxExperimental::class, ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
     state: MapUiState,
-    alarmButtonText: String,
-    onMapTap: (uk.co.oliverdelange.locationalarm.model.domain.Location) -> Unit,
-    onLocationUpdate: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit,
-    onToggleAlarm: () -> Unit,
-    onToggleAlarmWithDelay: () -> Unit,
-    onRadiusChange: (Int) -> Unit,
-    onTapLocationIcon: () -> Unit,
-    onFinishFlyingToUsersLocation: () -> Unit,
+    callbacks: MapViewModelInterface,
 ) {
     Box {
         val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -69,13 +62,13 @@ fun MapScreen(
             isSystemInDarkTheme(),
             state.usersLocationToFlyTo,
             state.shouldEnableMapboxLocationComponent,
-            onLocationUpdate = onLocationUpdate,
-            onMapTap = onMapTap,
-            onFinishFlyingToUsersLocation = onFinishFlyingToUsersLocation,
+            onLocationUpdate = callbacks::onLocationChange,
+            onMapTap = callbacks::onMapTap,
+            onFinishFlyingToUsersLocation = callbacks::onFinishFlyingToUsersLocation,
             geofenceSourceState = geofenceSourceState,
         )
         FlyToCurrentLocationButton(
-            onTapLocationIcon,
+            callbacks::onTapLocationIcon,
             Modifier
                 .align(Alignment.BottomStart)
                 .navigationBarsPadding()
@@ -86,7 +79,7 @@ fun MapScreen(
                 .align(Alignment.CenterEnd)
                 .padding(16.dp),
             radius = state.perimeterRadiusMeters,
-            onRadiusChange = onRadiusChange
+            onRadiusChange = callbacks::onRadiusChanged
         )
         Column(
             Modifier
@@ -116,7 +109,7 @@ fun MapScreen(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)
                         .padding(bottom = 8.dp, top = 8.dp),
-                    onClick = onToggleAlarmWithDelay,
+                    onClick = callbacks::onToggleAlarmWithDelay,
                 ) {
                     Text("Delayed start")
                 }
@@ -125,12 +118,12 @@ fun MapScreen(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp, top = 8.dp),
-                onClick = onToggleAlarm,
+                onClick = callbacks::onToggleAlarm,
                 elevation = ButtonDefaults.elevatedButtonElevation(),
                 enabled = state.enableAlarmButtonEnabled
             ) {
                 Text(
-                    text = alarmButtonText.uppercase(),
+                    text = state.toggleAlarmButtonText.uppercase(),
                     fontSize = 24.sp,
                 )
             }
@@ -153,7 +146,3 @@ private fun FlyToCurrentLocationButton(onTapLocationIcon: () -> Unit, modifier: 
         )
     }
 }
-
-@Preview
-@Composable
-fun Preview_MapScreen() = MapScreen(MapUiState(), "Enable Alarm", {}, {}, {}, {}, {}, {}, {})

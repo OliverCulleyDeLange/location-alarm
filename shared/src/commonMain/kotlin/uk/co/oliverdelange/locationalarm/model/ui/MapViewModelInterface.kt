@@ -22,3 +22,56 @@ interface MapViewModelInterface {
     fun onSetAlarm(enabled: Boolean)
     fun onToggleAlarmWithDelay()
 }
+
+
+class EmptyMapViewModel : MapViewModelInterface {
+    override fun onTapAllowLocationPermissions() {
+
+    }
+
+    override fun onRequestedLocationPermissions() {
+    }
+
+    override fun onLocationPermissionResult(state: PermissionState) {
+    }
+
+    override fun onNotificationPermissionResult(granted: Boolean) {
+    }
+
+    override fun onNotificationPermissionResult(state: PermissionState) {
+    }
+
+    override fun onLocationChange(locations: List<Location>) {
+    }
+
+    override fun onRadiusChanged(radius: Int) {
+    }
+
+    override fun onMapTap(newGeofenceLocation: Location) {
+    }
+
+    override fun onMapShown() {
+    }
+
+    override fun onMapNotShown() {
+    }
+
+    override fun onTapLocationIcon() {
+    }
+
+    override fun onFinishFlyingToUsersLocation() {
+    }
+
+    override fun onTapStopAlarm() {
+    }
+
+    override fun onToggleAlarm() {
+    }
+
+    override fun onSetAlarm(enabled: Boolean) {
+    }
+
+    override fun onToggleAlarmWithDelay() {
+    }
+
+}

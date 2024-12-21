@@ -50,17 +50,7 @@ fun App(viewModel: MapUiViewModel = viewModel()) {
                 .background(MaterialTheme.colorScheme.background)
         ) {
             when (state.screenState) {
-                MapUiScreenState.ShowMap -> MapScreen(
-                    state,
-                    state.toggleAlarmButtonText,
-                    onLocationUpdate = { locations -> viewModel.onLocationChange(locations) },
-                    onMapTap = { location -> viewModel.onMapTap(location) },
-                    onToggleAlarm = { viewModel.onToggleAlarm() },
-                    onToggleAlarmWithDelay = { viewModel.onToggleAlarmWithDelay() },
-                    onRadiusChange = { radius -> viewModel.onRadiusChanged(radius) },
-                    onTapLocationIcon = { viewModel.onTapLocationIcon() },
-                    onFinishFlyingToUsersLocation = { viewModel.onFinishFlyingToUsersLocation() }
-                )
+                MapUiScreenState.ShowMap -> MapScreen(state, viewModel)
 
                 MapUiScreenState.LocationPermissionRequired -> LocationPermissionsRequiredScreen {
                     viewModel.onTapAllowLocationPermissions()
