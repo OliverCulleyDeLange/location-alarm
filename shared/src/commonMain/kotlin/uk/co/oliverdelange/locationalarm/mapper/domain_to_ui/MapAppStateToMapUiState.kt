@@ -33,9 +33,11 @@ class MapAppStateToMapUiState {
             usersLocationToFlyTo = state.usersLocationToFlyTo,
             perimeterRadiusMeters = state.perimeterRadiusMeters,
             shouldShowDistanceToAlarmText = state.alarmEnabled,
-            distanceToAlarmText = state.distanceToGeofencePerimeter?.let {
-                "${it}m to alarm"
-            } ?: "Alarm active"
+            distanceToAlarmText = if (state.alarmEnabled) {
+                state.distanceToGeofencePerimeter?.let {
+                    "${it}m to alarm"
+                } ?: "Alarm active"
+            } else ""
         )
     }
 }

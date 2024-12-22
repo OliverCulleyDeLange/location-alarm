@@ -77,13 +77,11 @@ class Permissions(
                 newInternalState = newInternalState.copy(shouldShowRationaleBecameFalse = true)
             }
             newInternalState = newInternalState.copy(previousShouldShowRationale = newShouldShowRationale)
-            Timber.d("Updating $androidPermission permission state: $previousState -> $newInternalState")
             currentPermissionState.replace(androidPermission, newInternalState)
         }
 
         val newState = calculatePermissionState()
         if (newState != previousPermissionState) {
-            Timber.d("$requiredPermissions state changed from $previousPermissionState to $newState")
             onPermissionChanged(newState)
             previousPermissionState = newState
         }

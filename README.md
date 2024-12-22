@@ -7,13 +7,15 @@
   cool shit you wouldn't usually play with.
 
 # Priority 1
-
 - S Use Android Location instead of mapbox
+- State change logger
 - M Refactoring & TODOS
+- L Allow searching for locations with dropdown results
 - L UI Tests?
 - M CI / CD
+- S firebase app distribution
 - S Bug & crash reporting
-- Debugging tools
+- Debugging tools window
   - S Activate by volume button sequence
   - M Show app logs
   - M Show location updates (Graph data)

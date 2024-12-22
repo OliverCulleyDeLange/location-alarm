@@ -46,6 +46,11 @@ class MainActivity : ComponentActivity() {
         }
         super.onCreate(savedInstanceState)
     }
+
+    override fun onDestroy() {
+        Timber.w("onDestroy MainActivity")
+        super.onDestroy()
+    }
 }
 
 @Preview

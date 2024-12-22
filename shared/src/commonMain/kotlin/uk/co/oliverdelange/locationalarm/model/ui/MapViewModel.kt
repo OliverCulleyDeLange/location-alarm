@@ -7,8 +7,10 @@ import com.rickclephas.kmp.observableviewmodel.launch
 import com.rickclephas.kmp.observableviewmodel.stateIn
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.scan
+import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiState
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.FinishedFLyingToUsersLocation
@@ -38,10 +40,12 @@ open class MapViewModel(
     init {
         //TODO Only if debug (pass in from client?)
         viewModelScope.launch {
-            state.map { it.toDebugString() }.distinctUntilChanged().collect {
-                // This only logs when the debug string changes, so if you wanna track something, add it.
-                Logger.w("NEW MAP UI STATE: $it")
-            }
+            state.scan(state.value) { prev, curr ->
+                stateChangeLog(prev, curr)?.let {
+                    Logger.w("MapUiState changed: ⤵ \n\t${it.joinToString("\n\t")}")
+                }
+                curr
+            }.collect()
         }
     }
 

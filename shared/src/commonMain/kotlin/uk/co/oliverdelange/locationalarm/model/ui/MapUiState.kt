@@ -36,14 +36,4 @@ data class MapUiState(
     val shouldShowDistanceToAlarmText: Boolean = false,
     // Distance to alarm shown to users
     val distanceToAlarmText: String = "",
-) : UiState {
-    fun toDebugString() = """MapUiState: ⤵︎
-        |   screenState: $screenState
-        |   shouldRequestNotificationPermissions : $shouldRequestNotificationPermissions
-        |   shouldRequestLocationPermissions     : $shouldRequestLocationPermissions
-        |   shouldEnableMapboxLocationComponent  : $shouldEnableMapboxLocationComponent
-        |   usersLocation                        : $usersLocation
-        |   usersLocationToFlyTo                 : $usersLocationToFlyTo
-        |   geoFenceLocation                     : $geoFenceLocation
-    """.trimMargin()
-}
+) : UiState

@@ -8,7 +8,10 @@ import com.rickclephas.kmp.observableviewmodel.launch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.update
+import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
 import kotlin.math.roundToInt
@@ -23,14 +26,16 @@ open class AppStateStore(
 
     init {
         viewModelScope.launch {
-            state.collect {
-                Logger.w("NEW STATE: ${it.toDebugString()}")
-            }
+            state.scan(state.value) { prev, curr ->
+                stateChangeLog(prev, curr)?.let {
+                    Logger.w("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
+                }
+                curr
+            }.collect()
         }
     }
 
     fun onTapAllowLocationPermissions() {
-        Logger.d { "onTapAllowLocationPermissions" }
         _state.update { it.copy(shouldRequestLocationPermissions = true) }
     }
 
@@ -39,7 +44,6 @@ open class AppStateStore(
     }
 
     fun onLocationPermissionResult(state: PermissionState) {
-        Logger.d { "Location permission updated: $state" }
         _state.update { current ->
             current.copy(
                 locationPermissionState = state,
@@ -53,7 +57,6 @@ open class AppStateStore(
     }
 
     fun onNotificationPermissionResult(state: PermissionState) {
-        Logger.d { "Notification permission updated: $state" }
         _state.update { current ->
             current.copy(
                 notificationPermissionState = state,
@@ -69,7 +72,6 @@ open class AppStateStore(
 
     /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
     fun onLocationChange(locations: List<Location>) {
-        Logger.v { "Location updated $locations" }
         locations.firstOrNull()?.let { firstLocation ->
             _state.update {
                 it.copy(
@@ -119,7 +121,6 @@ open class AppStateStore(
     }
 
     fun onMapTap(newGeofenceLocation: Location) {
-        Logger.d("Map tapped $newGeofenceLocation")
         _state.update { state ->
             state.copy(
                 mapInteracted = true,
