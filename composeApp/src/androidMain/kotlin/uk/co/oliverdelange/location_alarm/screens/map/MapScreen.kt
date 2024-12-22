@@ -33,7 +33,6 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
-import uk.co.oliverdelange.location_alarm.helpers.isDebug
 import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
@@ -113,7 +112,7 @@ fun MapScreen(
                     Text(state.distanceToAlarmText, color = MaterialTheme.colorScheme.secondary)
                 }
             }
-            if (isDebug()) {
+            if (state.shouldShowDelayedStartButton) {
                 Button(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)

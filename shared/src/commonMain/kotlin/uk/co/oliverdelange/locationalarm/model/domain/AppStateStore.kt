@@ -228,6 +228,7 @@ open class AppStateStore(
     }
 
     fun setDebug(debug: Boolean) {
+        Logger.w("DEBUG MODE: $debug")
         _state.update { it.copy(debug = debug) }
     }
 

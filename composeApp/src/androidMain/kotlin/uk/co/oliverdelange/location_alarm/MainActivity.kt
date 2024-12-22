@@ -2,6 +2,7 @@ package uk.co.oliverdelange.location_alarm
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,11 +19,15 @@ import uk.co.oliverdelange.location_alarm.screens.AppUi
 import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
+import uk.co.oliverdelange.locationalarm.model.domain.DebugMode
+import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Down
+import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Up
 
 class MainActivity : ComponentActivity() {
 
     private val appViewModel: MapUiViewModel by viewModel()
     private val appStateStore: AppStateStore by inject()
+    private val debugMode: DebugMode by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -56,9 +61,18 @@ class MainActivity : ComponentActivity() {
         appStateStore.onAppBackgrounded()
         super.onStop()
     }
+
     override fun onDestroy() {
         Timber.w("onDestroy MainActivity")
         super.onDestroy()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_DOWN -> debugMode.onVolumeButton(Down)
+            KeyEvent.KEYCODE_VOLUME_UP -> debugMode.onVolumeButton(Up)
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
 

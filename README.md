@@ -6,23 +6,23 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-- L Allow searching for locations with dropdown results
-- L UI Tests?
-- M Log snapshot tests - Check logs for given flow haven't changed
-- M CI / CD
-- S firebase app distribution
-- S Bug & crash reporting
+
 - Debugging tools window
   - S Activate by volume button sequence
   - M Show app logs
   - M Show location updates (Graph data)
   - M Capture GPX file for alarm enabled session - to aid GPS issue debugging
-
-- M Tutorial
-- S Draw path of route while alarm enabled
+- M CI / CD
+- S Firebase app distribution
+- S Bug & crash reporting
 
 ## Priority 2
 
+- M Tutorial
+- L UI Tests?
+- M Log snapshot tests - Check logs for given flow haven't changed
+- L Allow searching for locations with dropdown results
+- S Draw path of route while alarm enabled
 - Apple watch app / Android watch app
 - Alarm config (sound, vibration pattern)
 - Recent geofences
