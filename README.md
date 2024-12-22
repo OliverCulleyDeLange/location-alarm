@@ -3,12 +3,9 @@
 - An app that sounds an alarm when you enter a geofence.
 - Also an excuse to learn multiplatform app development with KMM.
 - Also an excuse to play with fun things like maps, location, notifications, ios widgets, voice
-  commands, watch apps, ya know,
-  cool shit you wouldn't usually play with.
+  commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-- S Use Android Location instead of mapbox
-- State change logger
 - M Refactoring & TODOS
 - L Allow searching for locations with dropdown results
 - L UI Tests?

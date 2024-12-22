@@ -52,7 +52,7 @@ private val appStateTrackedProperties = listOf(
     AppState::alarmEnabled,
     AppState::alarmEnabledAt,
     AppState::alarmTriggered,
-    AppState::distanceToGeofencePerimeter,
-    AppState::distanceToGeofence,
+//    AppState::distanceToGeofencePerimeter,
+//    AppState::distanceToGeofence,
     AppState::usersLocationToFlyTo,
 )

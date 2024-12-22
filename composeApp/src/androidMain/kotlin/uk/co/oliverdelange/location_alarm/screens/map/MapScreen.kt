@@ -72,7 +72,6 @@ fun MapScreen(
             isSystemInDarkTheme(),
             state.usersLocationToFlyTo,
             state.shouldEnableMapboxLocationComponent,
-            onLocationUpdate = { onEvent(UiResult.LocationChanged(it)) },
             onMapTap = { onEvent(UserEvent.TappedMap(it)) },
             onFinishFlyingToUsersLocation = { onEvent(UiResult.FinishedFLyingToUsersLocation) },
             geofenceSourceState = geofenceSourceState,

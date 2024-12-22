@@ -19,9 +19,10 @@ kotlin {
     sourceSets {
         
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.material3)
+            implementation(compose.preview)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -29,13 +30,14 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.accompanist.permissions)
-            implementation(libs.androidx.material3)
             implementation(libs.mapbox)
             implementation(libs.mapboxCompose)
             implementation(libs.mapboxTurf)
             implementation(libs.koin.android)
             implementation(libs.koin.android.compose)
             implementation(libs.timber)
+            implementation(libs.play.services.location)
+
         }
         commonMain.dependencies {
             implementation(projects.shared)

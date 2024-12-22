@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapEffect
@@ -33,7 +32,6 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import timber.log.Timber
-import uk.co.oliverdelange.location_alarm.location.MapboxLocationConsumer
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
 import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
@@ -45,7 +43,6 @@ fun MapboxMap(
     usersLocationToFlyTo: uk.co.oliverdelange.locationalarm.model.domain.Location?,
     shouldEnableMapboxLocationComponent: Boolean,
     onMapTap: (uk.co.oliverdelange.locationalarm.model.domain.Location) -> Unit,
-    onLocationUpdate: (List<uk.co.oliverdelange.locationalarm.model.domain.Location>) -> Unit,
     onFinishFlyingToUsersLocation: () -> Unit,
     geofenceSourceState: GeoJsonSourceState,
 ) {
@@ -88,7 +85,7 @@ fun MapboxMap(
             fillOpacity = DoubleValue(0.3)
         )
         MapEffect(shouldEnableMapboxLocationComponent) { mapView ->
-            with<MapView, Unit>(mapView) {
+            with(mapView) {
                 if (shouldEnableMapboxLocationComponent) {
                     location.locationPuck = createDefault2DPuck(withBearing = false)
                     location.enabled = true
@@ -101,12 +98,6 @@ fun MapboxMap(
                         ),
                         transition = viewport.makeImmediateViewportTransition()
                     )
-                    location.getLocationProvider()?.apply {
-                        registerLocationConsumer(MapboxLocationConsumer {
-                            onLocationUpdate(it)
-                        })
-                        Timber.d("Registered location consumer")
-                    } ?: Timber.w("Couldn't get location provider")
                 } else {
                     Timber.d("Location permission not granted, so location disabled")
                     location.enabled = false
