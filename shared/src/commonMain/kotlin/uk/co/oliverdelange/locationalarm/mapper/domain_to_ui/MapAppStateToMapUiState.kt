@@ -29,6 +29,7 @@ class MapAppStateToMapUiState {
             shouldShowNotificationPermissionRationale = state.notificationPermissionState.shouldShowRationale(),
             shouldRequestLocationPermissions = state.shouldRequestLocationPermissions,
             shouldEnableMapboxLocationComponent = state.locationPermissionState.granted(),
+            shouldShowDelayedStartButton = state.debug,
             usersLocation = state.usersLocation,
             geoFenceLocation = state.geoFenceLocation,
             usersLocationToFlyTo = state.usersLocationToFlyTo,

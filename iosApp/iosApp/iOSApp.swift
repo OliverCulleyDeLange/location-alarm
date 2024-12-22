@@ -11,6 +11,12 @@ struct iOSApp: App {
     
     init() {
         appStateStore = AppStateStore(timeProvider: SystemTimeProvider())
+
+#if DEBUG
+        appStateStore.setDebug(debug: true)
+#else
+        appStateStore.setDebug(debug: false)
+#endif
         alarmManager = AlarmManager(appStateStore: appStateStore)
         let locationService = LocationService()
         locationStateListener = LocationStateListener(locationService: locationService, appStateStore: appStateStore)
