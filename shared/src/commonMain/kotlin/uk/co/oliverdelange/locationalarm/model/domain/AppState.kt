@@ -3,6 +3,8 @@ package uk.co.oliverdelange.locationalarm.model.domain
 import kotlinx.datetime.Instant
 
 data class AppState(
+    val appInForeground: Boolean = true,
+
     val shouldRequestNotificationPermissions: Boolean = false,
     val notificationPermissionState: PermissionState = PermissionState.Unknown,
 

@@ -21,6 +21,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +49,13 @@ fun MapScreen(
     state: MapUiState,
     onEvent: (UiEvents) -> Unit,
 ) {
+    DisposableEffect(Unit) {
+        onEvent(UiResult.MapShown)
+        onDispose {
+            onEvent(UiResult.MapNotShown)
+        }
+    }
+
     Box {
         val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             rememberPermissionState(POST_NOTIFICATIONS)

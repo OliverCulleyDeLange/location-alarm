@@ -130,6 +130,24 @@ open class AppStateStore(
         recomputeDistancesAndTriggered()
     }
 
+    fun onAppForegrounded() {
+        _state.update { state ->
+            state.copy(
+                appInForeground = true,
+                shouldListenForLocationUpdates = state.locationPermissionState.granted(),
+            )
+        }
+    }
+
+    fun onAppBackgrounded() {
+        _state.update { state ->
+            state.copy(
+                appInForeground = false,
+                shouldListenForLocationUpdates = state.alarmEnabled
+            )
+        }
+    }
+
     fun onMapShown() {
         _state.update { state ->
             state.copy(shouldListenForLocationUpdates = true)

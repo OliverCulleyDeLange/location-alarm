@@ -89,16 +89,8 @@ struct MapScreen: View {
             logger.debug("Map did appear")
             onEvent(UiResultMapShown())
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            logger.debug("Did receive UIApplication.didBecomeActiveNotification")
-            onEvent(UiResultMapShown())
-        }
         .onDisappear{
             logger.debug("Map did dissapear")
-            onEvent(UiResultMapNotShown())
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-            logger.debug("Did receive UIApplication.didEnterBackgroundNotification")
             onEvent(UiResultMapNotShown())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

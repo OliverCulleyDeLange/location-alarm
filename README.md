@@ -12,6 +12,7 @@
 - M Refactoring & TODOS
 - L Allow searching for locations with dropdown results
 - L UI Tests?
+- M Log snapshot tests - Check logs for given flow haven't changed
 - M CI / CD
 - S firebase app distribution
 - S Bug & crash reporting

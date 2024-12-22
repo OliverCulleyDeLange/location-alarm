@@ -37,6 +37,7 @@ private val mapUiStateTrackedProperties = listOf(
 )
 
 private val appStateTrackedProperties = listOf(
+    AppState::appInForeground,
     AppState::shouldRequestNotificationPermissions,
     AppState::notificationPermissionState,
     AppState::shouldRequestLocationPermissions,

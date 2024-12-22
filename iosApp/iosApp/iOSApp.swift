@@ -18,7 +18,12 @@ struct iOSApp: App {
             AppUi(
                 appStateStore: appStateStore,
                 alarmManager: alarmManager
-            )
+            ).onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                appStateStore.onAppForegrounded()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                appStateStore.onAppBackgrounded()
+            }
         }
     }
 }

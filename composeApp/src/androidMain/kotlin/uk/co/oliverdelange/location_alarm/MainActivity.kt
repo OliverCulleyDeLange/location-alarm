@@ -47,6 +47,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onStart() {
+        appStateStore.onAppForegrounded()
+        super.onStart()
+    }
+
+    override fun onStop() {
+        appStateStore.onAppBackgrounded()
+        super.onStop()
+    }
     override fun onDestroy() {
         Timber.w("onDestroy MainActivity")
         super.onDestroy()

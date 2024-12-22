@@ -194,6 +194,66 @@ class AppStateStoreTest {
     }
 
     @Test
+    fun onAppForegrounded_doesNotListenForLocationIfNotGranted() {
+        store.onAppBackgrounded()
+        assertEquals(false, store.state.value.appInForeground)
+        assertEquals(PermissionState.Unknown, store.state.value.locationPermissionState)
+        assertEquals(false, store.state.value.shouldListenForLocationUpdates)
+        store.onAppForegrounded()
+        assertEquals(true, store.state.value.appInForeground)
+        assertEquals(false, store.state.value.shouldListenForLocationUpdates)
+    }
+
+    @Test
+    fun onAppForegrounded_listensForLocationIfGranted() {
+        store.onAppBackgrounded()
+        store.onLocationPermissionResult(PermissionState.Granted)
+        assertEquals(false, store.state.value.appInForeground)
+        assertEquals(PermissionState.Granted, store.state.value.locationPermissionState)
+        assertEquals(false, store.state.value.shouldListenForLocationUpdates)
+        store.onAppForegrounded()
+        assertEquals(true, store.state.value.appInForeground)
+        assertEquals(true, store.state.value.shouldListenForLocationUpdates)
+    }
+
+    @Test
+    fun onAppBackgrounded_disablesLocationUpdatesWhenAlarmDisabled() {
+        assertEquals(true, store.state.value.appInForeground)
+        assertEquals(false, store.state.value.alarmEnabled)
+        assertEquals(false, store.state.value.shouldListenForLocationUpdates)
+        store.onAppBackgrounded()
+        assertEquals(false, store.state.value.appInForeground)
+        assertEquals(false, store.state.value.shouldListenForLocationUpdates)
+    }
+
+    @Test
+    fun onAppBackgrounded_continuesLocationUpdatesWhenAlarmEnabled() {
+        enableAlarm()
+        assertEquals(true, store.state.value.appInForeground)
+        assertEquals(true, store.state.value.alarmEnabled)
+        assertEquals(true, store.state.value.shouldListenForLocationUpdates)
+        store.onAppBackgrounded()
+        assertEquals(false, store.state.value.appInForeground)
+        assertEquals(true, store.state.value.shouldListenForLocationUpdates)
+    }
+
+    @Test
+    fun onMapShown() {
+        assertEquals(false, store.state.value.shouldListenForLocationUpdates)
+        store.onMapShown()
+        assertEquals(true, store.state.value.shouldListenForLocationUpdates)
+    }
+
+    @Test
+    fun onMapNotShown_continuesLocationUpdatesWhenAlarmEnabled() {
+        enableAlarm()
+        assertEquals(true, store.state.value.alarmEnabled)
+        assertEquals(true, store.state.value.shouldListenForLocationUpdates)
+        store.onMapNotShown()
+        assertEquals(true, store.state.value.shouldListenForLocationUpdates)
+    }
+
+    @Test
     fun testFlyToLocationFlow() {
         store.onLocationChange(listOf(someLocation))
         assertEquals(null, store.state.value.usersLocationToFlyTo)
@@ -269,5 +329,13 @@ class AppStateStoreTest {
         assertEquals(true, store.state.value.alarmTriggered)
         store.onSetAlarm(false)
         assertEquals(false, store.state.value.alarmTriggered)
+    }
+
+    /** Happy path flow for enabling the alarm*/
+    private fun enableAlarm() {
+        store.onLocationPermissionResult(PermissionState.Granted)
+        store.onNotificationPermissionResult(PermissionState.Granted)
+        store.onMapShown()
+        store.onToggleAlarm()
     }
 }
