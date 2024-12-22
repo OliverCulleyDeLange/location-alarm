@@ -42,12 +42,10 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func getCurrentPermissions() -> CLAuthorizationStatus {
-        logger.debug("getCurrentPermissions")
         return locationManager.authorizationStatus
     }
     
     func requestPermissions() {
-        logger.debug("request location 'when in use' Permissions")
         locationManager.requestWhenInUseAuthorization()
     }
     
@@ -58,7 +56,6 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
             listeningForLocationUpdates = true
-            delegate?.onLocationUpdate(locations: [Location(lat:51.49279212322023, lng:0.07192943692961544)])
         }
     }
     

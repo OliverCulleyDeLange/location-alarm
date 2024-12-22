@@ -7,10 +7,13 @@ import Shared
 struct iOSApp: App {
     private var appStateStore: AppStateStore
     private var alarmManager: AlarmManager
+    private var locationStateListener: LocationStateListener
     
     init() {
         appStateStore = AppStateStore(timeProvider: SystemTimeProvider())
         alarmManager = AlarmManager(appStateStore: appStateStore)
+        let locationService = LocationService()
+        locationStateListener = LocationStateListener(locationService: locationService, appStateStore: appStateStore)
     }
     
     var body: some Scene {
