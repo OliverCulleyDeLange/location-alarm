@@ -17,6 +17,8 @@ sealed interface UserEvent : UiEvents {
     object TappedStopAlarm : UserEvent
     object ToggledAlarm : UserEvent
     object ToggledAlarmWithDelay : UserEvent
+
+    /** Currently only IOS uses this as a mechanism to stop the alarm as android can used pending intents */
     object OpenedDeepLinkStopAlarm : UserEvent
 }
 

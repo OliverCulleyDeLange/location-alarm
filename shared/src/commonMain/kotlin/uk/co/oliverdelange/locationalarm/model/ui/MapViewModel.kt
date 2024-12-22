@@ -59,6 +59,7 @@ open class MapViewModel(
             is TappedStopAlarm -> appStateStore.onTapStopAlarm()
             is ToggledAlarm -> appStateStore.onToggleAlarm()
             is UserEvent.ToggledAlarmWithDelay -> appStateStore.onToggleAlarmWithDelay()
+            is UserEvent.OpenedDeepLinkStopAlarm -> appStateStore.onSetAlarm(false)
             // Ui Results
             is LocationChanged -> appStateStore.onLocationChange(uiEvent.location)
             is LocationPermissionResult -> appStateStore.onLocationPermissionResult(uiEvent.state)
