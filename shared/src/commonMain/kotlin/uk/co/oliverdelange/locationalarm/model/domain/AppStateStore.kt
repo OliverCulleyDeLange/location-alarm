@@ -8,9 +8,10 @@ import com.rickclephas.kmp.observableviewmodel.launch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.update
+import uk.co.oliverdelange.locationalarm.helper.doWhen
 import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
@@ -26,12 +27,14 @@ open class AppStateStore(
 
     init {
         viewModelScope.launch {
-            state.scan(state.value) { prev, curr ->
-                stateChangeLog(prev, curr)?.let {
-                    Logger.w("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
+            doWhen(state.map { it.debug }) {
+                state.scan(state.value) { prev, curr ->
+                    stateChangeLog(prev, curr)?.let {
+                        Logger.w("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
+                    }
+                    curr
                 }
-                curr
-            }.collect()
+            }
         }
     }
 
@@ -222,6 +225,10 @@ open class AppStateStore(
             delay(5000)
             recomputeDistancesAndTriggered()
         }
+    }
+
+    fun setDebug(debug: Boolean) {
+        _state.update { it.copy(debug = debug) }
     }
 
     private fun getDistanceToGeofence(

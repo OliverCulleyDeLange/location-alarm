@@ -9,7 +9,8 @@ import uk.co.oliverdelange.locationalarm.model.ui.MapUiScreenState
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 
 /** TODO Get strings from string provider
- * TODO UNIT TESTS*/
+ * TODO UNIT TESTS
+ * */
 class MapAppStateToMapUiState {
     fun map(state: AppState): MapUiState {
         return MapUiState(

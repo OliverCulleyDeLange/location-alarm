@@ -5,11 +5,12 @@ import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import com.rickclephas.kmp.observableviewmodel.ViewModel
 import com.rickclephas.kmp.observableviewmodel.launch
 import com.rickclephas.kmp.observableviewmodel.stateIn
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.scan
+import uk.co.oliverdelange.locationalarm.helper.doWhen
 import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiState
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
@@ -28,6 +29,7 @@ import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedMap
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedStopAlarm
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.ToggledAlarm
 
+@OptIn(ExperimentalCoroutinesApi::class)
 open class MapViewModel(
     private val appStateStore: AppStateStore,
     private val uiStateMapper: MapAppStateToMapUiState,
@@ -39,14 +41,15 @@ open class MapViewModel(
         .stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
     init {
-        //TODO Only if debug (pass in from client?)
         viewModelScope.launch {
-            state.scan(state.value) { prev, curr ->
-                stateChangeLog(prev, curr)?.let {
-                    Logger.w("MapUiState changed: ⤵ \n\t${it.joinToString("\n\t")}")
+            doWhen(appStateStore.state.map { it.debug }) {
+                state.scan(state.value) { prev, curr ->
+                    stateChangeLog(prev, curr)?.let {
+                        Logger.w("MapUiState changed: ⤵ \n\t${it.joinToString("\n\t")}")
+                    }
+                    curr
                 }
-                curr
-            }.collect()
+            }
         }
     }
 
