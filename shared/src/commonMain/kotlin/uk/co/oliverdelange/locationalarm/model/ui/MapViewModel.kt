@@ -20,6 +20,7 @@ import uk.co.oliverdelange.locationalarm.model.ui.UiResult.MapNotShown
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.MapShown
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.NotificationPermissionResult
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.RequestedLocationPermission
+import uk.co.oliverdelange.locationalarm.model.ui.UiResult.RequestedNotificationPermission
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.DraggedRadiusControl
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedAllowLocationPermissions
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedLocationIcon
@@ -65,6 +66,7 @@ open class MapViewModel(
             is LocationPermissionResult -> appStateStore.onLocationPermissionResult(uiEvent.state)
             is NotificationPermissionResult -> appStateStore.onNotificationPermissionResult(uiEvent.state)
             is RequestedLocationPermission -> appStateStore.onRequestedLocationPermissions()
+            is RequestedNotificationPermission -> appStateStore.onRequestedNotificationPermissions()
             is FinishedFLyingToUsersLocation -> appStateStore.onFinishFlyingToUsersLocation()
             is MapShown -> appStateStore.onMapShown()
             is MapNotShown -> appStateStore.onMapNotShown()

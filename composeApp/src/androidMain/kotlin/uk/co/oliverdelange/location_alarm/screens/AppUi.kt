@@ -1,6 +1,5 @@
 package uk.co.oliverdelange.location_alarm.screens
 
-import android.Manifest.permission.POST_NOTIFICATIONS
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,7 +15,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import uk.co.oliverdelange.location_alarm.screens.map.MapScreen
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsDeniedScreen
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsRequiredScreen
-import uk.co.oliverdelange.location_alarm.ui.PermissionHandler
 import uk.co.oliverdelange.location_alarm.ui.PermissionsHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
@@ -33,16 +31,18 @@ fun AppUi(viewModel: MapUiViewModel = viewModel()) {
 
     AppTheme {
         // Permissions
-        PermissionHandler(POST_NOTIFICATIONS, state.shouldRequestNotificationPermissions) {
-            viewModel.onEvent(UiResult.NotificationPermissionResult(it))
-        }
+        PermissionsHandler(
+            permission = RequestablePermission.Notifications,
+            shouldRequestPermission = state.shouldRequestNotificationPermissions,
+            onRequestedPermissions = { viewModel.onEvent(UiResult.RequestedNotificationPermission) },
+            onPermissionChanged = { viewModel.onEvent(UiResult.NotificationPermissionResult(it)) }
+        )
         PermissionsHandler(
             permission = RequestablePermission.Location,
             shouldRequestPermission = state.shouldRequestLocationPermissions,
-            onRequestedPermissions = { viewModel.onEvent(UiResult.RequestedLocationPermission) }
-        ) {
-            viewModel.onEvent(UiResult.LocationPermissionResult(it))
-        }
+            onRequestedPermissions = { viewModel.onEvent(UiResult.RequestedLocationPermission) },
+            onPermissionChanged = { viewModel.onEvent(UiResult.LocationPermissionResult(it)) }
+        )
 
         // UI
         Box(

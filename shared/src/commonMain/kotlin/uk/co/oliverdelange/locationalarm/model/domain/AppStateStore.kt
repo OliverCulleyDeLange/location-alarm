@@ -43,6 +43,10 @@ open class AppStateStore(
         _state.update { it.copy(shouldRequestLocationPermissions = false) }
     }
 
+    fun onRequestedNotificationPermissions() {
+        _state.update { it.copy(shouldRequestNotificationPermissions = false) }
+    }
+
     fun onLocationPermissionResult(state: PermissionState) {
         _state.update { current ->
             current.copy(

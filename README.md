@@ -6,7 +6,6 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-- M Refactoring & TODOS
 - L Allow searching for locations with dropdown results
 - L UI Tests?
 - M Log snapshot tests - Check logs for given flow haven't changed

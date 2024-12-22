@@ -37,6 +37,10 @@ sealed interface UiResult : UiEvents {
      * This may or may not result in a dialog being shown */
     object RequestedLocationPermission : UserEvent
 
+    /** Fired when we attempt to ask the user for notification permissions
+     * This may or may not result in a dialog being shown */
+    object RequestedNotificationPermission : UserEvent
+
     /** Fired when the map finishes flying to the users location */
     object FinishedFLyingToUsersLocation : UserEvent
 
