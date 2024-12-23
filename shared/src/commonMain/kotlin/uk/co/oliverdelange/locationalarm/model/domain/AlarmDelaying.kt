@@ -1,9 +1,9 @@
 package uk.co.oliverdelange.locationalarm.model.domain
 
-import co.touchlab.kermit.Logger
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.until
+import uk.co.oliverdelange.locationalarm.logging.SLog
 
 /* Dev tool to delay the alarm triggering for 5 seconds to allow testing at desk
 * TODO Extract tools like this into a seperate state store not linked to a view */
@@ -23,10 +23,10 @@ fun AppState.shouldDelayAlarm(): Boolean {
         val now = Clock.System.now()
         alarmEnabledAt?.until(now, DateTimeUnit.SECOND)?.let {
             val delayAlarm = it < 5 // Delay alarm triggering by 5 seconds
-            Logger.w("shouldDelayAlarm::: delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
+            SLog.w("shouldDelayAlarm::: delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
             delayAlarm
         } ?: false.also {
-            Logger.w("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")
+            SLog.w("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")
         }
     } else false
 }

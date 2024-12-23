@@ -1,6 +1,5 @@
 package uk.co.oliverdelange.locationalarm.model.domain
 
-import co.touchlab.kermit.Logger
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import com.rickclephas.kmp.observableviewmodel.MutableStateFlow
 import com.rickclephas.kmp.observableviewmodel.ViewModel
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.update
 import uk.co.oliverdelange.locationalarm.helper.doWhen
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
@@ -30,7 +30,7 @@ open class AppStateStore(
             doWhen(state.map { it.debug }) {
                 state.scan(state.value) { prev, curr ->
                     stateChangeLog(prev, curr)?.let {
-                        Logger.w("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
+                        SLog.v("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
                     }
                     curr
                 }
@@ -92,7 +92,7 @@ open class AppStateStore(
                 }
             }
             recomputeDistancesAndTriggered()
-        } ?: Logger.w { "Location update contains no location" }
+        } ?: SLog.w("Location update contains no location")
     }
 
     /** Recompute distances to alarm, and triggered state
@@ -228,7 +228,7 @@ open class AppStateStore(
     }
 
     fun setDebug(debug: Boolean) {
-        Logger.w("DEBUG MODE: $debug")
+        SLog.w("DEBUG MODE: $debug")
         _state.update { it.copy(debug = debug) }
     }
 

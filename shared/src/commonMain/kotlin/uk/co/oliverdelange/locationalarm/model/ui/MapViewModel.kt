@@ -1,6 +1,5 @@
 package uk.co.oliverdelange.locationalarm.model.ui
 
-import co.touchlab.kermit.Logger
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
 import com.rickclephas.kmp.observableviewmodel.ViewModel
 import com.rickclephas.kmp.observableviewmodel.launch
@@ -11,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.scan
 import uk.co.oliverdelange.locationalarm.helper.doWhen
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiState
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
@@ -45,7 +45,7 @@ open class MapViewModel(
             doWhen(appStateStore.state.map { it.debug }) {
                 state.scan(state.value) { prev, curr ->
                     stateChangeLog(prev, curr)?.let {
-                        Logger.w("MapUiState changed: ⤵ \n\t${it.joinToString("\n\t")}")
+                        SLog.v("MapUiState changed: ⤵ \n\t${it.joinToString("\n\t")}")
                     }
                     curr
                 }
@@ -74,7 +74,7 @@ open class MapViewModel(
             is MapShown -> appStateStore.onMapShown()
             is MapNotShown -> appStateStore.onMapNotShown()
             else -> {
-                Logger.v("Unhandled UI event: $uiEvent")
+                SLog.v("Unhandled UI event: $uiEvent")
             }
         }
     }
