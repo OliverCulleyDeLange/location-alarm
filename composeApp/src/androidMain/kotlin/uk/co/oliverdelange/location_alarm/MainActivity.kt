@@ -6,16 +6,12 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.oliverdelange.location_alarm.screens.AppUi
-import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
@@ -25,7 +21,6 @@ import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Up
 
 class MainActivity : ComponentActivity() {
 
-    private val appViewModel: MapUiViewModel by viewModel()
     private val appStateStore: AppStateStore by inject()
     private val debugMode: DebugMode by inject()
 
@@ -33,7 +28,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            AppUi(appViewModel)
+            AppUi(appStateStore)
         }
 
         lifecycleScope.launch {
@@ -74,10 +69,4 @@ class MainActivity : ComponentActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    AppUi()
 }

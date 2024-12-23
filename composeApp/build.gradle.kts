@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -22,6 +23,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.material3)
+            implementation(libs.androidx.navigation.compose)
             implementation(compose.preview)
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -40,6 +42,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(projects.shared)
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }
