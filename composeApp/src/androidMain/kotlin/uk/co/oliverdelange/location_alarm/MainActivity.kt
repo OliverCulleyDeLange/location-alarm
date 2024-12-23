@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.oliverdelange.location_alarm.screens.AppUi
 import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
-import uk.co.oliverdelange.locationalarm.logging.Log
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Down
@@ -41,10 +41,10 @@ class MainActivity : ComponentActivity() {
             appStateStore.state.map { it.alarmEnabled }.distinctUntilChanged().collect { alarmEnabled ->
                 val intent = Intent(applicationContext, LocationAlarmService::class.java)
                 if (alarmEnabled) {
-                    Log.i("Starting LocationAlarmService")
+                    SLog.i("Starting LocationAlarmService")
                     startForegroundService(intent)
                 } else {
-                    Log.i("Stopping LocationAlarmService")
+                    SLog.i("Stopping LocationAlarmService")
                     stopService(intent)
                 }
             }
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
-        Log.w("onDestroy MainActivity")
+        SLog.w("onDestroy MainActivity")
         super.onDestroy()
     }
 

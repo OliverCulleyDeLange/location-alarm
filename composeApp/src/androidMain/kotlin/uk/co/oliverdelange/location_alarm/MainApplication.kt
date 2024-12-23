@@ -10,7 +10,7 @@ import uk.co.oliverdelange.location_alarm.di.androidModule
 import uk.co.oliverdelange.location_alarm.helpers.isDebug
 import uk.co.oliverdelange.location_alarm.location.LocationService
 import uk.co.oliverdelange.locationalarm.di.sharedModule
-import uk.co.oliverdelange.locationalarm.logging.Log
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 
 class MainApplication : Application() {
@@ -26,7 +26,7 @@ class MainApplication : Application() {
             modules(sharedModule + androidModule)
         }
         setupSharedLogging()
-        Log.d("Koin started")
+        SLog.d("Koin started")
 
         appStateStore.setDebug(isDebug())
         locationService.listenToStateAndListenForLocationUpdates()

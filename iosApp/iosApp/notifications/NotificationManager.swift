@@ -9,7 +9,7 @@ class NotificationManager {
     private let notificationId = "LocationAlarmNotification"
     
     func createAlarmNotification() {
-        logger.debug("createAlarmNotification")
+        SLog.d("createAlarmNotification")
         let content = UNMutableNotificationContent()
         content.title = "Location Alarm"
         content.body = "You have reached your destination"
@@ -22,7 +22,7 @@ class NotificationManager {
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                logger.error("Error scheduling notification: \(error)")
+                SLog.e("Error scheduling notification: \(error)")
             }
         }
     }
@@ -38,12 +38,12 @@ class NotificationManager {
             let center = UNUserNotificationCenter.current()
             do {
                 let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
-                logger.debug("Notification permissions granted: \(granted)")
+                SLog.d("Notification permissions granted: \(granted)")
                 await MainActor.run {
                     onNotificationPermissionResult(granted)
                 }
             } catch {
-                logger.debug("Error requesting notification permissions: \(error)")
+                SLog.d("Error requesting notification permissions: \(error)")
             }
         }
     }
@@ -59,7 +59,7 @@ class NotificationManager {
                 case .notDetermined:
                     return PermissionStateUnknown()
                 @unknown default:
-                    logger.error("Unexpected code path")
+                    SLog.e("Unexpected code path")
                     return PermissionStateUnknown()
                 }}()
                 onNotificationPermissionResult(state)

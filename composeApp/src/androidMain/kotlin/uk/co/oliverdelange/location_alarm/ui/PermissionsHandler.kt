@@ -13,7 +13,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 import uk.co.oliverdelange.location_alarm.permissions.AndroidSystemPermissionState
 import uk.co.oliverdelange.location_alarm.permissions.Permissions
 import uk.co.oliverdelange.location_alarm.permissions.androidPermissionStrings
-import uk.co.oliverdelange.locationalarm.logging.Log
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
 import java.time.LocalDateTime
@@ -54,7 +54,7 @@ fun PermissionsHandler(
 
     LaunchedEffect(shouldRequestPermission) {
         if (shouldRequestPermission) {
-            Log.d("Launching $permission permission request")
+            SLog.d("Launching $permission permission request")
             permissionState.launchMultiplePermissionRequest()
             onRequestedPermissions()
         }

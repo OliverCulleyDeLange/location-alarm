@@ -19,7 +19,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
-        logger.debug("LocationService init")
+        SLog.d("LocationService init")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 0
@@ -50,9 +50,9 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func listenForUpdates() {
-        logger.debug("listenForUpdates request")
+        SLog.d("listenForUpdates request")
         if (!listeningForLocationUpdates){
-            logger.debug("actually listening for updates")
+            SLog.d("actually listening for updates")
             locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
             listeningForLocationUpdates = true
@@ -61,11 +61,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     func stopListeningForUpdates() {
         if (listeningForLocationUpdates){
-            logger.debug("stopListeningForUpdates")
+            SLog.d("stopListeningForUpdates")
             locationManager.stopUpdatingLocation()
             listeningForLocationUpdates = false
         } else {
-            logger.debug("Request to stop listening for location updates when not listening")
+            SLog.d("Request to stop listening for location updates when not listening")
         }
     }
     
@@ -79,26 +79,26 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     // CLLocationManagerDelegate method for error handling
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        logger.error("Failed to get location: \(error.localizedDescription)")
+        SLog.e("Failed to get location: \(error.localizedDescription)")
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
-            logger.debug("Location access granted")
+            SLog.d("Location access granted")
             delegate?.onLocationPermissionChanged(state: PermissionStateGranted())
             if (shouldStartListeningAfterPermissionGranted){
                 listenForUpdates()
                 shouldStartListeningAfterPermissionGranted = false
             }
         case .denied, .restricted:
-            logger.debug("Location access denied or restricted")
+            SLog.d("Location access denied or restricted")
             delegate?.onLocationPermissionChanged(state: PermissionStateDenied(shouldShowRationale: false))
         case .notDetermined:
-            logger.debug("Location access not determined yet")
+            SLog.d("Location access not determined yet")
             delegate?.onLocationPermissionChanged(state: PermissionStateUnknown())
         @unknown default:
-            logger.error("Unknown authorization status")
+            SLog.e("Unknown authorization status")
         }
     }
 }

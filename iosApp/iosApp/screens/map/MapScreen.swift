@@ -87,11 +87,11 @@ struct MapScreen: View {
             )
         }
         .onAppear {
-            logger.debug("Map did appear")
+            SLog.d("Map did appear")
             onEvent(UiResultMapShown())
         }
         .onDisappear{
-            logger.debug("Map did dissapear")
+            SLog.d("Map did dissapear")
             onEvent(UiResultMapNotShown())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

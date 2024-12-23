@@ -12,7 +12,7 @@ class Vibrator {
     
     private func prepareHapticEngine() {
         guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else {
-            logger.warning("Device does not support haptics")
+            SLog.w("Device does not support haptics")
             return
         }
         
@@ -21,29 +21,29 @@ class Vibrator {
             
             // Handle engine reset
             hapticEngine?.resetHandler = { [weak self] in
-                logger.debug("Haptic engine was reset.")
+                SLog.d("Haptic engine was reset.")
                 self?.isEngineRunning = false
                 do {
                     try self?.hapticEngine?.start()
                     self?.isEngineRunning = true
                 } catch {
-                    logger.debug("Failed to restart haptic engine: \(error.localizedDescription)")
+                    SLog.d("Failed to restart haptic engine: \(error.localizedDescription)")
                 }
             }
             
             // Handle engine stop
             hapticEngine?.stoppedHandler = { [weak self] reason in
-                logger.debug("Haptic engine stopped for reason: \(reason.rawValue)")
+                SLog.d("Haptic engine stopped for reason: \(reason.rawValue)")
                 self?.isEngineRunning = false
             }
         } catch {
-            logger.warning("Failed to start haptic engine: \(error)")
+            SLog.w("Failed to start haptic engine: \(error)")
         }
     }
     
     func vibrate() {
         guard let hapticEngine = hapticEngine else {
-            logger.warning("Tried to use haptics with uninitialised haptic engine")
+            SLog.w("Tried to use haptics with uninitialised haptic engine")
             return
         }
         
@@ -78,7 +78,7 @@ class Vibrator {
             
             try vibrationPattern?.start(atTime: CHHapticTimeImmediate)
         } catch {
-            logger.warning("Failed to play haptic pattern: \(error)")
+            SLog.w("Failed to play haptic pattern: \(error)")
         }
     }
     
@@ -87,7 +87,7 @@ class Vibrator {
             do {
                 try vibrationPattern?.stop(atTime: CHHapticTimeImmediate)
             } catch {
-                logger.warning("Error stopping haptics \(error)")
+                SLog.w("Error stopping haptics \(error)")
             }
         }
     }

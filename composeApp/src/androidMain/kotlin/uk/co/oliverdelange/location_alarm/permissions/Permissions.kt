@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 import uk.co.oliverdelange.location_alarm.permissions.AndroidPermission.AccessCoarseLocation
 import uk.co.oliverdelange.location_alarm.permissions.AndroidPermission.AccessFineLocation
 import uk.co.oliverdelange.location_alarm.permissions.AndroidPermission.PostNotifications
-import uk.co.oliverdelange.locationalarm.logging.Log
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission.Location
@@ -64,7 +64,7 @@ class Permissions(
             val newShouldShowRationale = newPermissionState.shouldShowRationale
             val previousState = currentPermissionState[androidPermission]
             if (previousState == null) {
-                Log.e("currentPermissionState is missing ${newPermissionState.permission}")
+                SLog.e("currentPermissionState is missing ${newPermissionState.permission}")
                 return@forEach
             }
             val previousShouldShowRationale = previousState.shouldShowRationale

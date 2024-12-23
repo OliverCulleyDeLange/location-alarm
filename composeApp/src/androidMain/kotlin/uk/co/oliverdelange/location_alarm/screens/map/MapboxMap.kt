@@ -33,7 +33,7 @@ import com.mapbox.maps.plugin.viewport.data.FollowPuckViewportStateOptions
 import com.mapbox.maps.plugin.viewport.viewport
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
-import uk.co.oliverdelange.locationalarm.logging.Log
+import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
 
 @Composable
@@ -99,7 +99,7 @@ fun MapboxMap(
                         transition = viewport.makeImmediateViewportTransition()
                     )
                 } else {
-                    Log.d("Location permission not granted, so location disabled")
+                    SLog.d("Location permission not granted, so location disabled")
                     location.enabled = false
                 }
             }

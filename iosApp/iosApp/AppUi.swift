@@ -26,13 +26,13 @@ struct AppUi: View {
             )
             .onOpenURL { url in
                 if url.scheme == "uk.co.oliverdelange.locationalarm" {
-                    logger.info("Deeplink: \(url)")
+                    SLog.i("Deeplink: \(url)")
                     switch url.relativePath {
                     case "action/stop_alarm":
                         viewModel.onEvent(uiEvent: UserEventOpenedDeepLinkStopAlarm())
                         
                     default:
-                        logger.warning("Unhandled deeplink \(url.relativePath)")
+                        SLog.w("Unhandled deeplink \(url.relativePath)")
                     }
                 }
             }

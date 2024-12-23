@@ -30,9 +30,9 @@ class AlarmManager {
     fileprivate func setAudioSessionCategory() {
         do {
             try audioSession.setCategory(.playback, mode: .default, policy: .default, options: .mixWithOthers)
-            logger.debug("Set audio session category")
+            SLog.d("Set audio session category")
         } catch {
-            logger.warning("Failed to set the audio session configuration")
+            SLog.w("Failed to set the audio session configuration")
         }
     }
     
@@ -78,7 +78,7 @@ class AlarmManager {
                 Task {
                     if (alarmEnabled){
                         guard let distanceToAlarm = self.appStateStore.state.distanceToGeofencePerimeter else {
-                            logger.warning("Trying to create live activity, but no available distance to alarm")
+                            SLog.w("Trying to create live activity, but no available distance to alarm")
                             return
                         }
                         await LiveActivityManager.shared.createLiveActivity(
@@ -105,7 +105,7 @@ class AlarmManager {
             .removeDuplicates()
             .sink { holder in
                 guard let distanceToAlarm = holder.distanceToGeofencePerimeter else {
-                    logger.warning("Trying to update live location, but no available distance to alarm")
+                    SLog.w("Trying to update live location, but no available distance to alarm")
                     return
                 }
                 Task {
@@ -121,32 +121,32 @@ class AlarmManager {
     private func activateAudioSession() {
         do {
             try audioSession.setActive(true)
-            logger.debug("Audio session activated")
+            SLog.d("Audio session activated")
         }
         catch {
-            logger.warning("Error activating audio session: \(error)")
+            SLog.w("Error activating audio session: \(error)")
         }
     }
 
     private func deactivateAudioSession() {
         do {
             try audioSession.setActive(false)
-            logger.debug("Audio session deactivated")
+            SLog.d("Audio session deactivated")
         }
         catch {
-            logger.warning("Error deactivating audio session: \(error)")
+            SLog.w("Error deactivating audio session: \(error)")
         }
     }
     
     /// Begins playing alarm sounds and vibrations
     private func startAlarm() {
-        logger.warning("STARTING ALARM")
+        SLog.w("STARTING ALARM")
         vibrator.vibrate()
         alarmPlayer.playAlarm()
     }
     
     private func stopAlarm() {
-        logger.warning("STOPPING ALARM")
+        SLog.w("STOPPING ALARM")
         vibrator.stop()
         alarmPlayer.stopAlarm()
     }

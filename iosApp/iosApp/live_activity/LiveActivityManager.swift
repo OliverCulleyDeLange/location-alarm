@@ -30,21 +30,21 @@ final class LiveActivityManager: ObservableObject {
                 content: initialContentState,
                 pushType: nil
             )
-            logger.debug("Started live activity")
+            SLog.d("Started live activity")
             
             await MainActor.run { activityID = activity.id }
         } catch {
-            logger.warning("Couldn't start live activity \(error)")
+            SLog.w("Couldn't start live activity \(error)")
         }
     }
     
     func updatePersistentNotification(_ newDistanceToAlarm: Int, _ alarmTriggered: Bool) async {
         guard let activityID = await activityID,
               let runningActivity = Activity<LocationAlarmWidgetAttributes>.activities.first(where: { $0.id == activityID }) else {
-            logger.warning("Activity to update isn't running")
+            SLog.w("Activity to update isn't running")
             return
         }
-        logger.debug("Updating live activity newDistanceToAlarm: \(newDistanceToAlarm), alarmTriggered: \(alarmTriggered)")
+        SLog.d("Updating live activity newDistanceToAlarm: \(newDistanceToAlarm), alarmTriggered: \(alarmTriggered)")
         await runningActivity.update(
             using: getContentStateFrom(newDistanceToAlarm, alarmTriggered)
         )
@@ -61,7 +61,7 @@ final class LiveActivityManager: ObservableObject {
             ActivityContent(state: initialContentState, staleDate: Date.distantFuture),
             dismissalPolicy: .immediate
         )
-        logger.debug("Stopped live activity")
+        SLog.d("Stopped live activity")
         
         await MainActor.run {
             self.activityID = nil
