@@ -23,11 +23,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
-import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.haptics.Vibrator
 import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
+import uk.co.oliverdelange.locationalarm.logging.Log
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 
 class LocationAlarmService : Service() {
@@ -43,7 +43,7 @@ class LocationAlarmService : Service() {
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onCreate() {
-        Timber.d("LocationAlarmService onCreate")
+        Log.d("LocationAlarmService onCreate")
         val alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             ?: Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
@@ -60,7 +60,7 @@ class LocationAlarmService : Service() {
             isLooping = true
             prepare()
             setOnErrorListener { _, what, extra ->
-                Timber.e("Media player occurred: what=$what, extra=$extra")
+                Log.e("Media player occurred: what=$what, extra=$extra")
                 true
             }
         }
@@ -68,7 +68,7 @@ class LocationAlarmService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Timber.d("LocationAlarmService onStartCommand")
+        Log.d("LocationAlarmService onStartCommand")
         when (intent?.action) {
             ACTION_STOP_AND_CANCEL_ALARM -> {
                 appStateStore.onSetAlarm(false)
@@ -105,19 +105,19 @@ class LocationAlarmService : Service() {
                     if (alarmTriggered) {
                         alarmPlayer?.let {
                             if (!it.isPlaying) {
-                                Timber.d("Triggering alarm sound & vibration")
+                                Log.d("Triggering alarm sound & vibration")
                                 it.start()
                             }
-                        } ?: Timber.e("Alarm player is null")
+                        } ?: Log.e("Alarm player is null")
                         vibrator.vibrateAlarm()
                     } else {
                         alarmPlayer?.let {
                             if (it.isPlaying) {
-                                Timber.d("Stopping alarm sound & vibration")
+                                Log.d("Stopping alarm sound & vibration")
                                 it.stop()
                                 it.prepare()
                             }
-                        } ?: Timber.e("Alarm player is null")
+                        } ?: Log.e("Alarm player is null")
                         vibrator.cancelVibration()
                     }
                 }
@@ -131,10 +131,10 @@ class LocationAlarmService : Service() {
                     distanceToGeofencePerimeter?.let {
                         // Check the alarm is still enabled here as this service scope doesnt seem to get cancelled immediately
                         if (checkNotificationPermission() && appStateStore.state.value.alarmEnabled) {
-                            Timber.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
+                            Log.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
                             notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
                         } else {
-                            Timber.w("Notification permissions aren't granted. Can't update notification")
+                            Log.w("Notification permissions aren't granted. Can't update notification")
                         }
                     }
                 }
@@ -152,7 +152,7 @@ class LocationAlarmService : Service() {
         vibrator.cancelVibration()
         serviceScope.cancel()
         notificationManager.cancel(notificationId)
-        Timber.d("LocationAlarmService onDestroy")
+        Log.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }
 

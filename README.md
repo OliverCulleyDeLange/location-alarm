@@ -8,7 +8,6 @@
 # Priority 1
 
 - Debugging tools window
-  - S Activate by volume button sequence
   - M Show app logs
   - M Show location updates (Graph data)
   - M Capture GPX file for alarm enabled session - to aid GPS issue debugging

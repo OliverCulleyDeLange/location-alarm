@@ -12,6 +12,7 @@ import uk.co.oliverdelange.location_alarm.helpers.isDebug
 import uk.co.oliverdelange.location_alarm.location.LocationService
 import uk.co.oliverdelange.location_alarm.logging.CustomDebugTree
 import uk.co.oliverdelange.locationalarm.di.sharedModule
+import uk.co.oliverdelange.locationalarm.logging.Log
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 
 class MainApplication : Application() {
@@ -28,7 +29,7 @@ class MainApplication : Application() {
         }
         setupSharedLogging()
         Timber.plant(CustomDebugTree())
-        Timber.d("Koin started")
+        Log.d("Koin started")
 
         appStateStore.setDebug(isDebug())
         locationService.listenToStateAndListenForLocationUpdates()

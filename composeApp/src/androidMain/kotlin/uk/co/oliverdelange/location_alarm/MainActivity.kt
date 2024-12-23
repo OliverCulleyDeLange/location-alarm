@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import uk.co.oliverdelange.location_alarm.screens.AppUi
 import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
+import uk.co.oliverdelange.locationalarm.logging.Log
 import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Down
@@ -41,10 +41,10 @@ class MainActivity : ComponentActivity() {
             appStateStore.state.map { it.alarmEnabled }.distinctUntilChanged().collect { alarmEnabled ->
                 val intent = Intent(applicationContext, LocationAlarmService::class.java)
                 if (alarmEnabled) {
-                    Timber.i("Starting LocationAlarmService")
+                    Log.i("Starting LocationAlarmService")
                     startForegroundService(intent)
                 } else {
-                    Timber.i("Stopping LocationAlarmService")
+                    Log.i("Stopping LocationAlarmService")
                     stopService(intent)
                 }
             }
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
-        Timber.w("onDestroy MainActivity")
+        Log.w("onDestroy MainActivity")
         super.onDestroy()
     }
 
