@@ -35,7 +35,6 @@ kotlin {
             implementation(libs.mapboxTurf)
             implementation(libs.koin.android)
             implementation(libs.koin.android.compose)
-            implementation(libs.timber)
             implementation(libs.play.services.location)
 
         }
