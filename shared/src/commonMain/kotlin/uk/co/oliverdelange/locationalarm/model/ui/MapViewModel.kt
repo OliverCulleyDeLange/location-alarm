@@ -28,6 +28,7 @@ import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedLocationIcon
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedMap
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedStopAlarm
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.ToggledAlarm
+import uk.co.oliverdelange.locationalarm.navigation.Navigate
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class MapViewModel(
@@ -55,6 +56,8 @@ open class MapViewModel(
 
     override fun onEvent(uiEvent: UiEvents) {
         when (uiEvent) {
+            // Navigation
+            is Navigate -> appStateStore.doNavigate(uiEvent.route)
             // User Events
             is TappedAllowLocationPermissions -> appStateStore.onTapAllowLocationPermissions()
             is DraggedRadiusControl -> appStateStore.onRadiusChanged(uiEvent.radius)

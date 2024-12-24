@@ -41,6 +41,8 @@ import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 import uk.co.oliverdelange.locationalarm.model.ui.UiEvents
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
+import uk.co.oliverdelange.locationalarm.navigation.Navigate
+import uk.co.oliverdelange.locationalarm.navigation.Route
 
 @OptIn(MapboxExperimental::class, ExperimentalPermissionsApi::class)
 @Composable
@@ -112,7 +114,7 @@ fun MapScreenContent(
                     Text(state.distanceToAlarmText, color = MaterialTheme.colorScheme.secondary)
                 }
             }
-            if (state.shouldShowDelayedStartButton) {
+            if (state.shouldShowDebugTools) {
                 Button(
                     modifier = Modifier
                         .padding(horizontal = 24.dp)
@@ -120,6 +122,15 @@ fun MapScreenContent(
                     onClick = { onEvent(UserEvent.ToggledAlarmWithDelay) },
                 ) {
                     Text("Delayed start")
+                }
+
+                Button(
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp)
+                        .padding(bottom = 8.dp, top = 8.dp),
+                    onClick = { onEvent(Navigate(Route.DebugScreen)) },
+                ) {
+                    Text("Debug screen")
                 }
             }
             Button(

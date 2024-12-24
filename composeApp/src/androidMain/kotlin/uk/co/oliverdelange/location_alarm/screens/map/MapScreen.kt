@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 import uk.co.oliverdelange.location_alarm.screens.AlarmAlert
 import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
@@ -18,9 +17,6 @@ import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermission
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiScreenState
 import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
-
-@Serializable
-object MapScreenRoute
 
 @Composable
 fun MapScreen() {

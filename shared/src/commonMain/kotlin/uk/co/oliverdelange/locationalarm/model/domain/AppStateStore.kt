@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import uk.co.oliverdelange.locationalarm.helper.doWhen
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
+import uk.co.oliverdelange.locationalarm.navigation.Route
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
 import kotlin.math.roundToInt
@@ -36,6 +37,14 @@ open class AppStateStore(
                 }
             }
         }
+    }
+
+    fun doNavigate(route: Route) {
+        _state.update { it.copy(navigateTo = route) }
+    }
+
+    fun didNavigate(currentScreen: Route) {
+        _state.update { it.copy(currentScreen = currentScreen, navigateTo = null) }
     }
 
     fun onTapAllowLocationPermissions() {

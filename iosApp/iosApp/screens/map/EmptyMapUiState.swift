@@ -4,6 +4,6 @@ import Shared
 extension Shared.MapUiState {
     convenience init(screenState: MapUiScreenState = MapUiScreenState.showmap) {
         self.init(screenState: screenState, shouldShowAlarmAlert: false, toggleAlarmButtonText: "Enable Alarm", enableAlarmButtonEnabled: true, shouldRequestNotificationPermissions: false, shouldShowNotificationPermissionDeniedMessage: false, shouldShowNotificationPermissionRationale: false, shouldRequestLocationPermissions: false,
-                  shouldEnableMapboxLocationComponent: false, shouldShowDelayedStartButton: false, usersLocation: nil, geoFenceLocation: nil, usersLocationToFlyTo: nil, perimeterRadiusMeters: 200, shouldShowDistanceToAlarmText: true, distanceToAlarmText: "100m to alarm")
+                  shouldEnableMapboxLocationComponent: false, shouldShowDebugTools: false, usersLocation: nil, geoFenceLocation: nil, usersLocationToFlyTo: nil, perimeterRadiusMeters: 200, shouldShowDistanceToAlarmText: true, distanceToAlarmText: "100m to alarm")
     }
 }

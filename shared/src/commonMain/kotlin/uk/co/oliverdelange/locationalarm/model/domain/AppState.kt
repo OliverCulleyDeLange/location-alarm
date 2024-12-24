@@ -1,10 +1,13 @@
 package uk.co.oliverdelange.locationalarm.model.domain
 
 import kotlinx.datetime.Instant
+import uk.co.oliverdelange.locationalarm.navigation.Route
 
 data class AppState(
     val debug: Boolean = false,
     val appInForeground: Boolean = true,
+    val currentScreen: Route = Route.MapScreen,
+    val navigateTo: Route? = null,
 
     val shouldRequestNotificationPermissions: Boolean = false,
     val notificationPermissionState: PermissionState = PermissionState.Unknown,
@@ -15,6 +18,7 @@ data class AppState(
     // Listen if map is open or alarm is enabled
     val shouldListenForLocationUpdates: Boolean = false,
 
+    // TODO The below are really MapFeatureState
     // Most up to date user location - may be used for the geofence if they haven't manually moved it
     val usersLocation: Location? = null,
     // A store of all location updates while the app is running

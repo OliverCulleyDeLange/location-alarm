@@ -58,10 +58,13 @@ struct MapScreen: View {
                 }
                 
                 // Dev tool to enable alarm but not trigger for a time period to allow background / locked testing
-                if (state.shouldShowDelayedStartButton){
+                if (state.shouldShowDebugTools){
+                    Button("Delayed Start", action: { onEvent(UserEventToggledAlarmWithDelay()) })
+                        .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                     
-                Button("Delayed Start", action: { onEvent(UserEventToggledAlarmWithDelay()) })
-                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
+                    NavigationLink(destination: DebugScreen()) {
+                        Text("Debug Screen")
+                    }.padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
                 }
                 
                 Button(action: { onEvent(UserEventToggledAlarm()) }) {

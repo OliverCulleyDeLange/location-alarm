@@ -18,7 +18,6 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -42,7 +41,6 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(projects.shared)
-            implementation(libs.kotlinx.serialization.json)
         }
     }
 }

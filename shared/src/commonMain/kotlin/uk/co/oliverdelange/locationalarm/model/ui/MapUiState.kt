@@ -25,7 +25,7 @@ data class MapUiState(
     val shouldShowNotificationPermissionRationale: Boolean = false,
     val shouldRequestLocationPermissions: Boolean = false,
     val shouldEnableMapboxLocationComponent: Boolean = false,
-    val shouldShowDelayedStartButton: Boolean = false,
+    val shouldShowDebugTools: Boolean = false,
     // Most up to date user location
     val usersLocation: Location? = null,
     // The location of the geofence. Defaults to the usersLocation, unless manually moved.
