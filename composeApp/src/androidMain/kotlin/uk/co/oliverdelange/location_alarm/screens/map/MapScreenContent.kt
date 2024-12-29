@@ -37,10 +37,10 @@ import uk.co.oliverdelange.location_alarm.mapbox.buildGeofenceFeature
 import uk.co.oliverdelange.location_alarm.mapper.domain_to_ui.toPoint
 import uk.co.oliverdelange.location_alarm.screens.permissions.NotificationPermissionDeniedAlert
 import uk.co.oliverdelange.locationalarm.mapbox.MapboxIDs
-import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 import uk.co.oliverdelange.locationalarm.model.ui.UiEvents
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
+import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiState
 import uk.co.oliverdelange.locationalarm.navigation.Navigate
 import uk.co.oliverdelange.locationalarm.navigation.Route
 

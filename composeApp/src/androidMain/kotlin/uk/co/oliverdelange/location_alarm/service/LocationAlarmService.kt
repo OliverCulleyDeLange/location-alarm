@@ -28,7 +28,7 @@ import uk.co.oliverdelange.location_alarm.haptics.Vibrator
 import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
 import uk.co.oliverdelange.locationalarm.logging.SLog
-import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
+import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 class LocationAlarmService : Service() {
     companion object {

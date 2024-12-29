@@ -14,9 +14,9 @@ import uk.co.oliverdelange.location_alarm.screens.AlarmAlert
 import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsDeniedScreen
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsRequiredScreen
-import uk.co.oliverdelange.locationalarm.model.ui.MapUiScreenState
-import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
+import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiScreenState
+import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiState
 
 @Composable
 fun MapScreen() {

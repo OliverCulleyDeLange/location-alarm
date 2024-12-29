@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
 import uk.co.oliverdelange.locationalarm.logging.SLog
-import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
+import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 /** Listens to app state and requests location updates appropriately using FusedLocationProvider */
 class LocationService(context: Context, private val appStateStore: AppStateStore) {
@@ -41,7 +41,7 @@ class LocationService(context: Context, private val appStateStore: AppStateStore
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     fun listenToStateAndListenForLocationUpdates() {
-        SLog.w("LocationService init")
+        SLog.d("LocationService init")
         serviceScope.launch {
             appStateStore.state
                 .map { it.shouldListenForLocationUpdates }

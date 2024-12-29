@@ -4,10 +4,10 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.Instant
-import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.model.domain.Location
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.provider.MockTimeProvider
+import uk.co.oliverdelange.locationalarm.store.AppStateStore
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

@@ -1,43 +1,38 @@
-package uk.co.oliverdelange.locationalarm.model.domain
+package uk.co.oliverdelange.locationalarm.store
 
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutinesState
-import com.rickclephas.kmp.observableviewmodel.MutableStateFlow
-import com.rickclephas.kmp.observableviewmodel.ViewModel
-import com.rickclephas.kmp.observableviewmodel.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.update
-import uk.co.oliverdelange.locationalarm.helper.doWhen
+import kotlinx.coroutines.launch
 import uk.co.oliverdelange.locationalarm.logging.SLog
-import uk.co.oliverdelange.locationalarm.logging.stateChangeLog
+import uk.co.oliverdelange.locationalarm.model.domain.AppState
+import uk.co.oliverdelange.locationalarm.model.domain.Location
+import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
+import uk.co.oliverdelange.locationalarm.model.domain.delayAlarmTriggering
+import uk.co.oliverdelange.locationalarm.model.domain.granted
+import uk.co.oliverdelange.locationalarm.model.domain.shouldDelayAlarm
 import uk.co.oliverdelange.locationalarm.navigation.Route
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
 import kotlin.math.roundToInt
 
 open class AppStateStore(
-    private val timeProvider: TimeProvider = SystemTimeProvider()
-) : ViewModel() {
-    private val _state = MutableStateFlow(viewModelScope, AppState())
+    private val timeProvider: TimeProvider = SystemTimeProvider(),
+) {
+    private val _state = MutableStateFlow(AppState())
 
     @NativeCoroutinesState
     val state: StateFlow<AppState> = _state.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            doWhen(state.map { it.debug }) {
-                state.scan(state.value) { prev, curr ->
-                    stateChangeLog(prev, curr)?.let {
-                        SLog.v("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
-                    }
-                    curr
-                }
-            }
-        }
-    }
+    // TODO Learn more about these scopes - are they appropriate?
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     fun doNavigate(route: Route) {
         _state.update { it.copy(navigateTo = route) }
@@ -230,7 +225,7 @@ open class AppStateStore(
     fun onToggleAlarmWithDelay() {
         delayAlarmTriggering = true
         onToggleAlarm()
-        viewModelScope.launch {
+        coroutineScope.launch {
             delay(5000)
             recomputeDistancesAndTriggered()
         }

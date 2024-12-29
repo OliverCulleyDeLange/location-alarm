@@ -1,13 +1,15 @@
-package uk.co.oliverdelange.locationalarm.model.ui
+package uk.co.oliverdelange.locationalarm.model.ui.map
 
+import uk.co.oliverdelange.locationalarm.logging.LoggedProperties
+import uk.co.oliverdelange.locationalarm.logging.mapUiStateTrackedProperties
 import uk.co.oliverdelange.locationalarm.model.domain.Location
+import uk.co.oliverdelange.locationalarm.model.ui.UiState
 
 enum class MapUiScreenState {
     ShowMap, LocationPermissionRequired, LocationPermissionDenied
 }
 
 
-//@Serializable
 data class MapUiState(
     val screenState: MapUiScreenState = MapUiScreenState.LocationPermissionRequired,
     // Alert dialog which appears when alarm is triggered - gives option to stop alarm
@@ -37,4 +39,7 @@ data class MapUiState(
     val shouldShowDistanceToAlarmText: Boolean = false,
     // Distance to alarm shown to users
     val distanceToAlarmText: String = "",
-) : UiState
+) : UiState, LoggedProperties<MapUiState> {
+    override fun getTrackedProperties() = mapUiStateTrackedProperties
+}
+

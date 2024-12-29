@@ -9,8 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import uk.co.oliverdelange.location_alarm.screens.debug.DebugScreen
 import uk.co.oliverdelange.location_alarm.screens.map.MapScreen
 import uk.co.oliverdelange.locationalarm.model.domain.AppState
-import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.navigation.Route
+import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 @Composable
 fun Navigation(appStateStore: AppStateStore, state: AppState) {

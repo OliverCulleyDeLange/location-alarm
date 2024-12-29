@@ -1,6 +1,8 @@
 package uk.co.oliverdelange.locationalarm.model.domain
 
 import kotlinx.datetime.Instant
+import uk.co.oliverdelange.locationalarm.logging.LoggedProperties
+import uk.co.oliverdelange.locationalarm.logging.appStateTrackedProperties
 import uk.co.oliverdelange.locationalarm.navigation.Route
 
 data class AppState(
@@ -45,4 +47,6 @@ data class AppState(
     // Tapping on the location icon zooms to the users current location.
     // If this is set we should fly to it. The UI should listen for changes to this state and fly to new values.
     val usersLocationToFlyTo: Location? = null,
-)
+) : LoggedProperties<AppState> {
+    override fun getTrackedProperties() = appStateTrackedProperties
+}

@@ -8,8 +8,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import uk.co.oliverdelange.location_alarm.ui.PermissionsHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 import uk.co.oliverdelange.locationalarm.model.domain.AppState
-import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
+import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 @SuppressLint("InlinedApi")
 @Composable

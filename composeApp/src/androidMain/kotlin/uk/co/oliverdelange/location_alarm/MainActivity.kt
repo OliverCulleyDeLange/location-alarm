@@ -14,10 +14,10 @@ import org.koin.android.ext.android.inject
 import uk.co.oliverdelange.location_alarm.screens.AppUi
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
 import uk.co.oliverdelange.locationalarm.logging.SLog
-import uk.co.oliverdelange.locationalarm.model.domain.AppStateStore
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Down
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode.VolumeButton.Up
+import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 class MainActivity : ComponentActivity() {
 

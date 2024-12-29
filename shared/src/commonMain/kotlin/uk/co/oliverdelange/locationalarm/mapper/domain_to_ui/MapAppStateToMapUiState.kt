@@ -5,8 +5,8 @@ import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.denied
 import uk.co.oliverdelange.locationalarm.model.domain.granted
 import uk.co.oliverdelange.locationalarm.model.domain.shouldShowRationale
-import uk.co.oliverdelange.locationalarm.model.ui.MapUiScreenState
-import uk.co.oliverdelange.locationalarm.model.ui.MapUiState
+import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiScreenState
+import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiState
 
 /** TODO Get strings from string provider
  * TODO UNIT TESTS
