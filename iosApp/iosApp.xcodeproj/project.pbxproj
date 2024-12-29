@@ -87,6 +87,7 @@
 		4244D0882D0A378000B2D9FC /* helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = helpers; sourceTree = "<group>"; };
 		424548482D0FACCD00DDF9EA /* notifications */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = notifications; sourceTree = "<group>"; };
 		424548572D0FBA6400DDF9EA /* live_activity */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4245485B2D0FBA6400DDF9EA /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = live_activity; sourceTree = "<group>"; };
+		4283DE2D2D2203350010EDA9 /* di */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = di; sourceTree = "<group>"; };
 		42B0AF402D0B6C2900521A6C /* alarm_manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = alarm_manager; sourceTree = "<group>"; };
 		42B0AF442D0B6CD700521A6C /* haptics */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = haptics; sourceTree = "<group>"; };
 		42B0AF4A2D0B82D600521A6C /* logging */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = logging; sourceTree = "<group>"; };
@@ -160,6 +161,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				4283DE2D2D2203350010EDA9 /* di */,
 				424548482D0FACCD00DDF9EA /* notifications */,
 				424548572D0FBA6400DDF9EA /* live_activity */,
 				42B0AF442D0B6CD700521A6C /* haptics */,
@@ -232,6 +234,7 @@
 				4244D0882D0A378000B2D9FC /* helpers */,
 				424548482D0FACCD00DDF9EA /* notifications */,
 				424548572D0FBA6400DDF9EA /* live_activity */,
+				4283DE2D2D2203350010EDA9 /* di */,
 				42B0AF402D0B6C2900521A6C /* alarm_manager */,
 				42B0AF442D0B6CD700521A6C /* haptics */,
 				42B0AF4A2D0B82D600521A6C /* logging */,

@@ -1,11 +1,11 @@
 package uk.co.oliverdelange.locationalarm.model.ui
 
 /** To allow passing a viewmodel into previews */
-interface MapViewModelInterface {
+interface ViewModelInterface {
     fun onEvent(uiEvent: UiEvents)
 }
 
 
-class EmptyMapViewModel : MapViewModelInterface {
+class EmptyViewModel : ViewModelInterface {
     override fun onEvent(uiEvent: UiEvents) {}
 }

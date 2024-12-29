@@ -15,7 +15,6 @@ struct MapScreen: View {
                 usersLocationToFlyTo:state.usersLocationToFlyTo,
                 perimeterRadiusMeters: Double(state.perimeterRadiusMeters),
                 onMapTap: { onEvent(UserEventTappedMap(location: $0)) },
-//                onMapTap: { onEvent(UserEventTappedMap($0)) },
                 onZoomedToUserLocation: { onEvent(UiResultFinishedFLyingToUsersLocation()) }
             )
             
@@ -62,9 +61,12 @@ struct MapScreen: View {
                     Button("Delayed Start", action: { onEvent(UserEventToggledAlarmWithDelay()) })
                         .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                     
-                    NavigationLink(destination: DebugScreen()) {
+                    NavigationLink {
+                        DebugScreen()
+                    } label:{
                         Text("Debug Screen")
-                    }.padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
+                            .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
+                    }
                 }
                 
                 Button(action: { onEvent(UserEventToggledAlarm()) }) {

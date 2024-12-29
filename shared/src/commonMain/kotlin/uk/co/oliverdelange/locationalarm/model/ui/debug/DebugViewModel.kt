@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapDebugStateToDebugUiState
-import uk.co.oliverdelange.locationalarm.model.ui.MapViewModelInterface
 import uk.co.oliverdelange.locationalarm.model.ui.UiEvents
+import uk.co.oliverdelange.locationalarm.model.ui.ViewModelInterface
 import uk.co.oliverdelange.locationalarm.store.DebugStateStore
 
-class DebugViewModel(
-    debugStateStore: DebugStateStore,
+open class DebugViewModel(
+    private val debugStateStore: DebugStateStore,
     private val uiStateMapper: MapDebugStateToDebugUiState,
-) : ViewModel(), MapViewModelInterface {
+) : ViewModel(), ViewModelInterface {
 
     init {
         SLog.d("DebugViewModel init")

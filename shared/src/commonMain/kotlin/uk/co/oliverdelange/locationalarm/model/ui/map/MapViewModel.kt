@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiState
-import uk.co.oliverdelange.locationalarm.model.ui.MapViewModelInterface
 import uk.co.oliverdelange.locationalarm.model.ui.UiEvents
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.FinishedFLyingToUsersLocation
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.LocationChanged
@@ -25,13 +24,14 @@ import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedLocationIcon
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedMap
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.TappedStopAlarm
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent.ToggledAlarm
+import uk.co.oliverdelange.locationalarm.model.ui.ViewModelInterface
 import uk.co.oliverdelange.locationalarm.navigation.Navigate
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 open class MapViewModel(
     private val appStateStore: AppStateStore,
     private val uiStateMapper: MapAppStateToMapUiState,
-) : ViewModel(), MapViewModelInterface {
+) : ViewModel(), ViewModelInterface {
 
     @NativeCoroutinesState
     val state: StateFlow<MapUiState> = appStateStore.state

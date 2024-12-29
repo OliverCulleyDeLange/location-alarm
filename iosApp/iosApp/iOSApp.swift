@@ -10,7 +10,8 @@ struct iOSApp: App {
     private var locationStateListener: LocationStateListener
     
     init() {
-        appStateStore = AppStateStore(timeProvider: SystemTimeProvider())
+        KoinProvider.companion.doInitKoin()
+        appStateStore = get()
 
 #if DEBUG
         appStateStore.setDebug(debug: true)
@@ -26,16 +27,13 @@ struct iOSApp: App {
         WindowGroup {
             NavigationView {
                 AppUi(
-                    appStateStore: appStateStore,
-                    alarmManager: alarmManager
+                    appStateStore: appStateStore, alarmManager: alarmManager
                 ).onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                     appStateStore.onAppForegrounded()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
                     appStateStore.onAppBackgrounded()
                 }
-                
-//                .navigationTitle("Navigation")
             }
         }
     }
