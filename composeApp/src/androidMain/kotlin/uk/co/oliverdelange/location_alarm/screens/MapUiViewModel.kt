@@ -5,9 +5,7 @@ import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiS
 import uk.co.oliverdelange.locationalarm.model.ui.map.MapViewModel
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
-/** App side extension of the shared view model
- * Handles app side ui model mapping
- * */
+/** App side extension of the shared view model */
 class MapUiViewModel(
     appStateStore: AppStateStore,
     uiStateMapper: MapAppStateToMapUiState,

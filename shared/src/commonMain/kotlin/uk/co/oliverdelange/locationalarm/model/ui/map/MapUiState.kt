@@ -5,13 +5,7 @@ import uk.co.oliverdelange.locationalarm.logging.mapUiStateTrackedProperties
 import uk.co.oliverdelange.locationalarm.model.domain.Location
 import uk.co.oliverdelange.locationalarm.model.ui.UiState
 
-enum class MapUiScreenState {
-    ShowMap, LocationPermissionRequired, LocationPermissionDenied
-}
-
-
 data class MapUiState(
-    val screenState: MapUiScreenState = MapUiScreenState.LocationPermissionRequired,
     // Alert dialog which appears when alarm is triggered - gives option to stop alarm
     val shouldShowAlarmAlert: Boolean = false,
     val toggleAlarmButtonText: String = "",

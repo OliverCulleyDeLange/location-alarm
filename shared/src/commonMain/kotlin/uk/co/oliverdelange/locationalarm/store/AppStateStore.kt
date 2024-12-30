@@ -16,8 +16,10 @@ import uk.co.oliverdelange.locationalarm.model.domain.AppState
 import uk.co.oliverdelange.locationalarm.model.domain.Location
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.delayAlarmTriggering
+import uk.co.oliverdelange.locationalarm.model.domain.denied
 import uk.co.oliverdelange.locationalarm.model.domain.granted
 import uk.co.oliverdelange.locationalarm.model.domain.shouldDelayAlarm
+import uk.co.oliverdelange.locationalarm.navigation.Navigate
 import uk.co.oliverdelange.locationalarm.navigation.Route
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
 import uk.co.oliverdelange.locationalarm.provider.TimeProvider
@@ -34,7 +36,7 @@ open class AppStateStore(
     // TODO Learn more about these scopes - are they appropriate?
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    fun doNavigate(route: Route) {
+    fun doNavigate(route: Navigate) {
         _state.update { it.copy(navigateTo = route) }
     }
 
@@ -56,9 +58,22 @@ open class AppStateStore(
 
     fun onLocationPermissionResult(state: PermissionState) {
         _state.update { current ->
+            val navigateTo = when {
+                state.granted() -> {
+                    val currentScreenIsLocationPermissionIssueScreen = current.currentScreen == Route.LocationPermissionDeniedScreen ||
+                        current.currentScreen == Route.LocationPermissionRequiredScreen
+                    if (currentScreenIsLocationPermissionIssueScreen) {
+                        Route.MapScreen
+                    } else current.currentScreen
+                }
+
+                state.denied() -> Route.LocationPermissionDeniedScreen
+                else -> Route.LocationPermissionRequiredScreen
+            }
             current.copy(
                 locationPermissionState = state,
                 shouldRequestLocationPermissions = false,
+                navigateTo = Navigate(navigateTo, current.currentScreen)
             )
         }
     }

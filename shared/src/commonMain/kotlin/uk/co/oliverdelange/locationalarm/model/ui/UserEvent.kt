@@ -1,7 +1,6 @@
 package uk.co.oliverdelange.locationalarm.model.ui
 
 import uk.co.oliverdelange.locationalarm.model.domain.Location
-import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 
 /** Combined [UserEvent]s and [UiResult]s to describe things that happen in the UI
  * that will be sent to the viewmodel to be handled */
@@ -26,12 +25,6 @@ sealed interface UserEvent : UiEvents {
 sealed interface UiResult : UiEvents {
     /** Locations are updated while the app or alarm is active */
     data class LocationChanged(val location: List<Location>) : UserEvent
-
-    /** User has responded to the system permissions dialog */
-    data class LocationPermissionResult(val state: PermissionState) : UserEvent
-
-    /** User has responded to the system permissions dialog */
-    data class NotificationPermissionResult(val state: PermissionState) : UserEvent
 
     /** Fired when we attempt to ask the user for location permissions
      * This may or may not result in a dialog being shown */

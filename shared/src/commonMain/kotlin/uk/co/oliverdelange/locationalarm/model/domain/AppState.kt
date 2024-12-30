@@ -3,19 +3,20 @@ package uk.co.oliverdelange.locationalarm.model.domain
 import kotlinx.datetime.Instant
 import uk.co.oliverdelange.locationalarm.logging.LoggedProperties
 import uk.co.oliverdelange.locationalarm.logging.appStateTrackedProperties
+import uk.co.oliverdelange.locationalarm.navigation.Navigate
 import uk.co.oliverdelange.locationalarm.navigation.Route
 
 data class AppState(
     val debug: Boolean = false,
     val appInForeground: Boolean = true,
-    val currentScreen: Route = Route.MapScreen,
-    val navigateTo: Route? = null,
+    val currentScreen: Route = Route.LocationPermissionRequiredScreen,
+    val navigateTo: Navigate? = null,
 
     val shouldRequestNotificationPermissions: Boolean = false,
-    val notificationPermissionState: PermissionState = PermissionState.Unknown,
+    val notificationPermissionState: PermissionState = PermissionState.Unchecked,
 
     val shouldRequestLocationPermissions: Boolean = false,
-    val locationPermissionState: PermissionState = PermissionState.Unknown,
+    val locationPermissionState: PermissionState = PermissionState.Unchecked,
 
     // Listen if map is open or alarm is enabled
     val shouldListenForLocationUpdates: Boolean = false,

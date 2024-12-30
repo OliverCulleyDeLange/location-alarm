@@ -12,7 +12,7 @@ struct iOSApp: App {
     init() {
         KoinProvider.companion.doInitKoin()
         appStateStore = get()
-
+        
 #if DEBUG
         appStateStore.setDebug(debug: true)
 #else
@@ -25,15 +25,13 @@ struct iOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                AppUi(
-                    appStateStore: appStateStore, alarmManager: alarmManager
-                ).onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                    appStateStore.onAppForegrounded()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                    appStateStore.onAppBackgrounded()
-                }
+            AppUi(
+                appStateStore: appStateStore, alarmManager: alarmManager
+            ).onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                appStateStore.onAppForegrounded()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                appStateStore.onAppBackgrounded()
             }
         }
     }

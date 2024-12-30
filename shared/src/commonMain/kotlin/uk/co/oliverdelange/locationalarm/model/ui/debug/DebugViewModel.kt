@@ -24,7 +24,6 @@ open class DebugViewModel(
     @NativeCoroutinesState
     val state: StateFlow<DebugUiState> = debugStateStore.state
         .map(uiStateMapper::map)
-        //FIXME This causes
         .stateIn(viewModelScope, SharingStarted.Eagerly, DebugUiState())
 
     override fun onEvent(uiEvent: UiEvents) {

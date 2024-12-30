@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.launch
 import uk.co.oliverdelange.locationalarm.helper.doWhen
 import uk.co.oliverdelange.locationalarm.model.domain.AppState
+import uk.co.oliverdelange.locationalarm.model.ui.location_permission_required.LocationPermissionRequiredUiState
 import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiState
 import kotlin.reflect.KProperty1
 
@@ -17,6 +18,7 @@ class AppStateChangeLogger(
     private val debug: Flow<Boolean>,
     private val appState: StateFlow<AppState>,
     private val mapUiState: StateFlow<MapUiState>,
+    private val locationPermissionRequiredUiState: StateFlow<LocationPermissionRequiredUiState>,
 ) {
     init {
         logStateChangesWhenDebug()
@@ -32,7 +34,10 @@ class AppStateChangeLogger(
                 val appUiLogs = doOnStateChangeLog(mapUiState) {
                     SLog.v("AppUiState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
                 }
-                merge(appLogs, appUiLogs)
+                val locationPermissionRequiredUi = doOnStateChangeLog(locationPermissionRequiredUiState) {
+                    SLog.v("LocationPermissionRequiredUiState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
+                }
+                merge(appLogs, appUiLogs, locationPermissionRequiredUi)
             }
         }
     }
@@ -61,8 +66,11 @@ interface LoggedProperties<T> {
     fun getTrackedProperties(): List<KProperty1<T, Any?>>
 }
 
+val locationPermissionRequiredTrackedPropertied = listOf(
+    LocationPermissionRequiredUiState::shouldShowContent
+)
+
 val mapUiStateTrackedProperties = listOf(
-    MapUiState::screenState,
     MapUiState::shouldShowAlarmAlert,
     MapUiState::toggleAlarmButtonText,
     MapUiState::enableAlarmButtonEnabled,

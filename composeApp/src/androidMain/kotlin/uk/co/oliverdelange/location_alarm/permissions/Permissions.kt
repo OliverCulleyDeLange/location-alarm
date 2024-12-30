@@ -17,6 +17,7 @@ import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission.Noti
 
 /** An attempt to contain the madness of Android permissions
  * - Mainly adds functionality to detect when the user hasn't yet decided on a permission: [PermissionState.Unknown]
+ * TODO Unit tests
  * */
 class Permissions(
     val requiredPermissions: RequestablePermission,
