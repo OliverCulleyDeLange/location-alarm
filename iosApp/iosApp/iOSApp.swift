@@ -33,6 +33,18 @@ struct iOSApp: App {
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
                 appStateStore.onAppBackgrounded()
             }
+            .onOpenURL { url in
+                if url.scheme == "uk.co.oliverdelange.locationalarm" {
+                    SLog.i("Deeplink: \(url)")
+                    switch url.relativePath {
+                    case "/stop_alarm":
+                        appStateStore.onSetAlarm(enabled: false)
+                        
+                    default:
+                        SLog.w("Unhandled deeplink \(url.relativePath)")
+                    }
+                }
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ import uk.co.oliverdelange.locationalarm.model.ui.UiResult.FinishedFLyingToUsers
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.LocationChanged
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.MapNotShown
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.MapShown
+import uk.co.oliverdelange.locationalarm.model.ui.UiResult.NotificationPermissionResult
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.RequestedLocationPermission
 import uk.co.oliverdelange.locationalarm.model.ui.UiResult.RequestedNotificationPermission
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
@@ -50,9 +51,9 @@ open class MapViewModel(
             is TappedStopAlarm -> appStateStore.onTapStopAlarm()
             is ToggledAlarm -> appStateStore.onToggleAlarm()
             is UserEvent.ToggledAlarmWithDelay -> appStateStore.onToggleAlarmWithDelay()
-            is UserEvent.OpenedDeepLinkStopAlarm -> appStateStore.onSetAlarm(false)
             // Ui Results
             is LocationChanged -> appStateStore.onLocationChange(uiEvent.location)
+            is NotificationPermissionResult -> appStateStore.onNotificationPermissionResult(uiEvent.state)
             is RequestedLocationPermission -> appStateStore.onRequestedLocationPermissions()
             is RequestedNotificationPermission -> appStateStore.onRequestedNotificationPermissions()
             is FinishedFLyingToUsersLocation -> appStateStore.onFinishFlyingToUsersLocation()

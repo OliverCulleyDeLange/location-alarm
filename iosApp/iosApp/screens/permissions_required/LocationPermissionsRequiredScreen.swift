@@ -3,7 +3,8 @@ import KMPObservableViewModelSwiftUI
 import Shared
 
 struct LocationPermissionsRequiredScreen: View {
-    let onAllowLocationAccess: () -> Void
+    @StateViewModel var viewModel: LocationPermissionRequiredViewModel = get()
+    
     var body: some View {
         VStack {
             Text("This app needs your location to enable location based alarms. Please allow precise location access for the app to work."
@@ -11,7 +12,7 @@ struct LocationPermissionsRequiredScreen: View {
                 .padding()
                 .multilineTextAlignment(.center)
             Spacer().frame(height: 24)
-            Button(action: { onAllowLocationAccess() }) {
+            Button(action: { viewModel.onEvent(uiEvent: UserEventTappedAllowLocationPermissions()) }) {
                 Text("Allow Location Access")
             }
         }
@@ -20,5 +21,5 @@ struct LocationPermissionsRequiredScreen: View {
 
 
 #Preview("LocationRequired") {
-    LocationPermissionsRequiredScreen(onAllowLocationAccess: {})
+    LocationPermissionsRequiredScreen()
 }

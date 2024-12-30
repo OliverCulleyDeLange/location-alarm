@@ -37,7 +37,7 @@ open class AppStateStore(
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     fun doNavigate(route: Navigate) {
-        _state.update { it.copy(navigateTo = route) }
+        _state.update { platformDoNavigation(it, route) }
     }
 
     fun didNavigate(currentScreen: Route) {
@@ -58,7 +58,7 @@ open class AppStateStore(
 
     fun onLocationPermissionResult(state: PermissionState) {
         _state.update { current ->
-            val navigateTo = when {
+            val navRoute = when {
                 state.granted() -> {
                     val currentScreenIsLocationPermissionIssueScreen = current.currentScreen == Route.LocationPermissionDeniedScreen ||
                         current.currentScreen == Route.LocationPermissionRequiredScreen
@@ -70,11 +70,12 @@ open class AppStateStore(
                 state.denied() -> Route.LocationPermissionDeniedScreen
                 else -> Route.LocationPermissionRequiredScreen
             }
-            current.copy(
+            val navigate = Navigate(navRoute, current.currentScreen)
+            val tmpState = current.copy(
                 locationPermissionState = state,
                 shouldRequestLocationPermissions = false,
-                navigateTo = Navigate(navigateTo, current.currentScreen)
             )
+            platformDoNavigation(tmpState, navigate)
         }
     }
 
@@ -268,3 +269,9 @@ open class AppStateStore(
         return getDistanceToGeofence(usersLocation, geofenceLocation)?.minus(perimeterRadiusMeters)
     }
 }
+
+/** IOS Doesn't navigate, it just responds to the currentScreen changing */
+expect fun AppStateStore.platformDoNavigation(
+    appState: AppState,
+    route: Navigate
+): AppState
