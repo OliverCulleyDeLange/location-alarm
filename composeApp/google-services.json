@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370990746084",
+    "project_id": "location-alarm-446413",
+    "storage_bucket": "location-alarm-446413.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370990746084:android:5fdd82aef8fa9a3ddc9ff1",
+        "android_client_info": {
+          "package_name": "uk.co.oliverdelange.location_alarm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8L-TTQFXxXtZvNfwg8Ye7u6JZN6v8apk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

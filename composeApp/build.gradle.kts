@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -37,7 +38,8 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.android.compose)
             implementation(libs.play.services.location)
-
+            implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+//            implementation("com.google.firebase:firebase-crashlytics") //TODO Crashlytics
         }
         commonMain.dependencies {
             implementation(projects.shared)

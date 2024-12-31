@@ -24,3 +24,28 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew shared:testDebugUnitTest
+
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      MAPBOX_DOWNLOAD_TOKEN: ${{ secrets.MAPBOX_DOWNLOAD_TOKEN}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'jetbrains'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew composeApp:assembleDebug
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_CI_CREDENTIALS }}
+          groups: AllTesters
+          file: app/build/outputs/apk/debug/app-debug.apk
