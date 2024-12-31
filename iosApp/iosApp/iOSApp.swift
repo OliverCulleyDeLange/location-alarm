@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseCore
 import KMPObservableViewModelSwiftUI
 import Shared
 
@@ -8,6 +9,8 @@ struct iOSApp: App {
     private var appStateStore: AppStateStore
     private var alarmManager: AlarmManager
     private var locationStateListener: LocationStateListener
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
         KoinProvider.companion.doInitKoin()
@@ -47,4 +50,13 @@ struct iOSApp: App {
             }
         }
     }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
 }

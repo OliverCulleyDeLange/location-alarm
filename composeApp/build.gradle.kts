@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 kotlin {
@@ -38,8 +39,9 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.android.compose)
             implementation(libs.play.services.location)
-            implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
-//            implementation("com.google.firebase:firebase-crashlytics") //TODO Crashlytics
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:33.7.0"))
+            implementation(libs.firebase.crashlytics)
+            implementation(libs.firebase.analytics)
         }
         commonMain.dependencies {
             implementation(projects.shared)

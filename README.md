@@ -6,8 +6,6 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-- M CI / CD
-- S Firebase app distribution
 - S Bug & crash reporting
 
 ## Priority 2
@@ -34,5 +32,6 @@
 - Allow multiple geofences to be active
 - Other actions when in geofence
 - Inverse location alarm (anchor watch)
-- Voice commands "Hey google, wake me when i get to woolwhich
+- Voice commands "Hey google, wake me when i get to woolwich
 - Weekly notifications - caught up on x hours extra sleep this week
+- S Firebase app distribution
