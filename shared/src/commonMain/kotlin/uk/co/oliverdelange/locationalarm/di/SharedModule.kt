@@ -4,9 +4,10 @@ import kotlinx.coroutines.flow.map
 import org.koin.dsl.module
 import uk.co.oliverdelange.locationalarm.logging.AppStateChangeLogger
 import uk.co.oliverdelange.locationalarm.logging.LogStorer
+import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToDebugGpsUiState
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToLocationPermissionRequiredUiState
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiState
-import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapDebugStateToDebugUiState
+import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapDebugStateToDebugLogUiState
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode
 import uk.co.oliverdelange.locationalarm.model.ui.debug.DebugViewModel
 import uk.co.oliverdelange.locationalarm.model.ui.location_permission_required.LocationPermissionRequiredViewModel
@@ -24,15 +25,16 @@ val sharedModule = module {
     // View Models
     factory { MapViewModel(get(), get()) }
     factory { LocationPermissionRequiredViewModel(get(), get()) }
-    factory { DebugViewModel(get(), get()) }
+    factory { DebugViewModel(get(), get(), get(), get()) }
 
     // Providers
     single<TimeProvider> { SystemTimeProvider() }
 
     // Mappers
     single { MapAppStateToMapUiState() }
-    single { MapDebugStateToDebugUiState() }
     single { MapAppStateToLocationPermissionRequiredUiState() }
+    single { MapDebugStateToDebugLogUiState() }
+    single { MapAppStateToDebugGpsUiState() }
 
     // Tools
     single { DebugMode(get()) }

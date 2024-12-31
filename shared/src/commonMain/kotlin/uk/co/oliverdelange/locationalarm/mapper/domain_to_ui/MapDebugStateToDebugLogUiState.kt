@@ -4,13 +4,13 @@ import kotlinx.datetime.format
 import kotlinx.datetime.format.DateTimeComponents.Formats.ISO_DATE_TIME_OFFSET
 import uk.co.oliverdelange.locationalarm.model.domain.DebugState
 import uk.co.oliverdelange.locationalarm.model.domain.LogLevel
-import uk.co.oliverdelange.locationalarm.model.ui.debug.DebugUiState
 import uk.co.oliverdelange.locationalarm.model.ui.debug.LogColor
 import uk.co.oliverdelange.locationalarm.model.ui.debug.LogEntryUiModel
+import uk.co.oliverdelange.locationalarm.model.ui.debug.LogUiState
 
-class MapDebugStateToDebugUiState {
-    fun map(state: DebugState): DebugUiState {
-        return DebugUiState(
+class MapDebugStateToDebugLogUiState {
+    fun map(state: DebugState): LogUiState {
+        return LogUiState(
             logs = state.logs.map {
                 LogEntryUiModel(
                     date = it.date.format(ISO_DATE_TIME_OFFSET),

@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.model.domain.AppState
 import uk.co.oliverdelange.locationalarm.model.domain.Location
+import uk.co.oliverdelange.locationalarm.model.domain.LocationUpdate
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.delayAlarmTriggering
 import uk.co.oliverdelange.locationalarm.model.domain.denied
@@ -100,10 +101,13 @@ open class AppStateStore(
     /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
     fun onLocationChange(locations: List<Location>) {
         locations.firstOrNull()?.let { firstLocation ->
+            val now = timeProvider.now()
             _state.update {
                 it.copy(
                     usersLocation = firstLocation,
-                    usersLocationHistory = it.usersLocationHistory.plus(firstLocation)
+                    usersLocationHistory = it.usersLocationHistory.plus(
+                        LocationUpdate(now, firstLocation)
+                    )
                 )
             }
             if (!_state.value.mapInteracted) {

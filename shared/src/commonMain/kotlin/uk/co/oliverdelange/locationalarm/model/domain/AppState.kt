@@ -25,7 +25,7 @@ data class AppState(
     // Most up to date user location - may be used for the geofence if they haven't manually moved it
     val usersLocation: Location? = null,
     // A store of all location updates while the app is running
-    val usersLocationHistory: List<Location> = emptyList(),
+    val usersLocationHistory: List<LocationUpdate> = emptyList(),
     // The location of the geofence. Defaults to the usersLocation, unless manually moved.
     val geoFenceLocation: Location? = null,
     // Flag to say whether user has manually interacted with the map.

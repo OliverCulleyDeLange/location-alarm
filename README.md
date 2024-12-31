@@ -8,7 +8,6 @@
 # Priority 1
 
 - Debugging tools window
-  - M Show app logs
   - M Show location updates (Graph data)
   - M Capture GPX file for alarm enabled session - to aid GPS issue debugging
 - M CI / CD
