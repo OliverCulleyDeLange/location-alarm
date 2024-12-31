@@ -6,7 +6,8 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-- S Bug & crash reporting
+
+- QA 1.0
 
 ## Priority 2
 
@@ -35,3 +36,4 @@
 - Voice commands "Hey google, wake me when i get to woolwich
 - Weekly notifications - caught up on x hours extra sleep this week
 - S Firebase app distribution
+- S Bug reporting
