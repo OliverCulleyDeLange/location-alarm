@@ -1,4 +1,4 @@
-name: iOS starter workflow
+name: IOS CI
 
 on:
   push:
@@ -7,6 +7,22 @@ on:
     branches: [ "main" ]
 
 jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'jetbrains'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew shared:iosSimulatorArm64Test
+
   build:
     name: Build and Test default scheme using any available iPhone simulator
     runs-on: macos-latest
@@ -16,6 +32,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Set Default Scheme
         run: |
+          cd iosApp
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
           echo $default | cat >default

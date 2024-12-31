@@ -5,6 +5,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.Instant
 import uk.co.oliverdelange.locationalarm.model.domain.Location
+import uk.co.oliverdelange.locationalarm.model.domain.LocationUpdate
 import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.provider.MockTimeProvider
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
@@ -44,7 +45,7 @@ class AppStateStoreTest {
         // We have requested location permissions from the system
         store.onRequestedLocationPermissions()
         assertEquals(false, store.state.value.shouldRequestLocationPermissions)
-        assertEquals(PermissionState.Unknown, store.state.value.locationPermissionState)
+        assertEquals(PermissionState.Unchecked, store.state.value.locationPermissionState)
         // User responds to permission dialog
         store.onLocationPermissionResult(PermissionState.Granted)
         assertEquals(PermissionState.Granted, store.state.value.locationPermissionState)
@@ -74,12 +75,17 @@ class AppStateStoreTest {
 
         store.onLocationChange(listOf(someLocation))
         assertEquals(someLocation, store.state.value.usersLocation)
-        assertEquals(listOf(someLocation), store.state.value.usersLocationHistory)
-
+        assertEquals(listOf(LocationUpdate(Instant.fromEpochSeconds(0), someLocation)), store.state.value.usersLocationHistory)
+        timeProvider.set(1)
         store.onLocationChange(listOf(someOtherLocation))
         assertEquals(someOtherLocation, store.state.value.usersLocation)
         // Location history is added to
-        assertEquals(listOf(someLocation, someOtherLocation), store.state.value.usersLocationHistory)
+        assertEquals(
+            listOf(
+                LocationUpdate(Instant.fromEpochSeconds(0), someLocation),
+                LocationUpdate(Instant.fromEpochSeconds(1), someOtherLocation)
+            ), store.state.value.usersLocationHistory
+        )
     }
 
     @Test
@@ -197,7 +203,7 @@ class AppStateStoreTest {
     fun onAppForegrounded_doesNotListenForLocationIfNotGranted() {
         store.onAppBackgrounded()
         assertEquals(false, store.state.value.appInForeground)
-        assertEquals(PermissionState.Unknown, store.state.value.locationPermissionState)
+        assertEquals(PermissionState.Unchecked, store.state.value.locationPermissionState)
         assertEquals(false, store.state.value.shouldListenForLocationUpdates)
         store.onAppForegrounded()
         assertEquals(true, store.state.value.appInForeground)

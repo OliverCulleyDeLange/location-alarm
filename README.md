@@ -6,10 +6,6 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-
-- Debugging tools window
-  - M Show location updates (Graph data)
-  - M Capture GPX file for alarm enabled session - to aid GPS issue debugging
 - M CI / CD
 - S Firebase app distribution
 - S Bug & crash reporting
@@ -32,6 +28,7 @@
 
 ### Priority 3
 
+- M Capture GPX file for alarm enabled session - to aid GPS issue debugging
 - S Code quality
 - Polygonal geofence areas
 - Allow multiple geofences to be active
