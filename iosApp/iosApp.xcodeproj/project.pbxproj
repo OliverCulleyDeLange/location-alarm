@@ -20,6 +20,7 @@
 		42CFA5482D245380009F63CF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 42CFA5472D245380009F63CF /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		42CFA54A2D245380009F63CF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 42CFA5492D245380009F63CF /* FirebaseCrashlytics */; };
 		42CFA5522D245643009F63CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CFA5512D245643009F63CF /* GoogleService-Info.plist */; };
+		42CFA5552D26BEA7009F63CF /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFA5542D26BEA7009F63CF /* NavigationViewModel.swift */; };
 		42D85C6E2C4E253D0001DF76 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 42D85C6D2C4E253D0001DF76 /* MapboxMaps */; };
 		42D9F99D2D11E1BB001A1516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		42B0AF6F2D0CAEFC00521A6C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		42B0AF712D0CAEFC00521A6C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		42CFA5512D245643009F63CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42CFA5542D26BEA7009F63CF /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Location Alarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Location Alarm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				42A522B92D15F9EC00DE3872 /* AppUi.swift */,
+				42CFA5542D26BEA7009F63CF /* NavigationViewModel.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				42CFA5512D245643009F63CF /* GoogleService-Info.plist */,
 			);
@@ -385,6 +388,7 @@
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				42A522BA2D15F9EC00DE3872 /* AppUi.swift in Sources */,
+				42CFA5552D26BEA7009F63CF /* NavigationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

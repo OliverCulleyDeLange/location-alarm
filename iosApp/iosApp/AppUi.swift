@@ -1,23 +1,26 @@
 import SwiftUI
 import KMPObservableViewModelSwiftUI
 import Shared
+import Combine
+import KMPNativeCoroutinesCombine
 
 struct AppUi: View {
     private var appStateStore: AppStateStore
     private var alarmManager: AlarmManager
+    @StateObject private var navViewModel: NavigationViewModel
     
     init(appStateStore: AppStateStore, alarmManager: AlarmManager) {
         self.appStateStore = appStateStore
         self.alarmManager = alarmManager
+        _navViewModel = StateObject(wrappedValue: NavigationViewModel(statePublisher: createPublisher(for: appStateStore.stateFlow)))
     }
-        
+    
     var body: some View {
         NavigationView {
-            // TODO This sucks, but i wanna support ios15 and SwiftUI Navigation sucks. 
-            switch appStateStore.state.currentScreen {
-            case is RouteMapScreen:
+            switch navViewModel.currentScreen {
+            case "MapScreen":
                 MapScreen()
-            case is RouteLocationPermissionDeniedScreen:
+            case "LocationPermissionDeniedScreen":
                 LocationPermissionsDeniedScreen()
             default:
                 LocationPermissionsRequiredScreen()

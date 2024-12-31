@@ -7,7 +7,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import uk.co.oliverdelange.location_alarm.ui.PermissionsHandler
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
-import uk.co.oliverdelange.locationalarm.model.domain.AppState
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
@@ -15,7 +14,7 @@ import uk.co.oliverdelange.locationalarm.store.AppStateStore
 @Composable
 @Preview
 fun AppUi(appStateStore: AppStateStore) {
-    val state by appStateStore.state.collectAsStateWithLifecycle(AppState())
+    val state by appStateStore.state.collectAsStateWithLifecycle()
 
     AppTheme {
         // Permissions

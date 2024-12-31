@@ -7,15 +7,17 @@ data class Navigate(val route: Route, val popUpTo: Route? = null) : UiEvents
 
 @Serializable
 sealed interface Route {
-    @Serializable
-    object LocationPermissionRequiredScreen : Route
+    fun name() = toString()
 
     @Serializable
-    object LocationPermissionDeniedScreen : Route
+    data object LocationPermissionRequiredScreen : Route
 
     @Serializable
-    object MapScreen : Route
+    data object LocationPermissionDeniedScreen : Route
 
     @Serializable
-    object DebugScreen : Route
+    data object MapScreen : Route
+
+    @Serializable
+    data object DebugScreen : Route
 }
