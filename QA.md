@@ -25,7 +25,7 @@ granted.
         - [ ] I tap 'allow while using app' - I see the map screen
         - [ ] I tap 'don't allow' - I see location permissions denied screen
 - [ ] Location permissions denied previously - I see location permissions denied screen
-- [ ] Deny location permissions - Manually enable via settings - Reopen app (don't force close) - I
+- [ ] Deny location permissions - Manually enable via settings - Reopen app (don't close) - I
   see the map screen
 
 ## Notification Permissions
@@ -37,9 +37,14 @@ Notification permissions are requested the first time the alarm is enabled.
 - [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
   permissions denied message - 'Enable alarm' button is disabled
 - [ ] Notification permissions denied previously - Open app - On map screen - I see notification
-  permissions
-  denied message - 'Enable alarm' button is disabled
-- [ ] Notification permissions denied previously - Manually enable in settings - Open app - On map
+  permissions denied message - 'Enable alarm' button is disabled
+- [ ] ANDROID ONLY: Notification permissions denied previously - Open app - On map screen - I see
+  notification permissions denied message - Tap 'Allow notification permissions' - System dialog
+  appears
+    - [ ] Tap 'Allow' - notification permissions denied message disappears
+    - [ ] Tap 'Don't Allow' - 'Allow notification permissions' button disappears
+- [ ] Notification permissions denied previously - Manually enable in settings - Reopen app (don't
+  close) - On map
   screen - 'Enable alarm' works as expected
 
 ## Set Geofence
@@ -63,8 +68,7 @@ See [Notification Permissions](#notification-permissions).
 - Map screen - Tap enable alarm
     - [ ] Alarm is enabled (Button says 'Disable Alarm') - Distance to alarm is shown
     - [ ] Persistent Notification (Android) / Live Activity (ios) is shown in notification drawer
-      with
-      distance to alarm shown
+      with distance to alarm shown
     - [ ] When my location updates - Then distance to alarm is updated in persistent notification /
       live activity
 
@@ -77,7 +81,7 @@ See [Notification Permissions](#notification-permissions).
     - [ ] Alert is shown with option to 'Stop Alarm'
     - [ ] Persistent notification becomes bright color and gives option to stop alarm
     - [ ] Tap stop alarm in alert UI - Alarm stops, persistent notification is dismissed
-    - [ ] Tap stop alarm in persistent notification - App opens, alarm stops, persistent
+  - [ ] Tap stop alarm in persistent notification - App opens (ios only), alarm stops, persistent
       notification is dismissed
 
 #### App in Background
@@ -88,7 +92,7 @@ See [Notification Permissions](#notification-permissions).
       option to stop alarm
     - [ ] Persistent notification in notification drawer becomes bright color and gives option to
       stop alarm
-    - [ ] Tap stop alarm in persistent notification - App opens, alarm stops, persistent
+  - [ ] Tap stop alarm in persistent notification - App opens (ios only), alarm stops, persistent
       notification is dismissed
 
 #### Phone locked
@@ -96,7 +100,7 @@ See [Notification Permissions](#notification-permissions).
 - Map screen - Tap enable alarm - **Lock app** - Location updates to within geofence
     - [ ] Alarm sounds & vibrates
     - [ ] Persistent notification on lock screen becomes bright color and gives option to stop alarm
-    - [ ] Tap stop alarm in persistent notification - App opens, alarm stops, persistent
+  - [ ] Tap stop alarm in persistent notification - App opens (ios only), alarm stops, persistent
       notification is dismissed
 
 #### Update Alarm Geofence while alarm enabled
@@ -108,28 +112,33 @@ See [Notification Permissions](#notification-permissions).
 ### Edge cases
 
 - Location alarm works as in [alarm triggered](#alarm-triggered) when:
-    - [ ] I have battery saver mode enabled
+    - [ ] I have battery saver mode enabled (Requires real world testing)
     - [ ] My phone is on silent
-- [ ] When i have headphones connected, the alarm is heard through the headphones
+    - [ ] My phone is on do not disturb
+- [ ] IOS: When i have headphones connected, the alarm is heard through the headphones
 
 ### Platform specific
 
 - [ ] Android system alarm volume is respected
 - [ ] IOS Dynamic Island works on iPhone 14Pro and above
-    - Minimal icon is white when active, and orange when triggered
-    - Compact view shows icon in white and green check when active, and orange warning triangle when
+    - [ ] Minimal icon is white when active, and orange when triggered
+    - [ ] Compact view shows icon in white and green check when active, and orange warning triangle
+      when
       triggered
-    - Compact Text says distance when active and 'Arrived!' when triggered
-    - Expanded view shows icon in white and green check when active, and orange warning triangle
+    - [ ] Compact Text says distance when active and 'Arrived!' when triggered
+    - [ ] Expanded view shows icon in white and green check when active, and orange warning triangle
       when triggered
-    - Compact Text says distance when active and 'You have reached your destination!' when triggered
+    - [ ] Expanded Text says distance when active and 'You have reached your destination!' when
+      triggered
 - [ ] Android emulator crap check:
+  Permissions, location updates, alarm triggers from locked phone
     - [ ] Android 12 (31)
     - [ ] Android 13 (33)
     - [ ] Android 14 (34)
-    - [ ] Android 15 (35)
+  - [ ] Android 15 (35) (Pixel 8)
     - [ ] Android 16 (36) (preview)
 - [ ] IOS simulator crap check:
+  Permissions, location updates, alarm triggers from locked phone
     - [ ] IOS 15
     - [ ] IOS 16
     - [ ] IOS 17
@@ -144,16 +153,16 @@ See [Notification Permissions](#notification-permissions).
 
 ## Dev tooling
 
-- ANDROID ONLY: Press volume buttons UP DOWN UP DOWN to toggle debug mode
-- Map screen - Tap debug screen button - Debug screen appears
+- [ ] ANDROID ONLY: Press volume buttons UP DOWN UP DOWN to toggle debug mode
+- [ ] Map screen - Tap debug screen button - Debug screen appears
     - Logs tab
-        - Logs are visible and update as new logs come in
-        - New logs are visible at the bottom of the screen (auto scroll to bottom)
-        - Scroll up in the logs - The auto scroll to bottom stops
-        - Scroll up in the logs - Scroll down to the bottom - The auto scroll to bottom restarts
+        - [ ] Logs are visible and update as new logs come in
+        - [ ] New logs are visible at the bottom of the screen (auto scroll to bottom)
+        - [ ] Scroll up in the logs - The auto scroll to bottom stops
+        - [ ] Scroll up in the logs - Scroll down to the bottom - The auto scroll to bottom restarts
     - Gps tab
-        - Timestamps of all location updates are visible and update as new updates come in
-        - Auto scroll works as in the Logs tab
+        - [ ] Timestamps of all location updates are visible and update as new updates come in
+        - [ ] Auto scroll works as in the Logs tab
     - Tools tab
-        - Crash button crashes the app
-            - I see the crash in Firebase Crashlytics
+        - [ ] Crash button crashes the app
+            - [ ] I see the crash in Firebase Crashlytics
