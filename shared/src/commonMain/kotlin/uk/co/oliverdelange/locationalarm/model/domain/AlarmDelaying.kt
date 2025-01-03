@@ -23,10 +23,10 @@ fun AppState.shouldDelayAlarm(): Boolean {
         val now = Clock.System.now()
         alarmEnabledAt?.until(now, DateTimeUnit.SECOND)?.let {
             val delayAlarm = it < 5 // Delay alarm triggering by 5 seconds
-            SLog.w("shouldDelayAlarm::: delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
+            SLog.i("shouldDelayAlarm::: delayAlarm: $delayAlarm, seconds since alarmEnabled: $it,")
             delayAlarm
         } ?: false.also {
-            SLog.w("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")
+            SLog.i("Error computing duration between alarmEnabledAt ($alarmEnabledAt) and now ($now)")
         }
     } else false
 }

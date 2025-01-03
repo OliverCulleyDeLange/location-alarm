@@ -140,13 +140,13 @@ class AlarmManager {
     
     /// Begins playing alarm sounds and vibrations
     private func startAlarm() {
-        SLog.w("STARTING ALARM")
+        SLog.i("STARTING ALARM")
         vibrator.vibrate()
         alarmPlayer.playAlarm()
     }
     
     private func stopAlarm() {
-        SLog.w("STOPPING ALARM")
+        SLog.i("STOPPING ALARM")
         vibrator.stop()
         alarmPlayer.stopAlarm()
     }
