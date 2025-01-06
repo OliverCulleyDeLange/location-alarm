@@ -11,13 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import uk.co.oliverdelange.location_alarm.screens.AlarmAlert
-import uk.co.oliverdelange.location_alarm.screens.MapUiViewModel
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
+import uk.co.oliverdelange.locationalarm.model.ui.map.MapViewModel
 
 @Composable
 fun MapScreen() {
-    val viewModel: MapUiViewModel = koinViewModel()
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val viewModel: MapViewModel = koinViewModel()
+    val state by viewModel.state.collectAsStateWithLifecycle(viewModel.state.value)
 
     Box(
         contentAlignment = Alignment.Center,

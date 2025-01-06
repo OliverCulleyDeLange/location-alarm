@@ -9,7 +9,6 @@ import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToLocati
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapAppStateToMapUiState
 import uk.co.oliverdelange.locationalarm.mapper.domain_to_ui.MapDebugStateToDebugLogUiState
 import uk.co.oliverdelange.locationalarm.model.domain.DebugMode
-import uk.co.oliverdelange.locationalarm.model.ui.debug.DebugViewModel
 import uk.co.oliverdelange.locationalarm.model.ui.location_permission_required.LocationPermissionRequiredViewModel
 import uk.co.oliverdelange.locationalarm.model.ui.map.MapViewModel
 import uk.co.oliverdelange.locationalarm.provider.SystemTimeProvider
@@ -21,11 +20,6 @@ val sharedModule = module {
     // State stores
     single { AppStateStore() }
     single { DebugStateStore() }
-
-    // View Models
-    factory { MapViewModel(get(), get()) }
-    factory { LocationPermissionRequiredViewModel(get(), get()) }
-    factory { DebugViewModel(get(), get(), get(), get()) }
 
     // Providers
     single<TimeProvider> { SystemTimeProvider() }
