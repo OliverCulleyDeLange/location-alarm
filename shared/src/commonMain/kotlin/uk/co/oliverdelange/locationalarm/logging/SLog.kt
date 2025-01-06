@@ -25,5 +25,9 @@ class SLog {
 
         @JvmStatic
         fun v(m: String) = Logger.v(m)
+
+        /** Purely used for temporary debug logs so we can find them easily and remove */
+        @JvmStatic
+        fun dbg(m: String) = Logger.e(m)
     }
 }
