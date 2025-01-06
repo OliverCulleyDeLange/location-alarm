@@ -49,6 +49,10 @@ open class AppStateStore(
         _state.update { it.copy(shouldRequestLocationPermissions = true) }
     }
 
+    fun onTapAllowNotificationPermissions() {
+        _state.update { it.copy(shouldRequestNotificationPermissions = true) }
+    }
+
     fun onRequestedLocationPermissions() {
         _state.update { it.copy(shouldRequestLocationPermissions = false) }
     }
@@ -80,6 +84,10 @@ open class AppStateStore(
         }
     }
 
+    fun onLocationPermissionChecked() {
+        _state.update { it.copy(shouldCheckLocationPermissions = false) }
+    }
+
     fun onNotificationPermissionResult(granted: Boolean) {
         onNotificationPermissionResult(if (granted) PermissionState.Granted else PermissionState.Denied(false))
     }
@@ -96,6 +104,10 @@ open class AppStateStore(
         if (state == PermissionState.Granted && _state.value.userRequestedAlarmEnable) {
             onSetAlarm(true)
         }
+    }
+
+    fun onNotificationPermissionChecked() {
+        _state.update { it.copy(shouldCheckNotificationPermissions = false) }
     }
 
     /** If users location changes, and user hasn't interacted with the map yet, make the geofence follow the location */
@@ -166,6 +178,8 @@ open class AppStateStore(
             state.copy(
                 appInForeground = true,
                 shouldListenForLocationUpdates = state.locationPermissionState.granted(),
+                shouldCheckLocationPermissions = true,
+                shouldCheckNotificationPermissions = true,
             )
         }
     }
@@ -174,7 +188,7 @@ open class AppStateStore(
         _state.update { state ->
             state.copy(
                 appInForeground = false,
-                shouldListenForLocationUpdates = state.alarmEnabled
+                shouldListenForLocationUpdates = state.alarmEnabled,
             )
         }
     }

@@ -20,15 +20,19 @@ fun AppUi(appStateStore: AppStateStore) {
         // Permissions
         PermissionsHandler(
             permission = RequestablePermission.Notifications,
+            shouldCheckPermission = state.shouldCheckNotificationPermissions,
             shouldRequestPermission = state.shouldRequestNotificationPermissions,
             onRequestedPermissions = { appStateStore.onRequestedNotificationPermissions() },
-            onPermissionChanged = { appStateStore.onNotificationPermissionResult(it) }
+            onPermissionChanged = { appStateStore.onNotificationPermissionResult(it) },
+            onPermissionChecked = { appStateStore.onNotificationPermissionChecked() }
         )
         PermissionsHandler(
             permission = RequestablePermission.Location,
+            shouldCheckPermission = state.shouldCheckLocationPermissions,
             shouldRequestPermission = state.shouldRequestLocationPermissions,
             onRequestedPermissions = { appStateStore.onRequestedLocationPermissions() },
-            onPermissionChanged = { appStateStore.onLocationPermissionResult(it) }
+            onPermissionChanged = { appStateStore.onLocationPermissionResult(it) },
+            onPermissionChecked = { appStateStore.onLocationPermissionChecked() }
         )
 
         Navigation(appStateStore, state)

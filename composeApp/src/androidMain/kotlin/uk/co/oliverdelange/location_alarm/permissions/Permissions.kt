@@ -20,8 +20,8 @@ import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission.Noti
  * TODO Unit tests
  * */
 class Permissions(
-    val requiredPermissions: RequestablePermission,
-    val onPermissionChanged: (PermissionState) -> Unit
+    private val requiredPermissions: RequestablePermission,
+    private val onPermissionChanged: (PermissionState) -> Unit
 ) {
     private var previousPermissionState: PermissionState? = null
     private val currentPermissionState = requiredPermissions
@@ -53,9 +53,6 @@ class Permissions(
     }
 
     /** Call this when permission state changes
-     * Eg `
-     * rememberMultiplePermissionsState(...) { permissions.onRequestedPermissions() }
-     * `
      * Emits [PermissionState]'s when the overall state changes.
      * Handles multiple sub-permissions eg fine and coarse location.
      * */

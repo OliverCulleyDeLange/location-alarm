@@ -42,7 +42,8 @@ Notification permissions are requested the first time the alarm is enabled.
   notification permissions denied message - Tap 'Allow notification permissions' - System dialog
   appears
     - [ ] Tap 'Allow' - notification permissions denied message disappears
-    - [ ] Tap 'Don't Allow' - 'Allow notification permissions' button disappears
+  - [ ] Tap 'Don't Allow' - 'Allow notification permissions' button disappears and is replaced by
+    instruction to go to settings
 - [ ] Notification permissions denied previously - Manually enable in settings - Reopen app (don't
   close) - On map
   screen - 'Enable alarm' works as expected

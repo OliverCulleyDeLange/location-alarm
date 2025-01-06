@@ -24,8 +24,10 @@ import java.time.LocalDateTime
 fun PermissionsHandler(
     permission: RequestablePermission,
     shouldRequestPermission: Boolean,
+    shouldCheckPermission: Boolean,
     onRequestedPermissions: () -> Unit,
-    onPermissionChanged: (PermissionState) -> Unit
+    onPermissionChecked: () -> Unit,
+    onPermissionChanged: (PermissionState) -> Unit,
 ) {
     var permissionsUpdatedAt: LocalDateTime? by remember { mutableStateOf(null) }
 
@@ -40,8 +42,7 @@ fun PermissionsHandler(
     }
 
     LaunchedEffect(permissionsUpdatedAt) {
-        val state = permissionState.permissions
-            .map { AndroidSystemPermissionState(it.permission, it.status.isGranted, it.status.shouldShowRationale) }
+        val state = permissionState.permissions.toAndroidSystemPermissionState()
         permissionsLogic.onPermissionsChanged(state)
         // The first time this launched effect is called isn't due to a user action,
         // but because of the initial value of permissionsUpdatedAt
@@ -59,4 +60,16 @@ fun PermissionsHandler(
             onRequestedPermissions()
         }
     }
+
+    LaunchedEffect(shouldCheckPermission) {
+        if (shouldCheckPermission) {
+            val state = permissionState.permissions.toAndroidSystemPermissionState()
+            permissionsLogic.onPermissionsChanged(state)
+            onPermissionChecked()
+        }
+    }
 }
+
+@OptIn(ExperimentalPermissionsApi::class)
+fun List<com.google.accompanist.permissions.PermissionState>.toAndroidSystemPermissionState() =
+    map { AndroidSystemPermissionState(it.permission, it.status.isGranted, it.status.shouldShowRationale) }

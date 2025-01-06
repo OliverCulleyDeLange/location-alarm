@@ -34,7 +34,7 @@ open class MapViewModel(
     @NativeCoroutinesState
     val state: StateFlow<MapUiState> = appStateStore.state
         .map(uiStateMapper::map)
-        .stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, MapUiState())
 
     init {
         SLog.d("MapViewModel init")
@@ -51,6 +51,7 @@ open class MapViewModel(
             is TappedStopAlarm -> appStateStore.onTapStopAlarm()
             is ToggledAlarm -> appStateStore.onToggleAlarm()
             is UserEvent.ToggledAlarmWithDelay -> appStateStore.onToggleAlarmWithDelay()
+            is UserEvent.TappedAllowNotificationPermissions -> appStateStore.onTapAllowNotificationPermissions()
             // Ui Results
             is LocationChanged -> appStateStore.onLocationChange(uiEvent.location)
             is NotificationPermissionResult -> appStateStore.onNotificationPermissionResult(uiEvent.state)
@@ -63,5 +64,10 @@ open class MapViewModel(
                 SLog.v("Unhandled UI event: $uiEvent")
             }
         }
+    }
+
+    override fun onCleared() {
+        SLog.d("onCleared MapUiViewModel")
+        super.onCleared()
     }
 }

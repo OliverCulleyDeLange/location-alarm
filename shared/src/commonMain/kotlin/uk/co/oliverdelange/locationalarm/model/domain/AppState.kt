@@ -14,9 +14,16 @@ data class AppState(
 
     val shouldRequestNotificationPermissions: Boolean = false,
     val notificationPermissionState: PermissionState = PermissionState.Unchecked,
+    /** Android only restarts the app when permission become denied, so when a user grants a permission via settings
+     * we don't hear about it. So we should check all permission state when the app is foregrounded */
+    val shouldCheckNotificationPermissions: Boolean = false,
 
     val shouldRequestLocationPermissions: Boolean = false,
     val locationPermissionState: PermissionState = PermissionState.Unchecked,
+    /** Android only restarts the app when permission become denied, so when a user grants a permission via settings
+     * we don't hear about it. So we should check all permission state when the app is foregrounded */
+    val shouldCheckLocationPermissions: Boolean = false,
+
 
     // Listen if map is open or alarm is enabled
     val shouldListenForLocationUpdates: Boolean = false,

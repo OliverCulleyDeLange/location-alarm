@@ -1,7 +1,5 @@
 package uk.co.oliverdelange.location_alarm.screens.map
 
-import android.Manifest.permission.POST_NOTIFICATIONS
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -29,7 +27,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.style.sources.GeoJSONData
 import com.mapbox.maps.extension.compose.style.sources.generated.rememberGeoJsonSourceState
@@ -58,10 +55,6 @@ fun MapScreenContent(
     }
 
     Box {
-        val notificationPermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            rememberPermissionState(POST_NOTIFICATIONS)
-        } else null
-
         val geofenceSourceState = rememberGeoJsonSourceState(sourceId = MapboxIDs.SOURCE_GEOFENCE)
         // Update geofence geojson source only when geofence location or radius changes
         LaunchedEffect(state.geoFenceLocation, state.perimeterRadiusMeters) {
@@ -100,7 +93,7 @@ fun MapScreenContent(
             if (state.shouldShowNotificationPermissionDeniedMessage) {
                 NotificationPermissionDeniedAlert(
                     state.shouldShowNotificationPermissionRationale,
-                    requestPermissions = { notificationPermissionState?.launchPermissionRequest() }
+                    requestPermissions = { onEvent(UserEvent.TappedAllowNotificationPermissions) }
                 )
             }
             if (state.shouldShowDistanceToAlarmText) {
