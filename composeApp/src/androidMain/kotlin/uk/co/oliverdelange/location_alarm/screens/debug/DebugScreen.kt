@@ -1,8 +1,10 @@
 package uk.co.oliverdelange.location_alarm.screens.debug
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -29,18 +31,20 @@ fun DebugScreen() {
     val tabs = listOf("Logs", "Gps", "Tools")
 
     Scaffold(
-        modifier = Modifier.safeContentPadding(),
         topBar = {
-            TabRow(
-                selectedTabIndex = selectedTabIndex,
-                modifier = Modifier.padding(top = 16.dp)
-            ) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        text = { Text(title) }
-                    )
+            Column {
+                Spacer(modifier = Modifier.safeDrawingPadding())
+                TabRow(
+                    selectedTabIndex = selectedTabIndex,
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    tabs.forEachIndexed { index, title ->
+                        Tab(
+                            selected = selectedTabIndex == index,
+                            onClick = { selectedTabIndex = index },
+                            text = { Text(title) }
+                        )
+                    }
                 }
             }
         }
