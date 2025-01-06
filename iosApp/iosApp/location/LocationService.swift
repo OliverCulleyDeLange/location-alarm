@@ -25,7 +25,6 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         locationManager.distanceFilter = 0
     }
     
-    
     func checkLocationPermissionsAndStartListening() {
         switch locationManager.authorizationStatus{
         case CLAuthorizationStatus.authorizedAlways,
@@ -46,6 +45,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func requestPermissions() {
+        SLog.d("Requesting location permissions 'requestWhenInUseAuthorization' ")
         locationManager.requestWhenInUseAuthorization()
     }
     

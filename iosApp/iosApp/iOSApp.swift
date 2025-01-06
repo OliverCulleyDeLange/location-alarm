@@ -9,6 +9,7 @@ struct iOSApp: App {
     private var appStateStore: AppStateStore
     private var alarmManager: AlarmManager
     private var locationStateListener: LocationStateListener
+    private var notificationStateListener: NotificationStateListener
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
@@ -24,6 +25,7 @@ struct iOSApp: App {
         alarmManager = AlarmManager(appStateStore: appStateStore)
         let locationService = LocationService()
         locationStateListener = LocationStateListener(locationService: locationService, appStateStore: appStateStore)
+        notificationStateListener = NotificationStateListener(notificationService: NotificationManager.shared, appStateStore: appStateStore)
     }
     
     var body: some Scene {

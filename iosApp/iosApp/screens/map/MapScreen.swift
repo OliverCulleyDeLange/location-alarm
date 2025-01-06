@@ -5,14 +5,7 @@ import KMPObservableViewModelSwiftUI
 
 struct MapScreen: View {
     
-    @StateViewModel private var viewModel: MapViewModel
-    
-    init() {
-        let appStateStore: AppStateStore = get()
-        _viewModel = StateViewModel(
-            wrappedValue: MapViewModel(appStateStore: appStateStore, uiStateMapper: MapAppStateToMapUiState())
-        )
-    }
+    @StateViewModel private var viewModel: MapViewModel = get()
     
     var body: some View {
         MapScreenContent(

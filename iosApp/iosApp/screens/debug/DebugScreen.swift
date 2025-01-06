@@ -4,7 +4,7 @@ import Shared
 
 struct DebugScreen: View {
     @StateViewModel private var viewModel: DebugViewModel = get()
-    @State private var atBottom: Bool = true
+        
     var body: some View {
         TabView {
             Logs(logUiState: viewModel.logUiState)

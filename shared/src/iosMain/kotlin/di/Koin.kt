@@ -15,7 +15,7 @@ class KoinProvider {
         lateinit var koin: Koin
         fun initKoin() {
             val instance = startKoin {
-                modules(sharedModule)
+                modules(sharedModule + iosModule)
             }
 
             koin = instance.koin
