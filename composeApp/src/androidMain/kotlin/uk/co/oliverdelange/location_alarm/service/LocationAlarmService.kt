@@ -1,7 +1,6 @@
 package uk.co.oliverdelange.location_alarm.service
 
 import android.Manifest
-import android.app.Notification
 import android.app.Service
 import android.content.ContentResolver
 import android.content.Intent
@@ -25,7 +24,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.haptics.Vibrator
-import uk.co.oliverdelange.location_alarm.notifications.buildAlarmNotification
+import uk.co.oliverdelange.location_alarm.notifications.buildDistanceToAlarmNotification
+import uk.co.oliverdelange.location_alarm.notifications.buildPersistentAlarmNotification
+import uk.co.oliverdelange.location_alarm.notifications.buildTriggeredAlarmNotification
 import uk.co.oliverdelange.location_alarm.notifications.createAlarmNotificationChannel
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
@@ -36,7 +37,9 @@ class LocationAlarmService : Service() {
     }
 
     private val notificationManager by lazy { NotificationManagerCompat.from(this) }
-    private val notificationId = 60494
+    private val persistentNotificationId = 60494
+    private val triggeredNotificationId = 60495
+    private val distanceToAlarmNotificationId = 60496
     private var alarmPlayer: MediaPlayer? = null
     private val appStateStore: AppStateStore = get()
     private val vibrator: Vibrator = get()
@@ -90,11 +93,8 @@ class LocationAlarmService : Service() {
         createAlarmNotificationChannel(this)
         ServiceCompat.startForeground(
             this,
-            notificationId,
-            buildAlarmNotification(
-                appStateStore.state.value.distanceToGeofencePerimeter,
-                appStateStore.state.value.alarmTriggered
-            ),
+            persistentNotificationId,
+            buildPersistentAlarmNotification(applicationContext),
             FOREGROUND_SERVICE_TYPE_LOCATION
         )
 
@@ -132,7 +132,16 @@ class LocationAlarmService : Service() {
                         // Check the alarm is still enabled here as this service scope doesnt seem to get cancelled immediately
                         if (checkNotificationPermission() && appStateStore.state.value.alarmEnabled) {
                             SLog.d("Updating persistent notification with new distance ($distanceToGeofencePerimeter) / triggered state ($alarmTriggered)")
-                            notificationManager.notify(notificationId, buildAlarmNotification(distanceToGeofencePerimeter, alarmTriggered))
+                            if (alarmTriggered) {
+                                notificationManager.notify(triggeredNotificationId, buildTriggeredAlarmNotification(applicationContext))
+                                notificationManager.cancel(distanceToAlarmNotificationId)
+                            } else {
+                                notificationManager.notify(
+                                    distanceToAlarmNotificationId,
+                                    buildDistanceToAlarmNotification(applicationContext, distanceToGeofencePerimeter)
+                                )
+                                notificationManager.cancel(triggeredNotificationId)
+                            }
                         } else {
                             SLog.w("Notification permissions aren't granted. Can't update notification")
                         }
@@ -151,7 +160,9 @@ class LocationAlarmService : Service() {
         alarmPlayer = null
         vibrator.cancelVibration()
         serviceScope.cancel()
-        notificationManager.cancel(notificationId)
+        notificationManager.cancel(persistentNotificationId)
+        notificationManager.cancel(triggeredNotificationId)
+        notificationManager.cancel(distanceToAlarmNotificationId)
         SLog.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }
@@ -167,13 +178,5 @@ class LocationAlarmService : Service() {
             true
         }
         return granted
-    }
-
-    private fun buildAlarmNotification(distanceToGeofencePerimeter: Int?, alarmTriggered: Boolean): Notification {
-        val subtitle = when {
-            alarmTriggered -> "You have reached your destination"
-            else -> "Alarm will sound in ${distanceToGeofencePerimeter}m"
-        }
-        return buildAlarmNotification(applicationContext, "Location Alarm Active", subtitle, alarmTriggered)
     }
 }
