@@ -31,13 +31,13 @@ class AppStateChangeLogger(
                 val appLogs = doOnStateChangeLog(appState) {
                     SLog.v("AppState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
                 }
-                val appUiLogs = doOnStateChangeLog(mapUiState) {
-                    SLog.v("AppUiState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
+                val mapUiLogs = doOnStateChangeLog(mapUiState) {
+                    SLog.v("MapUiState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
                 }
                 val locationPermissionRequiredUi = doOnStateChangeLog(locationPermissionRequiredUiState) {
                     SLog.v("LocationPermissionRequiredUiState changed:  ⤵ \n\t${it.joinToString("\n\t")}")
                 }
-                merge(appLogs, appUiLogs, locationPermissionRequiredUi)
+                merge(appLogs, mapUiLogs, locationPermissionRequiredUi)
             }
         }
     }
@@ -95,6 +95,7 @@ val appStateTrackedProperties = listOf(
     AppState::notificationPermissionState,
     AppState::shouldRequestLocationPermissions,
     AppState::locationPermissionState,
+    AppState::shouldCheckLocationPermissions,
     AppState::shouldListenForLocationUpdates,
 //    AppState::usersLocation,
 //    AppState::usersLocationHistory,
