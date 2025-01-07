@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
@@ -47,8 +46,8 @@ class LocationAlarmService : Service() {
 
     override fun onCreate() {
         SLog.d("LocationAlarmService onCreate")
-        val alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            ?: Uri.Builder()
+        val alarmUri: Uri =/* RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+            ?: */Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
                 .authority(packageName)
                 .appendPath("${R.raw.alarm}")
@@ -63,7 +62,7 @@ class LocationAlarmService : Service() {
             isLooping = true
             prepare()
             setOnErrorListener { _, what, extra ->
-                SLog.e("Media player occurred: what=$what, extra=$extra")
+                SLog.e("Media player error occurred: what=$what, extra=$extra")
                 true
             }
         }
@@ -115,7 +114,7 @@ class LocationAlarmService : Service() {
                             if (it.isPlaying) {
                                 SLog.d("Stopping alarm sound & vibration")
                                 it.stop()
-                                it.prepare()
+                                it.prepare() //crash
                             }
                         } ?: SLog.e("Alarm player is null")
                         vibrator.cancelVibration()
@@ -151,6 +150,11 @@ class LocationAlarmService : Service() {
     }
 
     override fun onDestroy() {
+        vibrator.cancelVibration()
+        serviceScope.cancel()
+        notificationManager.cancel(persistentNotificationId)
+        notificationManager.cancel(triggeredNotificationId)
+        notificationManager.cancel(distanceToAlarmNotificationId)
         alarmPlayer?.let {
             if (it.isPlaying) {
                 it.stop()
@@ -158,11 +162,6 @@ class LocationAlarmService : Service() {
             }
         }
         alarmPlayer = null
-        vibrator.cancelVibration()
-        serviceScope.cancel()
-        notificationManager.cancel(persistentNotificationId)
-        notificationManager.cancel(triggeredNotificationId)
-        notificationManager.cancel(distanceToAlarmNotificationId)
         SLog.d("LocationAlarmService onDestroy")
         super.onDestroy()
     }
