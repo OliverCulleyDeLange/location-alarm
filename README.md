@@ -6,10 +6,7 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
-
-- QA 1.0
 - Check for memory leaks and performance issues esp around cancellation and lifetimes
-- Light screen up when alarm triggers?
 
 ## Priority 2
 

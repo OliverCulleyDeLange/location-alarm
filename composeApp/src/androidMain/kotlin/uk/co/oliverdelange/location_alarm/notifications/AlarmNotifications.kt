@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.NotificationCompat
+import uk.co.oliverdelange.location_alarm.AlarmCancelActivity
 import uk.co.oliverdelange.location_alarm.MainActivity
 import uk.co.oliverdelange.location_alarm.R
 import uk.co.oliverdelange.location_alarm.service.LocationAlarmService
@@ -19,7 +20,7 @@ fun buildPersistentAlarmNotification(context: Context): Notification {
         .setSmallIcon(R.drawable.ic_location_alarm)
         .setContentTitle("Location Alarm")
         .setContentText("Location alarm is enabled")
-        .setContentIntent(mainActivityIntent(context))
+        .setContentIntent(activityIntent(context, MainActivity::class.java))
         .setForegroundServiceBehavior(FOREGROUND_SERVICE_IMMEDIATE)
         .setCategory(NotificationCompat.CATEGORY_ALARM)
         .build()
@@ -43,7 +44,8 @@ fun buildTriggeredAlarmNotification(context: Context): Notification {
         .setContentTitle("Location Alarm Triggered")
         .setContentText("You have reached your destination")
         .setCategory(NotificationCompat.CATEGORY_ALARM)
-        .setFullScreenIntent(mainActivityIntent(context), true)
+        .setFullScreenIntent(activityIntent(context, AlarmCancelActivity::class.java), true)
+        .setPriority(Notification.PRIORITY_HIGH)
         .addAction(Notification.Action.Builder(android.R.drawable.ic_media_pause, "Stop", stopAlarmIntent).build())
         .setColor(errorLight.toArgb())
         .setColorized(true)
@@ -57,16 +59,18 @@ fun buildDistanceToAlarmNotification(context: Context, distanceMeters: Int): Not
         .setSmallIcon(R.drawable.ic_location_alarm)
         .setContentTitle("Location Alarm Active")
         .setContentText("Alarm will sound in ${distanceMeters}m")
-        .setContentIntent(mainActivityIntent(context))
+        .setContentIntent(activityIntent(context, MainActivity::class.java))
         .setOnlyAlertOnce(true)
         .setCategory(NotificationCompat.CATEGORY_PROGRESS)
         .build()
 }
 
 
-fun mainActivityIntent(context: Context): PendingIntent? = PendingIntent.getActivity(
-    context,
-    0,
-    Intent(context, MainActivity::class.java),
-    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-)
+private fun activityIntent(context: Context, clz: Class<*>): PendingIntent? {
+    return PendingIntent.getActivity(
+        context,
+        0,
+        Intent(context, clz),
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+}

@@ -101,6 +101,8 @@ See [Notification Permissions](#notification-permissions).
 - Map screen - Tap enable alarm - **Lock app** - Location updates to within geofence
     - [ ] Alarm sounds & vibrates
     - [ ] Persistent notification on lock screen becomes bright color and gives option to stop alarm
+  - [ ] ANDROID ONLY: A full screen view is shown with a button to cancel alarm
+      - [ ] Tap cancel button - Alarm stops and view dismisses
   - [ ] Tap stop alarm in persistent notification - App opens (ios only), alarm stops, persistent
       notification is dismissed
 
