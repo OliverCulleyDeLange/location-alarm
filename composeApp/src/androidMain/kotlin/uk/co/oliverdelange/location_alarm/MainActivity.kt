@@ -49,16 +49,28 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         appStateStore.onAppForegrounded()
+        SLog.d("MainActivity onStart")
         super.onStart()
+    }
+
+    override fun onResume() {
+        SLog.d("MainActivity onResume")
+        super.onResume()
     }
 
     override fun onStop() {
         appStateStore.onAppBackgrounded()
+        SLog.d("MainActivity onStop")
         super.onStop()
     }
 
+    override fun onPause() {
+        SLog.d("MainActivity onPause")
+        super.onPause()
+    }
+
     override fun onDestroy() {
-        SLog.w("onDestroy MainActivity")
+        SLog.d("onDestroy MainActivity")
         super.onDestroy()
     }
 

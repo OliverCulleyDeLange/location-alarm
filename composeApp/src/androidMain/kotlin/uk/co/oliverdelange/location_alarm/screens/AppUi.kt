@@ -1,6 +1,5 @@
 package uk.co.oliverdelange.location_alarm.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -10,7 +9,6 @@ import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
 import uk.co.oliverdelange.locationalarm.model.domain.RequestablePermission
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
-@SuppressLint("InlinedApi")
 @Composable
 @Preview
 fun AppUi(appStateStore: AppStateStore) {
@@ -35,7 +33,9 @@ fun AppUi(appStateStore: AppStateStore) {
             onPermissionChecked = { appStateStore.onLocationPermissionChecked() }
         )
 
-        Navigation(appStateStore, state)
+        Navigation(state) {
+            appStateStore.didNavigate(it)
+        }
     }
 }
 

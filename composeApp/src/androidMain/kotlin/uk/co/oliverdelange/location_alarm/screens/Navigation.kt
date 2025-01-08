@@ -13,13 +13,12 @@ import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermission
 import uk.co.oliverdelange.location_alarm.screens.permissions.LocationPermissionsRequiredScreen
 import uk.co.oliverdelange.locationalarm.model.domain.AppState
 import uk.co.oliverdelange.locationalarm.navigation.Route
-import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 @Composable
-fun Navigation(appStateStore: AppStateStore, state: AppState) {
+fun Navigation(state: AppState, didNavigate: (Route) -> Unit) {
     val navController = rememberNavController().apply {
         addOnDestinationChangedListener { _, destination, args ->
-            destination.toRoute()?.let { appStateStore.didNavigate(it) }
+            destination.toRoute()?.let { didNavigate(it) }
         }
     }
 
@@ -31,7 +30,7 @@ fun Navigation(appStateStore: AppStateStore, state: AppState) {
     }
     LaunchedEffect(state.navigateTo) {
         state.navigateTo?.let { navigate ->
-            if (navController.currentDestination != navigate.route) {
+            if (navController.currentDestination?.toRoute() != navigate.route) {
                 state.navigateTo?.let { navigate ->
                     val navOptions = NavOptions.Builder()
                         .run {

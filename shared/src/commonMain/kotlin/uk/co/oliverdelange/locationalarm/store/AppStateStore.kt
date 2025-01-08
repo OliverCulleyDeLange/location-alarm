@@ -80,7 +80,11 @@ open class AppStateStore(
                 locationPermissionState = state,
                 shouldRequestLocationPermissions = false,
             )
-            platformDoNavigation(tmpState, navigate)
+            if (current.currentScreen != navigate.route) {
+                platformDoNavigation(tmpState, navigate)
+            } else {
+                tmpState
+            }
         }
     }
 

@@ -59,6 +59,7 @@ android {
 
     defaultConfig {
         applicationId = "uk.co.oliverdelange.location_alarm"
+//        testApplicationId = "uk.co.oliverdelange.location_alarm.test"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -66,6 +67,7 @@ android {
         buildFeatures {
             buildConfig = true
         }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
@@ -87,6 +89,15 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+
+        androidTestImplementation(libs.androidx.espresso.core)
+        androidTestImplementation(libs.androidx.espresso.intent)
+        androidTestImplementation(libs.androidx.uiautomator)
+        androidTestImplementation(libs.androidx.runner)
+        androidTestImplementation(libs.androidx.rules)
+        androidTestImplementation(libs.androidx.junit.ktx)
+        androidTestImplementation(libs.androidx.ui.test.junit4)
+
     }
 }
 dependencies {
