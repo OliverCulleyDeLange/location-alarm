@@ -80,6 +80,10 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+        debug {
+            //https://developer.android.com/studio/build/application-id
+            applicationIdSuffix = ".debug"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

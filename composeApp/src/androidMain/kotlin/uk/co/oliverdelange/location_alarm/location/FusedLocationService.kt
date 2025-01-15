@@ -40,7 +40,7 @@ class FusedLocationService(context: Context, private val appStateStore: AppState
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    fun listenToStateAndListenForLocationUpdates() {
+    override fun listenToStateAndListenForLocationUpdates() {
         SLog.d("LocationService init")
         serviceScope.launch {
             appStateStore.state

@@ -22,8 +22,8 @@ class EspressoApplication : Application() {
             androidContext(this@EspressoApplication)
             modules(sharedModule + testAndroidModule)
         }
-        appStateStore.setDebug(true)
-        SLog.d("Test Koin started")
+        appStateStore.setDebug(false)
+        SLog.d("Espresso Koin started")
     }
 }
 
