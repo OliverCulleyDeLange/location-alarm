@@ -6,16 +6,17 @@
   commands, watch apps, ya know, cool shit you wouldn't usually play with.
 
 # Priority 1
+
+- L UI Tests?
+- M Log snapshot tests - Check logs for given flow haven't changed
 - Check for memory leaks and performance issues esp around cancellation and lifetimes
 
 ## Priority 2
 
 - M Tutorial
-- L UI Tests?
-- M Log snapshot tests - Check logs for given flow haven't changed
 - L Allow searching for locations with dropdown results
-- S Draw path of route while alarm enabled
 - Apple watch app / Android watch app
+- S Draw path of route while alarm enabled
 - Alarm config (sound, vibration pattern)
 - Recent geofences
   - Save most recent geofence location and radius

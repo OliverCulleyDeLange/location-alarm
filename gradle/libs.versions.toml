@@ -28,6 +28,7 @@ mapboxTurf = "7.0.0"
 kmpObservableviewmodelCore = "1.0.0-BETA-5"
 navigationCompose = "2.8.5"
 runner = "1.6.1"
+orchestrator = "1.5.1"
 junitKtx = "1.2.1"
 uiautomator = "2.2.0"
 uiTestJunit4 = "1.7.6"
@@ -38,6 +39,7 @@ androidx-material3 = { module = "androidx.compose.material3:material3", version.
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "runner" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+androidx-test-orchestrator = { module = "androidx.test:orchestrator", version.ref = "orchestrator" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }

@@ -68,7 +68,9 @@ android {
             buildConfig = true
         }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
+    testOptions.execution = "ANDROIDX_TEST_ORCHESTRATOR"
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -89,6 +91,8 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+
+        androidTestUtil(libs.androidx.test.orchestrator)
 
         androidTestImplementation(libs.androidx.espresso.core)
         androidTestImplementation(libs.androidx.espresso.intent)
