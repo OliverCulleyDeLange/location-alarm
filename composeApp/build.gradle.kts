@@ -67,7 +67,7 @@ android {
         buildFeatures {
             buildConfig = true
         }
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "uk.co.oliverdelange.location_alarm.TestAppJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
     testOptions.execution = "ANDROIDX_TEST_ORCHESTRATOR"

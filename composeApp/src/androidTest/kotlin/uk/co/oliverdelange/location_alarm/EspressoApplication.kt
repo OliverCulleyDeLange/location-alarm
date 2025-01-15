@@ -5,15 +5,13 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import uk.co.oliverdelange.location_alarm.di.androidModule
-import uk.co.oliverdelange.location_alarm.helpers.isDebug
-import uk.co.oliverdelange.location_alarm.location.FusedLocationService
+import uk.co.oliverdelange.location_alarm.di.testAndroidModule
 import uk.co.oliverdelange.locationalarm.di.sharedModule
 import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
-class MainApplication : Application() {
-    private val locationService: FusedLocationService by inject()
+/** References in TestAppJUnitRunner */
+class EspressoApplication : Application() {
     private val appStateStore: AppStateStore by inject()
 
     override fun onCreate() {
@@ -21,12 +19,11 @@ class MainApplication : Application() {
 
         startKoin {
             androidLogger()
-            androidContext(this@MainApplication)
-            modules(sharedModule + androidModule)
+            androidContext(this@EspressoApplication)
+            modules(sharedModule + testAndroidModule)
         }
-        appStateStore.setDebug(isDebug())
-        SLog.d("Koin started")
-
-        locationService.listenToStateAndListenForLocationUpdates()
+        appStateStore.setDebug(true)
+        SLog.d("Test Koin started")
     }
 }
+
