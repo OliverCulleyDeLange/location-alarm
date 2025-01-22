@@ -1,7 +1,5 @@
 package uk.co.oliverdelange.locationalarm.logging
 
-import co.touchlab.kermit.Logger
-import co.touchlab.kermit.platformLogWriter
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -26,10 +24,10 @@ class LogStorer(
             debug.distinctUntilChanged().collect {
                 if (it) {
                     SLog.w("StoringLogger added")
-                    Logger.setLogWriters(platformLogWriter(), StoringLogger(debugStateStore, timeProvider))
+                    SLog.setLogWriters(customLogWriter(), StoringLogger(debugStateStore, timeProvider))
                 } else {
                     SLog.w("StoringLogger removed")
-                    Logger.setLogWriters(platformLogWriter())
+                    SLog.setLogWriters(customLogWriter())
                 }
             }
         }

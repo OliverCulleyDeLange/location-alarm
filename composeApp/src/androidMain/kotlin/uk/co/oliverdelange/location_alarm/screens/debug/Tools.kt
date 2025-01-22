@@ -17,6 +17,9 @@ import uk.co.oliverdelange.locationalarm.logging.SLog
 fun Tools() {
     val ctx = LocalContext.current
     Column {
+        Button(onClick = { SLog.e("TEST LOG") }) {
+            Text("Test Log")
+        }
         Button(onClick = { throw RuntimeException("Test crash") }) {
             Text("Crash")
         }

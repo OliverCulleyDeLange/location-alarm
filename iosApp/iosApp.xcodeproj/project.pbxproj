@@ -26,6 +26,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4259E3702D41751A0052D8D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7555FF7A242A565900829871;
+			remoteInfo = iosApp;
+		};
 		42B0AF812D0CAEFD00521A6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -53,6 +60,7 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A522B92D15F9EC00DE3872 /* AppUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUi.swift; sourceTree = "<group>"; };
 		42B0AF6E2D0CAEFC00521A6C /* LocationAlarmWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LocationAlarmWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B0AF6F2D0CAEFC00521A6C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -93,6 +101,7 @@
 		4244D0882D0A378000B2D9FC /* helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = helpers; sourceTree = "<group>"; };
 		424548482D0FACCD00DDF9EA /* notifications */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = notifications; sourceTree = "<group>"; };
 		424548572D0FBA6400DDF9EA /* live_activity */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4245485B2D0FBA6400DDF9EA /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = live_activity; sourceTree = "<group>"; };
+		4259E36B2D41751A0052D8D3 /* LocationAlarmUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocationAlarmUITests; sourceTree = "<group>"; };
 		4283DE2D2D2203350010EDA9 /* di */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = di; sourceTree = "<group>"; };
 		42B0AF402D0B6C2900521A6C /* alarm_manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = alarm_manager; sourceTree = "<group>"; };
 		42B0AF442D0B6CD700521A6C /* haptics */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = haptics; sourceTree = "<group>"; };
@@ -104,6 +113,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4259E3672D41751A0052D8D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42B0AF6B2D0CAEFC00521A6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,6 +168,7 @@
 				AB1DB47929225F7C00F7AF9C /* Configuration */,
 				7555FF7D242A565900829871 /* iosApp */,
 				42B0AF732D0CAEFC00521A6C /* LocationAlarmWidget */,
+				4259E36B2D41751A0052D8D3 /* LocationAlarmUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				42799AB246E5F90AF97AA0EF /* Frameworks */,
 			);
@@ -162,6 +179,7 @@
 			children = (
 				7555FF7B242A565900829871 /* Location Alarm.app */,
 				42B0AF6E2D0CAEFC00521A6C /* LocationAlarmWidgetExtension.appex */,
+				4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -202,6 +220,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4259E3692D41751A0052D8D3 /* LocationAlarmUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4259E3722D41751A0052D8D3 /* Build configuration list for PBXNativeTarget "LocationAlarmUITests" */;
+			buildPhases = (
+				4259E3662D41751A0052D8D3 /* Sources */,
+				4259E3672D41751A0052D8D3 /* Frameworks */,
+				4259E3682D41751A0052D8D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4259E3712D41751A0052D8D3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4259E36B2D41751A0052D8D3 /* LocationAlarmUITests */,
+			);
+			name = LocationAlarmUITests;
+			packageProductDependencies = (
+			);
+			productName = LocationAlarmUITests;
+			productReference = 4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		42B0AF6D2D0CAEFC00521A6C /* LocationAlarmWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42B0AF852D0CAEFD00521A6C /* Build configuration list for PBXNativeTarget "LocationAlarmWidgetExtension" */;
@@ -273,10 +314,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = orgName;
 				TargetAttributes = {
+					4259E3692D41751A0052D8D3 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 7555FF7A242A565900829871;
+					};
 					42B0AF6D2D0CAEFC00521A6C = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -306,11 +351,19 @@
 			targets = (
 				7555FF7A242A565900829871 /* iosApp */,
 				42B0AF6D2D0CAEFC00521A6C /* LocationAlarmWidgetExtension */,
+				4259E3692D41751A0052D8D3 /* LocationAlarmUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4259E3682D41751A0052D8D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42B0AF6C2D0CAEFC00521A6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -375,6 +428,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4259E3662D41751A0052D8D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42B0AF6A2D0CAEFC00521A6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,6 +455,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4259E3712D41751A0052D8D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7555FF7A242A565900829871 /* iosApp */;
+			targetProxy = 4259E3702D41751A0052D8D3 /* PBXContainerItemProxy */;
+		};
 		42B0AF822D0CAEFD00521A6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 42B0AF6D2D0CAEFC00521A6C /* LocationAlarmWidgetExtension */;
@@ -403,6 +468,52 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		4259E3732D41751A0052D8D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.oliverdelange.LocationAlarmUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iosApp;
+			};
+			name = Debug;
+		};
+		4259E3742D41751A0052D8D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.oliverdelange.LocationAlarmUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iosApp;
+			};
+			name = Release;
+		};
 		42B0AF862D0CAEFD00521A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -421,7 +532,7 @@
 				INFOPLIST_FILE = LocationAlarmWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LocationAlarmWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 orgName. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,7 +567,7 @@
 				INFOPLIST_FILE = LocationAlarmWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LocationAlarmWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 orgName. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -612,7 +723,7 @@
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Location Alarm";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -642,7 +753,7 @@
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Location Alarm";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -660,6 +771,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4259E3722D41751A0052D8D3 /* Build configuration list for PBXNativeTarget "LocationAlarmUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4259E3732D41751A0052D8D3 /* Debug */,
+				4259E3742D41751A0052D8D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		42B0AF852D0CAEFD00521A6C /* Build configuration list for PBXNativeTarget "LocationAlarmWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
