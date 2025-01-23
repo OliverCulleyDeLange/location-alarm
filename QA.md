@@ -15,16 +15,17 @@ Location permissions are request on first app start. The map screen doesn't show
 granted.
 
 - Fresh app install
-    - 􀤊🤖UITest􀤊 [ ] I see location permissions rationale
+    - 🤖UITest🍏 I see location permissions rationale
     - I tap 'allow location access'
-        - 􀤊🤖UITest􀤊 [ ] I see location permission dialog
+        - 🤖UITest🍏 [ ] I see location permission dialog
         - I tap 'allow once' (IOS) / 'Only this time' (Android)
-            - 􀤊🤖UITest􀤊 [ ] I see the map screen
-            - [ ] IOS ONLY: I see the map screen - I force close and reopen app - I see location
+            - 🤖UITest🍏 [ ] I see the map screen
+            - UITest🍏[ ] IOS ONLY: I see the map screen - I force close and reopen app - I see
+              location
               permissions rationale
-        - 􀤊🤖UITest􀤊 [ ] I tap 'allow while using app' - I see the map screen
-        - 􀤊🤖UITest􀤊 [ ] I tap 'don't allow' - I see location permissions denied screen
-- [ ] Location permissions denied previously - I see location permissions denied screen
+        - 🤖UITest🍏 [ ] I tap 'allow while using app' - I see the map screen
+        - 🤖UITest🍏 [ ] I tap 'don't allow' - I see location permissions denied screen
+- 􀤊UITest🍏[ ] Location permissions denied previously - I see location permissions denied screen
 - [ ] Deny location permissions - Manually enable via settings - Reopen app (don't close) - I
   see the map screen
 
@@ -32,9 +33,9 @@ granted.
 
 Notification permissions are requested the first time the alarm is enabled.
 
-- 􀤊🤖UITest􀤊 [ ] Fresh app install - On map screen - Tap enable alarm - I see notification
+- 🤖UITest􀤊 [ ] Fresh app install - On map screen - Tap enable alarm - I see notification
   permissions dialog
-- 􀤊🤖UITest􀤊 [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is
+- 🤖UITest􀤊 [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is
   enabled
 - [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
   permissions denied message - 'Enable alarm' button is disabled
@@ -81,7 +82,7 @@ See [Notification Permissions](#notification-permissions).
 
 - Map screen - Tap enable alarm - Location updates to within geofence
     - [ ] Alarm sounds & vibrates
-  - 􀤊🤖UITest􀤊 [ ] Alert is shown with option to 'Stop Alarm'
+  - 🤖UITest􀤊 [ ] Alert is shown with option to 'Stop Alarm'
     - [ ] Persistent notification becomes bright color and gives option to stop alarm
     - [ ] Tap stop alarm in alert UI - Alarm stops, persistent notification is dismissed
   - [ ] Tap stop alarm in persistent notification - App opens (ios only), alarm stops, persistent
