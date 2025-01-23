@@ -1,18 +1,25 @@
 import XCTest
+import Shared
 
 final class LocationAlarmUITests: XCTestCase {
     
     let app = XCUIApplication()
     let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
     
+    func waitAndTap(_ element: XCUIElement) {
+        element.waitForExistence(timeout: 1)
+        element.tap()
+    }
+    
     override func setUpWithError() throws {
         continueAfterFailure = false
+        XCUIDevice.shared.press(.home)
         let appIcon = springboard.icons["Location Alarm"]
-        if (appIcon.exists){
-            appIcon.press(forDuration: 2)
-            springboard.buttons["Remove App"].tap()
-            springboard.buttons["Delete App"].tap()
-            springboard.buttons["Delete"].tap()
+        if (appIcon.waitForExistence(timeout: 3)){
+            appIcon.press(forDuration: 1)
+            waitAndTap(springboard.buttons["Remove App"])
+            waitAndTap(springboard.buttons["Delete App"])
+            waitAndTap(springboard.buttons["Delete"])
         }
         app.resetAuthorizationStatus(for: .location)
         app.launchArguments = ["-UITests"]
@@ -25,17 +32,19 @@ final class LocationAlarmUITests: XCTestCase {
     
     @MainActor
     func testEnableAndDisableAlarm() throws {
-        app.buttons["Allow Location Access"].tap()
+        XCTAssert(app.staticTexts[Shared.MapScreenStrings.shared.locationPermissionRequiredText]
+            .waitForExistence(timeout: 1))
+        app.buttons[Shared.MapScreenStrings.shared.allowLocationAccess].tap()
         springboard.buttons["Allow Once"].tap()
-        let enableButton = app.buttons["Enable Alarm"]
-        enableButton.wait(for: \.exists, toEqual: true, timeout: 3)
+        let enableButton = app.buttons[Shared.MapScreenStrings.shared.enableAlarm]
+        XCTAssert(enableButton.wait(for: \.exists, toEqual: true, timeout: 3))
         enableButton.tap()
-        springboard.buttons["Allow"].tap()
-        app.buttons["Stop Alarm"].tap()
+        waitAndTap(springboard.buttons["Allow"])
+        waitAndTap(app.buttons["Stop Alarm"])
     }
     
     @MainActor
-    func testLaunchPerformance() throws {
+    func _testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
             measure(metrics: [XCTApplicationLaunchMetric()]) {

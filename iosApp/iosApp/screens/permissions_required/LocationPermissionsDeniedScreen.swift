@@ -5,7 +5,7 @@ import Shared
 struct LocationPermissionsDeniedScreen: View {
     var body: some View {
         VStack {
-            Text("You have denied location permissions")
+            Text(MapScreenStrings.shared.locationPermissionDeniedText)
                 .foregroundStyle(Color(.primary))
                 .font(.system(size:20, weight: .bold))
                 .padding()

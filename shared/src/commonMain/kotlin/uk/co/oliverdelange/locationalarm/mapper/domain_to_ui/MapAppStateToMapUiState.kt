@@ -5,6 +5,7 @@ import uk.co.oliverdelange.locationalarm.model.domain.PermissionState
 import uk.co.oliverdelange.locationalarm.model.domain.granted
 import uk.co.oliverdelange.locationalarm.model.domain.shouldShowRationale
 import uk.co.oliverdelange.locationalarm.model.ui.map.MapUiState
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings
 
 /** TODO Get strings from string provider
  * TODO UNIT TESTS
@@ -13,7 +14,7 @@ class MapAppStateToMapUiState {
     fun map(state: AppState): MapUiState {
         return MapUiState(
             shouldShowAlarmAlert = state.alarmTriggered,
-            toggleAlarmButtonText = if (state.alarmEnabled) "Disable Alarm" else "Enable Alarm",
+            toggleAlarmButtonText = if (state.alarmEnabled) MapScreenStrings.disableAlarm else MapScreenStrings.enableAlarm,
             enableAlarmButtonEnabled = state.notificationPermissionState !is PermissionState.Denied &&
                 state.usersLocation != null &&
                 state.geoFenceLocation != null,

@@ -7,42 +7,40 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import uk.co.oliverdelange.location_alarm.MainActivity
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.allowLocationAccess
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.disableAlarm
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.enableAlarm
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.locationPermissionDeniedText
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.locationPermissionRequiredText
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.stopAlarm
 
 @OptIn(ExperimentalTestApi::class)
 class MapScreen(private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>) {
-    val disableButtonText = "DISABLE ALARM"
-    val enableButtonText = "ENABLE ALARM"
-    val stopAlarmDialogText = "Stop Alarm"
-    val allowLocationPermissionButtonText = "Allow Location Access"
-    val locationPermissionRequiredText =
-        "This app needs your location to enable location based alarms. Please allow precise location access for the app to work."
-    val locationPermissionDeniedText = "You have denied location permissions"
-
     // Text UI
     val locationPermissionRequiredTextNode = composeTestRule.onNode(hasText(locationPermissionRequiredText))
     val locationPermissionDeniedTextNode = composeTestRule.onNode(hasText(locationPermissionDeniedText))
 
     // Buttons
-    val allowLocationPermissionButton = composeTestRule.onNode(hasText(allowLocationPermissionButtonText))
-    val enableButton = composeTestRule.onNode(hasText(enableButtonText))
-    val disableButton = composeTestRule.onNode(hasText(disableButtonText))
-    val stopAlarmDialogButton = composeTestRule.onNode(hasText(stopAlarmDialogText))
+    val allowLocationPermissionButton = composeTestRule.onNode(hasText(allowLocationAccess))
+    val enableButton = composeTestRule.onNode(hasText(enableAlarm))
+    val disableButton = composeTestRule.onNode(hasText(disableAlarm))
+    val stopAlarmDialogButton = composeTestRule.onNode(hasText(stopAlarm))
 
     fun enableAlarm() {
         composeTestRule.waitForIdle()
-        composeTestRule.waitUntilExactlyOneExists(hasText(enableButtonText).and(isEnabled()), 5000)
+        composeTestRule.waitUntilExactlyOneExists(hasText(enableAlarm).and(isEnabled()), 5000)
         enableButton.performClick()
     }
 
     fun disableAlarm() {
         composeTestRule.waitForIdle()
-        composeTestRule.waitUntilExactlyOneExists(hasText(disableButtonText).and(isEnabled()), 5000)
+        composeTestRule.waitUntilExactlyOneExists(hasText(disableAlarm).and(isEnabled()), 5000)
         disableButton.performClick()
     }
 
     fun disableAlarmViaDialog() {
         composeTestRule.waitForIdle()
-        composeTestRule.waitUntilExactlyOneExists(hasText(stopAlarmDialogText).and(isEnabled()), 5000)
+        composeTestRule.waitUntilExactlyOneExists(hasText(stopAlarm).and(isEnabled()), 5000)
         stopAlarmDialogButton.performClick()
     }
 }

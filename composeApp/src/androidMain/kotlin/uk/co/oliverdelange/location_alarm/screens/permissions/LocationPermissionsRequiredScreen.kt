@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import uk.co.oliverdelange.locationalarm.model.ui.UserEvent
 import uk.co.oliverdelange.locationalarm.model.ui.location_permission_required.LocationPermissionRequiredViewModel
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings
 
 @Composable
 fun LocationPermissionsRequiredScreen() {
@@ -40,7 +41,7 @@ fun LocationPermissionsRequiredScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                "This app needs your location to enable location based alarms. Please allow precise location access for the app to work.",
+                MapScreenStrings.locationPermissionRequiredText,
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
@@ -48,7 +49,7 @@ fun LocationPermissionsRequiredScreen() {
             Button(
                 onClick = { viewModel.onEvent(UserEvent.TappedAllowLocationPermissions) },
             ) {
-                Text("Allow Location Access")
+                Text(MapScreenStrings.allowLocationAccess)
             }
         }
     }

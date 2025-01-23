@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "C0EA5CEA-01C1-4368-B00C-B7F632721C68",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:iosApp.xcodeproj",
+      "identifier" : "7555FF7A242A565900829871",
+      "name" : "iosApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "4259E3692D41751A0052D8D3",
+        "name" : "LocationAlarmUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

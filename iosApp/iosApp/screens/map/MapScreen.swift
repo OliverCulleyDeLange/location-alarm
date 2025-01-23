@@ -15,7 +15,7 @@ struct MapScreen: View {
             Alert(
                 title: Text("Wakey Wakey"),
                 message: Text("You have reached your destination."),
-                dismissButton: .default(Text("Stop Alarm")){
+                dismissButton: .default(Text(MapScreenStrings.shared.stopAlarm)){
                     viewModel.onEvent(uiEvent: UserEventTappedStopAlarm())
                 }
             )

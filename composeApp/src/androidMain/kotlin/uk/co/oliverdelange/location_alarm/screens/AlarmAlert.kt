@@ -6,6 +6,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import uk.co.oliverdelange.location_alarm.ui.theme.AppTheme
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings.stopAlarm
 
 @Composable
 fun AlarmAlert(
@@ -29,7 +30,7 @@ fun AlarmAlert(
                         onStopAlarm()
                     }
                 ) {
-                    Text("Stop Alarm")
+                    Text(stopAlarm)
                 }
             },
         )

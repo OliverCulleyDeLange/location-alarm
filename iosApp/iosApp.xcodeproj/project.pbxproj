@@ -61,6 +61,7 @@
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4295AC842D4207BB00F37D68 /* iosApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = iosApp.xctestplan; sourceTree = "<group>"; };
 		42A522B92D15F9EC00DE3872 /* AppUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUi.swift; sourceTree = "<group>"; };
 		42B0AF6E2D0CAEFC00521A6C /* LocationAlarmWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LocationAlarmWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B0AF6F2D0CAEFC00521A6C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -165,6 +166,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				4295AC842D4207BB00F37D68 /* iosApp.xctestplan */,
 				AB1DB47929225F7C00F7AF9C /* Configuration */,
 				7555FF7D242A565900829871 /* iosApp */,
 				42B0AF732D0CAEFC00521A6C /* LocationAlarmWidget */,
