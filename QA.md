@@ -33,13 +33,15 @@ granted.
 
 Notification permissions are requested the first time the alarm is enabled.
 
-- 🤖UITest􀤊 [ ] Fresh app install - On map screen - Tap enable alarm - I see notification
+- 🤖UITest🍏 [ ] Fresh app install - On map screen - Tap enable alarm - I see notification
   permissions dialog
-- 🤖UITest􀤊 [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is
+- 🤖UITest🍏 [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Allow' - Alarm is
   enabled
-- [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a notification
+- 􀤊UITest🍏 [ ] Fresh app install - On map screen - Tap enable alarm - Tap 'Don't Allow - I see a
+  notification
   permissions denied message - 'Enable alarm' button is disabled
-- [ ] Notification permissions denied previously - Open app - On map screen - I see notification
+- 􀤊UITest🍏 [ ] Notification permissions denied previously - Open app - On map screen - I see
+  notification
   permissions denied message - 'Enable alarm' button is disabled
 - [ ] ANDROID ONLY: Notification permissions denied previously - Open app - On map screen - I see
   notification permissions denied message - Tap 'Allow notification permissions' - System dialog
@@ -82,7 +84,7 @@ See [Notification Permissions](#notification-permissions).
 
 - Map screen - Tap enable alarm - Location updates to within geofence
     - [ ] Alarm sounds & vibrates
-  - 🤖UITest􀤊 [ ] Alert is shown with option to 'Stop Alarm'
+  - 🤖UITest🍏 [ ] Alert is shown with option to 'Stop Alarm'
     - [ ] Persistent notification becomes bright color and gives option to stop alarm
     - [ ] Tap stop alarm in alert UI - Alarm stops, persistent notification is dismissed
   - [ ] Tap stop alarm in persistent notification - App opens (ios only), alarm stops, persistent

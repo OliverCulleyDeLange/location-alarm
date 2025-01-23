@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings
 
 @Composable
 fun NotificationPermissionDeniedAlert(
@@ -32,7 +33,7 @@ fun NotificationPermissionDeniedAlert(
             modifier = Modifier.padding(bottom = 4.dp)
         )
         Text(
-            text = "You have denied notification permissions. This is required to alert you when you have reached your destination.",
+            text = MapScreenStrings.notificationPermissionDeniedText,
             color = MaterialTheme.colorScheme.onErrorContainer,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 4.dp)

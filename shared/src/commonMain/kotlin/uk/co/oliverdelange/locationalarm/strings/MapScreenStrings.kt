@@ -4,8 +4,12 @@ object MapScreenStrings {
     val disableAlarm = "DISABLE ALARM"
     val enableAlarm = "ENABLE ALARM"
     val stopAlarm = "Stop Alarm"
+
     val allowLocationAccess = "Allow Location Access"
     val locationPermissionRequiredText =
         "This app needs your location to enable location based alarms. Please allow precise location access for the app to work."
     val locationPermissionDeniedText = "You have denied location permissions"
+
+    val notificationPermissionDeniedText =
+        "You have denied notification permissions. This is required to alert you when you have reached your destination."
 }

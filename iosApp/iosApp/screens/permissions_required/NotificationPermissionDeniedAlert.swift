@@ -1,4 +1,5 @@
 import SwiftUI
+import Shared
 
 struct NotificationPermissionDeniedAlert: View {    
     var body: some View {
@@ -7,7 +8,7 @@ struct NotificationPermissionDeniedAlert: View {
             ).foregroundStyle(Color(.error))
                 .font(.title2)
             Spacer().frame(height: 16)
-            Text("You have denied notification permissions. This is required to alert you when you have reached your destination"
+            Text(Shared.MapScreenStrings.shared.notificationPermissionDeniedText
             ).foregroundStyle(Color(.onErrorContainer))
                 .font(.body)
             Spacer().frame(height: 16)
