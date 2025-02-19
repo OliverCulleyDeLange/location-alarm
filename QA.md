@@ -56,6 +56,9 @@ Notification permissions are requested the first time the alarm is enabled.
 ## Set Geofence
 
 - [ ] Map screen - geofence moves with location updates
+    - This is unit tested on android, assuming
+      `locationStateListener.listenToStateAndListenForLocationUpdates`
+      is called in the application
 - [ ] Map screen - Tap somewhere on the map - geofence moves to tap location
 - [ ] Map screen - Tap somewhere on the map - geofence stops moving with location updates
 - [ ] Map screen - Tap radius scrubber - arrows animate up and down

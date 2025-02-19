@@ -96,6 +96,11 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
 
+        testImplementation(libs.mockk)
+        testImplementation(libs.junit)
+        testImplementation(libs.androidx.junit.ktx)
+        testImplementation(libs.kotlinx.coroutines.test)
+
         androidTestUtil(libs.androidx.test.orchestrator)
 
         androidTestImplementation(libs.androidx.espresso.core)
@@ -105,6 +110,7 @@ android {
         androidTestImplementation(libs.androidx.rules)
         androidTestImplementation(libs.androidx.junit.ktx)
         androidTestImplementation(libs.androidx.ui.test.junit4)
+
 
     }
 }

@@ -10,14 +10,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationRequest.Builder.IMPLICIT_MIN_UPDATE_INTERVAL
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import uk.co.oliverdelange.location_alarm.mapper.ui_to_domain.toLocation
-import uk.co.oliverdelange.locationalarm.logging.SLog
 import uk.co.oliverdelange.locationalarm.store.AppStateStore
 
 /** Listens to app state and requests location updates appropriately using FusedLocationProvider */
@@ -38,26 +31,8 @@ class FusedLocationService(context: Context, private val appStateStore: AppState
         onLocationUpdate(location.toLocation())
     }
 
-    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    override fun listenToStateAndListenForLocationUpdates() {
-        SLog.d("LocationService init")
-        serviceScope.launch {
-            appStateStore.state
-                .map { it.shouldListenForLocationUpdates }
-                .distinctUntilChanged()
-                .collect {
-                    if (it) {
-                        listenForUpdates()
-                    } else {
-                        stopListeningForUpdates()
-                    }
-                }
-        }
-    }
-
     @SuppressLint("MissingPermission")
-    private fun listenForUpdates() {
+    override fun listenForUpdates() {
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationListener,
@@ -65,7 +40,7 @@ class FusedLocationService(context: Context, private val appStateStore: AppState
         )
     }
 
-    private fun stopListeningForUpdates() {
+    override fun stopListeningForUpdates() {
         fusedLocationClient.removeLocationUpdates(locationListener)
     }
 

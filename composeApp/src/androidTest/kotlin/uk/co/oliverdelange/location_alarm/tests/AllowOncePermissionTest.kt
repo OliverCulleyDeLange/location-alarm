@@ -9,6 +9,7 @@ import org.junit.Test
 import uk.co.oliverdelange.location_alarm.MainActivity
 import uk.co.oliverdelange.location_alarm.helpers.TestPermissionHelper
 import uk.co.oliverdelange.location_alarm.screens.MapScreen
+import uk.co.oliverdelange.locationalarm.strings.MapScreenStrings
 
 @OptIn(ExperimentalTestApi::class)
 class AllowOncePermissionTest {
@@ -27,6 +28,6 @@ class AllowOncePermissionTest {
             .performClick()
         composeTestRule.waitForIdle()
         permissions.allowOnlyThisTime()
-        composeTestRule.waitUntilExactlyOneExists(hasText(mapScreen.enableButtonText), 3000)
+        composeTestRule.waitUntilExactlyOneExists(hasText(MapScreenStrings.enableAlarm), 3000)
     }
 }

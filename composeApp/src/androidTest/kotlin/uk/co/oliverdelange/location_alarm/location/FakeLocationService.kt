@@ -8,7 +8,11 @@ class FakeLocationService(val appStateStore: AppStateStore) : LocationService {
         appStateStore.onLocationChange(locations = listOf(location))
     }
 
-    override fun listenToStateAndListenForLocationUpdates() {
+    override fun stopListeningForUpdates() {
+        // no op
+    }
+
+    override fun listenForUpdates() {
         // no op
     }
 }
