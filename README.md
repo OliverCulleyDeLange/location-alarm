@@ -7,15 +7,11 @@
 
 # Priority 1
 
-- L UI Tests?
-- M Log snapshot tests - Check logs for given flow haven't changed
-- Check for memory leaks and performance issues esp around cancellation and lifetimes
-
 ## Priority 2
 
+- Apple watch app / Android watch app
 - M Tutorial
 - L Allow searching for locations with dropdown results
-- Apple watch app / Android watch app
 - S Draw path of route while alarm enabled
 - Alarm config (sound, vibration pattern)
 - Recent geofences
@@ -27,6 +23,8 @@
 
 ### Priority 3
 
+- Check for memory leaks and performance issues esp around cancellation and lifetimes
+- M Log snapshot tests - Check logs for given flow haven't changed
 - M Capture GPX file for alarm enabled session - to aid GPS issue debugging
 - S Code quality
 - Polygonal geofence areas

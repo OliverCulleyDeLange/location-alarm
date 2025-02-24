@@ -10,6 +10,7 @@
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		42196EE02D657F3C00AE79BF /* LocationAlarm Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 42196EBD2D657F3A00AE79BF /* LocationAlarm Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		423E49FB2CF7729B0024F2EB /* KMPObservableViewModelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 423E49FA2CF7729B0024F2EB /* KMPObservableViewModelCore */; };
 		423E49FD2CF7729B0024F2EB /* KMPObservableViewModelSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 423E49FC2CF7729B0024F2EB /* KMPObservableViewModelSwiftUI */; };
 		423E4A1A2CFE40580024F2EB /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 423E4A192CFE40580024F2EB /* KMPNativeCoroutinesCombine */; };
@@ -26,6 +27,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		42196ECD2D657F3C00AE79BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42196EBC2D657F3A00AE79BF;
+			remoteInfo = "LocationAlarm Watch App";
+		};
+		42196ED72D657F3C00AE79BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42196EBC2D657F3A00AE79BF;
+			remoteInfo = "LocationAlarm Watch App";
+		};
+		42196EDE2D657F3C00AE79BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42196EBC2D657F3A00AE79BF;
+			remoteInfo = "LocationAlarm Watch App";
+		};
 		4259E3702D41751A0052D8D3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -43,6 +65,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		42196EE12D657F3C00AE79BF /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				42196EE02D657F3C00AE79BF /* LocationAlarm Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		42B0AF882D0CAEFD00521A6C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -60,6 +93,9 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		42196EBD2D657F3A00AE79BF /* LocationAlarm Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LocationAlarm Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42196ECC2D657F3C00AE79BF /* LocationAlarm Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LocationAlarm Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42196ED62D657F3C00AE79BF /* LocationAlarm Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LocationAlarm Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4295AC842D4207BB00F37D68 /* iosApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = iosApp.xctestplan; sourceTree = "<group>"; };
 		42A522B92D15F9EC00DE3872 /* AppUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUi.swift; sourceTree = "<group>"; };
@@ -98,6 +134,9 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		42196EBE2D657F3A00AE79BF /* LocationAlarm Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "LocationAlarm Watch App"; sourceTree = "<group>"; };
+		42196ECF2D657F3C00AE79BF /* LocationAlarm Watch AppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "LocationAlarm Watch AppTests"; sourceTree = "<group>"; };
+		42196ED92D657F3C00AE79BF /* LocationAlarm Watch AppUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "LocationAlarm Watch AppUITests"; sourceTree = "<group>"; };
 		42422AB22D10572C0084108E /* ui */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (42422AB32D1057360084108E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ui; sourceTree = "<group>"; };
 		4244D0882D0A378000B2D9FC /* helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = helpers; sourceTree = "<group>"; };
 		424548482D0FACCD00DDF9EA /* notifications */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = notifications; sourceTree = "<group>"; };
@@ -114,6 +153,27 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		42196EBA2D657F3A00AE79BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42196EC92D657F3C00AE79BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42196ED32D657F3C00AE79BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4259E3672D41751A0052D8D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -171,6 +231,9 @@
 				7555FF7D242A565900829871 /* iosApp */,
 				42B0AF732D0CAEFC00521A6C /* LocationAlarmWidget */,
 				4259E36B2D41751A0052D8D3 /* LocationAlarmUITests */,
+				42196EBE2D657F3A00AE79BF /* LocationAlarm Watch App */,
+				42196ECF2D657F3C00AE79BF /* LocationAlarm Watch AppTests */,
+				42196ED92D657F3C00AE79BF /* LocationAlarm Watch AppUITests */,
 				7555FF7C242A565900829871 /* Products */,
 				42799AB246E5F90AF97AA0EF /* Frameworks */,
 			);
@@ -182,6 +245,9 @@
 				7555FF7B242A565900829871 /* Location Alarm.app */,
 				42B0AF6E2D0CAEFC00521A6C /* LocationAlarmWidgetExtension.appex */,
 				4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */,
+				42196EBD2D657F3A00AE79BF /* LocationAlarm Watch App.app */,
+				42196ECC2D657F3C00AE79BF /* LocationAlarm Watch AppTests.xctest */,
+				42196ED62D657F3C00AE79BF /* LocationAlarm Watch AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +288,74 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		42196EBC2D657F3A00AE79BF /* LocationAlarm Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42196EE82D657F3C00AE79BF /* Build configuration list for PBXNativeTarget "LocationAlarm Watch App" */;
+			buildPhases = (
+				42196EB92D657F3A00AE79BF /* Sources */,
+				42196EBA2D657F3A00AE79BF /* Frameworks */,
+				42196EBB2D657F3A00AE79BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				42196EBE2D657F3A00AE79BF /* LocationAlarm Watch App */,
+			);
+			name = "LocationAlarm Watch App";
+			packageProductDependencies = (
+			);
+			productName = "LocationAlarm Watch App";
+			productReference = 42196EBD2D657F3A00AE79BF /* LocationAlarm Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		42196ECB2D657F3C00AE79BF /* LocationAlarm Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42196EE92D657F3C00AE79BF /* Build configuration list for PBXNativeTarget "LocationAlarm Watch AppTests" */;
+			buildPhases = (
+				42196EC82D657F3C00AE79BF /* Sources */,
+				42196EC92D657F3C00AE79BF /* Frameworks */,
+				42196ECA2D657F3C00AE79BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				42196ECE2D657F3C00AE79BF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				42196ECF2D657F3C00AE79BF /* LocationAlarm Watch AppTests */,
+			);
+			name = "LocationAlarm Watch AppTests";
+			packageProductDependencies = (
+			);
+			productName = "LocationAlarm Watch AppTests";
+			productReference = 42196ECC2D657F3C00AE79BF /* LocationAlarm Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		42196ED52D657F3C00AE79BF /* LocationAlarm Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42196EEA2D657F3C00AE79BF /* Build configuration list for PBXNativeTarget "LocationAlarm Watch AppUITests" */;
+			buildPhases = (
+				42196ED22D657F3C00AE79BF /* Sources */,
+				42196ED32D657F3C00AE79BF /* Frameworks */,
+				42196ED42D657F3C00AE79BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				42196ED82D657F3C00AE79BF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				42196ED92D657F3C00AE79BF /* LocationAlarm Watch AppUITests */,
+			);
+			name = "LocationAlarm Watch AppUITests";
+			packageProductDependencies = (
+			);
+			productName = "LocationAlarm Watch AppUITests";
+			productReference = 42196ED62D657F3C00AE79BF /* LocationAlarm Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		4259E3692D41751A0052D8D3 /* LocationAlarmUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4259E3722D41751A0052D8D3 /* Build configuration list for PBXNativeTarget "LocationAlarmUITests" */;
@@ -277,11 +411,13 @@
 				7555FF79242A565900829871 /* Resources */,
 				42B0AF882D0CAEFD00521A6C /* Embed Foundation Extensions */,
 				42CFA5532D245AF5009F63CF /* ShellScript */,
+				42196EE12D657F3C00AE79BF /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				42B0AF822D0CAEFD00521A6C /* PBXTargetDependency */,
+				42196EDF2D657F3C00AE79BF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				42422AB22D10572C0084108E /* ui */,
@@ -320,6 +456,17 @@
 				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = orgName;
 				TargetAttributes = {
+					42196EBC2D657F3A00AE79BF = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					42196ECB2D657F3C00AE79BF = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 42196EBC2D657F3A00AE79BF;
+					};
+					42196ED52D657F3C00AE79BF = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 42196EBC2D657F3A00AE79BF;
+					};
 					4259E3692D41751A0052D8D3 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 7555FF7A242A565900829871;
@@ -354,11 +501,35 @@
 				7555FF7A242A565900829871 /* iosApp */,
 				42B0AF6D2D0CAEFC00521A6C /* LocationAlarmWidgetExtension */,
 				4259E3692D41751A0052D8D3 /* LocationAlarmUITests */,
+				42196EBC2D657F3A00AE79BF /* LocationAlarm Watch App */,
+				42196ECB2D657F3C00AE79BF /* LocationAlarm Watch AppTests */,
+				42196ED52D657F3C00AE79BF /* LocationAlarm Watch AppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		42196EBB2D657F3A00AE79BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42196ECA2D657F3C00AE79BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42196ED42D657F3C00AE79BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4259E3682D41751A0052D8D3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,6 +601,27 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		42196EB92D657F3A00AE79BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42196EC82D657F3C00AE79BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42196ED22D657F3C00AE79BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4259E3662D41751A0052D8D3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -457,6 +649,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		42196ECE2D657F3C00AE79BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42196EBC2D657F3A00AE79BF /* LocationAlarm Watch App */;
+			targetProxy = 42196ECD2D657F3C00AE79BF /* PBXContainerItemProxy */;
+		};
+		42196ED82D657F3C00AE79BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42196EBC2D657F3A00AE79BF /* LocationAlarm Watch App */;
+			targetProxy = 42196ED72D657F3C00AE79BF /* PBXContainerItemProxy */;
+		};
+		42196EDF2D657F3C00AE79BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42196EBC2D657F3A00AE79BF /* LocationAlarm Watch App */;
+			targetProxy = 42196EDE2D657F3C00AE79BF /* PBXContainerItemProxy */;
+		};
 		4259E3712D41751A0052D8D3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* iosApp */;
@@ -470,6 +677,176 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		42196EE22D657F3C00AE79BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"LocationAlarm Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LocationAlarm;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = uk.co.oliverdelange.locationalarm.LocationAlarm;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.oliverdelange.locationalarm.LocationAlarm.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		42196EE32D657F3C00AE79BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LocationAlarm Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LocationAlarm;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = uk.co.oliverdelange.locationalarm.LocationAlarm;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.oliverdelange.locationalarm.LocationAlarm.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		42196EE42D657F3C00AE79BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.oliverdelange.LocationAlarm-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LocationAlarm Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LocationAlarm Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		42196EE52D657F3C00AE79BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.oliverdelange.LocationAlarm-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LocationAlarm Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LocationAlarm Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
+		42196EE62D657F3C00AE79BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.oliverdelange.LocationAlarm-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "LocationAlarm Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		42196EE72D657F3C00AE79BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9839FS8BT3;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.oliverdelange.LocationAlarm-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "LocationAlarm Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Release;
+		};
 		4259E3732D41751A0052D8D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -773,6 +1150,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		42196EE82D657F3C00AE79BF /* Build configuration list for PBXNativeTarget "LocationAlarm Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42196EE22D657F3C00AE79BF /* Debug */,
+				42196EE32D657F3C00AE79BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42196EE92D657F3C00AE79BF /* Build configuration list for PBXNativeTarget "LocationAlarm Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42196EE42D657F3C00AE79BF /* Debug */,
+				42196EE52D657F3C00AE79BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42196EEA2D657F3C00AE79BF /* Build configuration list for PBXNativeTarget "LocationAlarm Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42196EE62D657F3C00AE79BF /* Debug */,
+				42196EE72D657F3C00AE79BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4259E3722D41751A0052D8D3 /* Build configuration list for PBXNativeTarget "LocationAlarmUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
