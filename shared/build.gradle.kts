@@ -17,28 +17,36 @@ kotlin {
         }
     }
 
-    listOf(
+    val iosTargets = listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
+    )
+    val appleWatchTargets = listOf(
+        watchosX64(),
+        watchosArm64(),
+        watchosSimulatorArm64()
+    )
+    (iosTargets + appleWatchTargets).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
         }
     }
-    
+
     sourceSets {
         all {
             languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
             languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
         }
-        commonMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.kermit)
-            implementation(libs.kotlinx.serialization.core)
-            api(libs.kotlinx.datetime)
-            api(libs.kmp.observableviewmodel.core)
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.koin.core)
+                implementation(libs.kermit)
+                implementation(libs.kotlinx.serialization.core)
+                api(libs.kotlinx.datetime)
+                api(libs.kmp.observableviewmodel.core)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

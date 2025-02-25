@@ -7,11 +7,17 @@
 //
 
 import SwiftUI
+import Shared
 
 struct ContentView: View {
+   
+    
     var body: some View {
         VStack {
-            Button("Enable Alarm", action: { WatchSessionManager.shared.enableAlarm()})
+            Button("Enable Alarm", action: {
+                SLog.w("TEST")
+                WatchSessionManager.shared.enableAlarm()
+            })
         }
         .padding()
     }
