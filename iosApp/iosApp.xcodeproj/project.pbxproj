@@ -11,6 +11,7 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		42196EE02D657F3C00AE79BF /* LocationAlarm Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 42196EBD2D657F3A00AE79BF /* LocationAlarm Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		42196EEE2D6D419100AE79BF /* WatchConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42196EED2D6D418D00AE79BF /* WatchConnectivity.swift */; };
 		423E49FB2CF7729B0024F2EB /* KMPObservableViewModelCore in Frameworks */ = {isa = PBXBuildFile; productRef = 423E49FA2CF7729B0024F2EB /* KMPObservableViewModelCore */; };
 		423E49FD2CF7729B0024F2EB /* KMPObservableViewModelSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 423E49FC2CF7729B0024F2EB /* KMPObservableViewModelSwiftUI */; };
 		423E4A1A2CFE40580024F2EB /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 423E4A192CFE40580024F2EB /* KMPNativeCoroutinesCombine */; };
@@ -96,6 +97,7 @@
 		42196EBD2D657F3A00AE79BF /* LocationAlarm Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LocationAlarm Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42196ECC2D657F3C00AE79BF /* LocationAlarm Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LocationAlarm Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42196ED62D657F3C00AE79BF /* LocationAlarm Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LocationAlarm Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42196EED2D6D418D00AE79BF /* WatchConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivity.swift; sourceTree = "<group>"; };
 		4259E36A2D41751A0052D8D3 /* LocationAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4295AC842D4207BB00F37D68 /* iosApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = iosApp.xctestplan; sourceTree = "<group>"; };
 		42A522B92D15F9EC00DE3872 /* AppUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUi.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+				42196EED2D6D418D00AE79BF /* WatchConnectivity.swift */,
 				42A522B92D15F9EC00DE3872 /* AppUi.swift */,
 				42CFA5542D26BEA7009F63CF /* NavigationViewModel.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
@@ -640,6 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42196EEE2D6D419100AE79BF /* WatchConnectivity.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				42A522BA2D15F9EC00DE3872 /* AppUi.swift in Sources */,
 				42CFA5552D26BEA7009F63CF /* NavigationViewModel.swift in Sources */,

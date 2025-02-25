@@ -10,6 +10,7 @@ struct iOSApp: App {
     private var alarmManager: AlarmManager
     private var locationStateListener: LocationStateListener
     private var notificationStateListener: NotificationStateListener
+    private var watchConnectivityManager: WatchConnectivityManager
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
@@ -22,6 +23,7 @@ struct iOSApp: App {
 #else
         appStateStore.setDebug(debug: false)
 #endif
+        watchConnectivityManager = WatchConnectivityManager(appStateStore: appStateStore)
         alarmManager = AlarmManager(appStateStore: appStateStore)
         let locationService = LocationService()
         locationStateListener = LocationStateListener(locationService: locationService, appStateStore: appStateStore)
